@@ -1,0 +1,185 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'de.felixschulze.gradle.hockeyapp'
+apply from: '../quality/quality.gradle'
+apply plugin: 'io.objectbox'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
+    defaultConfig {
+        applicationId "de.bornholdtlee.defaultproject"
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode System.getenv("CI_PIPELINE_ID") as Integer ?: 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+
+        release {
+            storeFile file('keystore/ENTER_KEYSTORE_NAME_AND_DONT_FORGET_THE_VARIABLES_IN_GITLAB')
+            storePassword System.getenv("STORE_PASSWORD")
+            keyAlias System.getenv("KEY_ALIAS")
+            keyPassword System.getenv("KEY_PASSWORD")
+        }
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            android.applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    outputFileName = "${variant.name}-${variant.versionName}.apk"
+                }
+            }
+
+            signingConfig signingConfigs.release
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    flavorDimensions("app")
+    productFlavors {
+        dev {
+            dimension = "app"
+            applicationId "dev.de.bornholdtlee.defaultproject"
+            buildConfigField 'String', 'HOCKEY_APP_ID', '"6f8e2aaa4886465ebee561bacecdcbaf"'
+            buildConfigField 'String', 'BASE_URL', '"https://api.stackexchange.com"'
+        }
+
+        prod {
+            dimension = "app"
+            applicationId "de.bornholdtlee.defaultproject"
+            buildConfigField 'String', 'HOCKEY_APP_ID', '"6f8e2aaa4886465ebee561bacecdcbaf"'
+            buildConfigField 'String', 'BASE_URL', '"https://api.stackexchange.com"'
+        }
+    }
+}
+
+hockeyapp {
+    apiToken = "not_required"
+    releaseType = 0 // alpha
+    notify = 0
+    status = 2
+    teams = 9235
+    notesType = 1
+}
+
+task setHockeyappMessage << {
+    def gitLastCommitMessage = 'git --no-pager log -1 --pretty=%B'.execute([], project.rootDir).text
+    hockeyapp.notes = "${gitLastCommitMessage}"
+}
+
+task setDevReleaseApiToken << {
+    hockeyapp.apiToken = "0bdfe99bee9f4750bd9b61b48622c57e"
+}
+
+task setProdReleaseApiToken << {
+    hockeyapp.apiToken = "5b59c54a43804c65bd39d8744119badd"
+}
+
+tasks.whenTaskAdded { task ->
+    task.dependsOn 'setHockeyappMessage'
+
+    if (task.name == 'uploadDevReleaseToHockeyApp') {
+        task.dependsOn 'setDevReleaseApiToken'
+    } else if (task.name == 'uploadProdReleaseToHockeyApp') {
+        task.dependsOn 'setProdReleaseApiToken'
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    /////TESTING/////
+
+    androidTestImplementation 'com.android.support.test:testing-support-lib:0.1'
+    testImplementation 'org.testng:testng:6.9.6'
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.mockito:mockito-inline:2.8.9"
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    testImplementation "org.robolectric:shadows-multidex:$robolectricVersion"
+    testImplementation "org.powermock:powermock-module-junit4:$powermockVersion"
+    testImplementation "org.powermock:powermock-module-junit4-rule:$powermockVersion"
+    testImplementation "org.powermock:powermock-api-mockito2:$powermockVersion"
+    testImplementation "org.powermock:powermock-classloading-xstream:$powermockVersion"
+
+    testAnnotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    if (Os.isFamily(Os.FAMILY_MAC)) {
+        testImplementation "io.objectbox:objectbox-macos:$objectboxVersion"
+    } else if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        testImplementation "io.objectbox:objectbox-windows:$objectboxVersion"
+    } else {
+        testImplementation "io.objectbox:objectbox-linux:$objectboxVersion"
+    }
+
+    /////UI/////
+
+    implementation "com.android.support:appcompat-v7:$supportVersion"
+    implementation "com.android.support:design:$supportVersion"
+    implementation "com.android.support:cardview-v7:$supportVersion"
+    implementation "com.android.support:recyclerview-v7:$supportVersion"
+
+    implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
+
+    /////SUPPORT/////
+
+    implementation 'net.hockeyapp.android:HockeySDK:5.0.4'
+    implementation "com.facebook.stetho:stetho:$stethoVersion"
+    implementation "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
+
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    testAnnotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    implementation "com.jakewharton:butterknife:$butterknifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
+
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.6'
+
+    /////DATABASE/////
+
+    implementation "io.objectbox:objectbox-android:$objectboxVersion"
+    annotationProcessor "io.objectbox:objectbox-processor:$objectboxVersion"
+    implementation "io.objectbox:objectbox-macos:$objectboxVersion"
+
+    /////API/////
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
+}
+repositories {
+    mavenCentral()
+}
