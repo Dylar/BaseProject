@@ -27,11 +27,11 @@ public class DefaultApplication extends Application {
     }
 
     public DefaultApplicationComponent getDefaultApplicationComponent() {
-//        if (defaultApplicationComponent == null) {
-//            defaultApplicationComponent = DaggerDefaultApplicationComponent.builder()
-//                    .applicationModule(new ApplicationModule(this))
-//                    .build();
-//        }
+        if (defaultApplicationComponent == null) {
+            defaultApplicationComponent = DaggerDefaultApplicationComponent.builder()
+                    .applicationModule(new ApplicationModule(this))
+                    .build();
+        }
         return defaultApplicationComponent;
     }
 
