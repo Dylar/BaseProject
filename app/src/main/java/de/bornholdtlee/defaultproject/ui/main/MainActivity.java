@@ -22,11 +22,6 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        /**
-         * Info:
-         * Diese Abfrage sollte nicht in der Splashscreen-Activity ausgeführt werden,
-         * sondern erst in der darauf folgenden Activity
-         */
         HockeyAppUtils.checkForCrashes(this);
     }
 }

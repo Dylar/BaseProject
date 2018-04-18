@@ -1,6 +1,8 @@
 package de.bornholdtlee.defaultproject.injection.modules;
 
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 import de.bornholdtlee.defaultproject.DefaultApplication;
@@ -15,7 +17,7 @@ public class ApplicationModule {
     }
 
     @Provides
-    @ApplicationScope
+    @Singleton
     public DefaultApplication provideApplication() {
         return application;
     }

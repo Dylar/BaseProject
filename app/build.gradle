@@ -5,6 +5,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'de.felixschulze.gradle.hockeyapp'
 apply from: '../quality/quality.gradle'
 apply plugin: 'io.objectbox'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 27

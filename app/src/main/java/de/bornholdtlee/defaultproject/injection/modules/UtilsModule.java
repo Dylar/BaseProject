@@ -1,5 +1,11 @@
 package de.bornholdtlee.defaultproject.injection.modules;
 
+import net.hockeyapp.android.utils.ImageUtils;
+
+import org.greenrobot.essentials.io.FileUtils;
+
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 import de.bornholdtlee.defaultproject.DefaultApplication;
@@ -11,20 +17,45 @@ import de.bornholdtlee.defaultproject.utils.UiUtils;
 public class UtilsModule {
 
     @Provides
-    @ApplicationScope
-    public SharedPreferencesUtils provideSharedPreferencesUtils(DefaultApplication defaultApplication) {
-        return new SharedPreferencesUtils(defaultApplication);
+    @Singleton
+    NetworkUtils provideNetworkUtils(DefaultApplication context) {
+        return new NetworkUtils(context);
     }
 
     @Provides
-    @ApplicationScope
-    public NetworkUtils provideNetworkUtils(DefaultApplication defaultApplication) {
-        return new NetworkUtils(defaultApplication);
+    @Singleton
+    SharedPreferencesUtils provideSharedPreferencesUtils(DefaultApplication context) {
+        return new SharedPreferencesUtils(context);
     }
 
     @Provides
-    @ApplicationScope
-    public UiUtils provideUiUtils() {
+    @Singleton
+    UiUtils provideUiUtils() {
         return new UiUtils();
     }
+
+    @Provides
+    @Singleton
+    ImageUtils provideImageUtils() {
+        return new ImageUtils();
+    }
+
+    @Provides
+    @Singleton
+    FileUtils provideFileUtils() {
+        return new FileUtils();
+    }
+//
+//    @Provides
+//    @Singleton
+//    ToastBuilder provideToastBuilder() {
+//        return new ToastBuilder();
+//    }
+//
+//    @Provides
+//    @Singleton
+//    DialogBuilder provideDialogBuilder() {
+//        return new DialogBuilder();
+//    }
+
 }
