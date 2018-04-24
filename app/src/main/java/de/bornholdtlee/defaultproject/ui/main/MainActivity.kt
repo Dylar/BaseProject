@@ -3,7 +3,7 @@ package de.bornholdtlee.defaultproject.ui.main
 import android.os.Bundle
 
 import de.bornholdtlee.defaultproject.R
-import de.bornholdtlee.defaultproject.ui.BaseActivity
+import de.bornholdtlee.defaultproject.base.BaseActivity
 import de.bornholdtlee.defaultproject.utils.HockeyAppUtils
 
 class MainActivity : BaseActivity() {
@@ -12,7 +12,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        BaseActivity.showFragment(MainFragment(), supportFragmentManager, CONTAINER, true)
+        showFragment(MainFragment(), CONTAINER, true)
     }
 
     override fun onResume() {

@@ -2,7 +2,7 @@ package de.bornholdtlee.defaultproject.controller
 
 import javax.inject.Inject
 
-import de.bornholdtlee.defaultproject.DefaultApplication
+import de.bornholdtlee.defaultproject.BaseApplication
 import de.bornholdtlee.defaultproject.api.RetrofitInterface
 import de.bornholdtlee.defaultproject.api.RxConsumer
 import de.bornholdtlee.defaultproject.model.QuestionList
@@ -10,13 +10,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 
-class DefaultController(defaultApplication: DefaultApplication) {
+class DefaultController(baseApplication: BaseApplication) {
 
     @Inject
     internal var retrofitInterface: RetrofitInterface? = null
 
     init {
-        defaultApplication.defaultApplicationComponent.inject(this)
+        baseApplication.appComponent.inject(this)
     }
 
     fun startDownload(callback: Callback) {

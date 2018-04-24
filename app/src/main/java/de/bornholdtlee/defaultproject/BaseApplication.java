@@ -4,17 +4,17 @@ import android.app.Application;
 
 import com.facebook.stetho.Stetho;
 
-import de.bornholdtlee.defaultproject.injection.components.DefaultApplicationComponent;
+import de.bornholdtlee.defaultproject.injection.components.AppComponent;
 import de.bornholdtlee.defaultproject.injection.modules.ApplicationModule;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
-public class DefaultApplication extends Application {
+public class BaseApplication extends Application {
 
     public static final String FONT_PATH = "fonts/Roboto-Light.ttf";
 
-    private DefaultApplicationComponent defaultApplicationComponent;
+    private AppComponent appComponent;
 
-    public DefaultApplication(DefaultApplication application) {
+    public BaseApplication(BaseApplication application) {
 
     }
 
@@ -26,13 +26,13 @@ public class DefaultApplication extends Application {
         initCalligraphy();
     }
 
-    public DefaultApplicationComponent getDefaultApplicationComponent() {
-        if (defaultApplicationComponent == null) {
-            defaultApplicationComponent = DaggerDefaultApplicationComponent.builder()
+    public AppComponent getAppComponent() {
+        if (appComponent == null) {
+            appComponent = DaggerDefaultApplicationComponent.builder()
                     .applicationModule(new ApplicationModule(this))
                     .build();
         }
-        return defaultApplicationComponent;
+        return appComponent;
     }
 
     private void initCalligraphy() {

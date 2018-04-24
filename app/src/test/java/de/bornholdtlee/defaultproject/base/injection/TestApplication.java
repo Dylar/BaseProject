@@ -1,14 +1,14 @@
 package de.bornholdtlee.defaultproject.base.injection;
 
-import de.bornholdtlee.defaultproject.DefaultApplication;
+import de.bornholdtlee.defaultproject.BaseApplication;
 import de.bornholdtlee.defaultproject.injection.modules.ApplicationModule;
 
-public class TestApplication extends DefaultApplication {
+public class TestApplication extends BaseApplication {
 
     private TestComponent testComponent;
 
     @Override
-    public TestComponent getDefaultApplicationComponent() {
+    public TestComponent getAppComponent() {
         return testComponent;
     }
 

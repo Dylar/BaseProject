@@ -3,7 +3,7 @@ package de.bornholdtlee.defaultproject.base.injection;
 
 import org.junit.Before;
 
-import de.bornholdtlee.defaultproject.DefaultApplication;
+import de.bornholdtlee.defaultproject.BaseApplication;
 import de.bornholdtlee.defaultproject.base.BaseContextTest;
 import de.bornholdtlee.defaultproject.injection.modules.UtilsModule;
 import de.bornholdtlee.defaultproject.utils.SharedPreferencesUtils;
@@ -21,7 +21,7 @@ public abstract class BaseInjectTest extends BaseContextTest implements ITestInj
         TestApplication application = (TestApplication) getContext();
 
         initComponent(application);
-        inject(application.getDefaultApplicationComponent());
+        inject(application.getAppComponent());
     }
 
     private void initComponent(TestApplication application) {
@@ -33,7 +33,7 @@ public abstract class BaseInjectTest extends BaseContextTest implements ITestInj
     private UtilsModule provideSharedPreferencesUtils() {
         return new UtilsModule() {
             @Override
-            public SharedPreferencesUtils provideSharedPreferencesUtils(DefaultApplication defaultApplication) {
+            public SharedPreferencesUtils provideSharedPreferencesUtils(BaseApplication baseApplication) {
                 return spy(SharedPreferencesUtils.class);
             }
         };

@@ -8,7 +8,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import de.bornholdtlee.defaultproject.DefaultApplication;
+import de.bornholdtlee.defaultproject.BaseApplication;
 import de.bornholdtlee.defaultproject.utils.NetworkUtils;
 import de.bornholdtlee.defaultproject.utils.SharedPreferencesUtils;
 import de.bornholdtlee.defaultproject.utils.UiUtils;
@@ -18,13 +18,13 @@ public class UtilsModule {
 
     @Provides
     @Singleton
-    NetworkUtils provideNetworkUtils(DefaultApplication context) {
+    NetworkUtils provideNetworkUtils(BaseApplication context) {
         return new NetworkUtils(context);
     }
 
     @Provides
     @Singleton
-    SharedPreferencesUtils provideSharedPreferencesUtils(DefaultApplication context) {
+    SharedPreferencesUtils provideSharedPreferencesUtils(BaseApplication context) {
         return new SharedPreferencesUtils(context);
     }
 

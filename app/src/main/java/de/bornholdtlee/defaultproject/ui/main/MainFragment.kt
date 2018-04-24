@@ -14,7 +14,7 @@ import butterknife.OnClick
 import de.bornholdtlee.defaultproject.R
 import de.bornholdtlee.defaultproject.controller.DefaultController
 import de.bornholdtlee.defaultproject.model.DefaultModel
-import de.bornholdtlee.defaultproject.ui.BaseFragment
+import de.bornholdtlee.defaultproject.base.BaseFragment
 import de.bornholdtlee.defaultproject.utils.Logger
 import de.bornholdtlee.defaultproject.utils.SharedPreferencesUtils
 import io.objectbox.Box
@@ -38,7 +38,7 @@ class MainFragment : BaseFragment(), DefaultController.Callback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        defaultApplicationComponent.inject(this)
+        appComponent.inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
