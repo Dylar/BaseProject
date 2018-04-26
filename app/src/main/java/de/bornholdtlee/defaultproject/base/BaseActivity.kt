@@ -7,12 +7,14 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.*
 import butterknife.ButterKnife
-import de.bitb.astroskop.injection.IBind
+import de.bornholdtlee.defaultproject.injection.IBind
 import de.bitb.astroskop.injection.IInjection
+import de.bitb.astroskop.ui.base.NavigationBaseActivity
 import de.bornholdtlee.defaultproject.BaseApplication
 import de.bornholdtlee.defaultproject.R
 import de.bornholdtlee.defaultproject.enums.AnimationType
 import de.bornholdtlee.defaultproject.injection.components.AppComponent
+import de.bornholdtlee.defaultproject.ui.main.MainFragment
 import de.bornholdtlee.defaultproject.utils.UiUtils
 import lombok.Getter
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
@@ -132,7 +134,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (currentContent?.allowBackPress == true && allowBackPressed()) {
-            if (currentContent is HomeFragment) {
+            if (currentContent is MainFragment) {
                 finish()
             } else {
                 super.onBackPressed()

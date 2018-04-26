@@ -67,6 +67,7 @@ android {
             applicationId "dev.de.bornholdtlee.defaultproject"
             buildConfigField 'String', 'HOCKEY_APP_ID', '"6f8e2aaa4886465ebee561bacecdcbaf"'
             buildConfigField 'String', 'BASE_URL', '"https://api.stackexchange.com"'
+            buildConfigField 'String', 'FILE_FOLDER_NAME', '"/BaseProjectDev/"'
         }
 
         prod {
@@ -74,6 +75,7 @@ android {
             applicationId "de.bornholdtlee.defaultproject"
             buildConfigField 'String', 'HOCKEY_APP_ID', '"6f8e2aaa4886465ebee561bacecdcbaf"'
             buildConfigField 'String', 'BASE_URL', '"https://api.stackexchange.com"'
+            buildConfigField 'String', 'FILE_FOLDER_NAME', '"/BaseProject/"'
         }
     }
 }
@@ -144,6 +146,7 @@ dependencies {
     implementation "com.android.support:design:$supportVersion"
     implementation "com.android.support:cardview-v7:$supportVersion"
     implementation "com.android.support:recyclerview-v7:$supportVersion"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
 
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
 

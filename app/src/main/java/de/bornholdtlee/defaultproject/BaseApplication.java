@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.facebook.stetho.Stetho;
 
+import de.bitb.astroskop.injection.modules.ApplicationModule;
 import de.bornholdtlee.defaultproject.injection.components.AppComponent;
 import de.bornholdtlee.defaultproject.injection.modules.ApplicationModule;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -13,10 +14,6 @@ public class BaseApplication extends Application {
     public static final String FONT_PATH = "fonts/Roboto-Light.ttf";
 
     private AppComponent appComponent;
-
-    public BaseApplication(BaseApplication application) {
-
-    }
 
     @Override
     public void onCreate() {

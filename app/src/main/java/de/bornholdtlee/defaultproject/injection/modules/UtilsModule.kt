@@ -11,9 +11,7 @@ import de.bitb.astroskop.BaseApplication
 import de.bitb.astroskop.viewbuilder.DialogBuilder
 import de.bitb.astroskop.viewbuilder.ToastBuilder
 import de.bornholdtlee.defaultproject.BaseApplication
-import de.bornholdtlee.defaultproject.utils.NetworkUtils
-import de.bornholdtlee.defaultproject.utils.SharedPreferencesUtils
-import de.bornholdtlee.defaultproject.utils.UiUtils
+import de.bornholdtlee.defaultproject.utils.*
 import javax.inject.Singleton
 
 @Module
@@ -33,7 +31,7 @@ class UtilsModule {
 
     @Provides
     @Singleton
-    internal fun provideToastUtils(): ToastBuilder {
+    internal fun provideToastBuilder(): ToastBuilder {
         return ToastBuilder()
     }
 

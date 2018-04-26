@@ -1,6 +1,6 @@
 package de.bornholdtlee.defaultproject.utils;
 
-import de.bornholdtlee.snh.Constants;
+import de.bornholdtlee.defaultproject.Constants;
 
 public class EncryptUtils {
 

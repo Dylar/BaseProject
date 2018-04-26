@@ -5,21 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-
-import javax.inject.Inject
-
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import de.bornholdtlee.defaultproject.R
-import de.bornholdtlee.defaultproject.controller.DefaultController
-import de.bornholdtlee.defaultproject.model.DefaultModel
+import de.bitb.astroskop.injection.IInjection
 import de.bornholdtlee.defaultproject.base.BaseFragment
+import de.bornholdtlee.defaultproject.controller.DefaultController
+import de.bornholdtlee.defaultproject.injection.IBind
+import de.bornholdtlee.defaultproject.injection.components.AppComponent
+import de.bornholdtlee.defaultproject.model.DefaultModel
 import de.bornholdtlee.defaultproject.utils.Logger
 import de.bornholdtlee.defaultproject.utils.SharedPreferencesUtils
 import io.objectbox.Box
+import javax.inject.Inject
 
-class MainFragment : BaseFragment(), DefaultController.Callback {
+class MainFragment : BaseFragment(), DefaultController.Callback, IInjection, IBind {
 
     @Inject
     internal var defaultModelBox: Box<DefaultModel>? = null
@@ -33,25 +33,14 @@ class MainFragment : BaseFragment(), DefaultController.Callback {
     @BindView(R.id.fragment_main_welcome_text)
     internal var welcomeText: TextView? = null
 
+
+    override val layoutId: Int
+        get() = R.layout.fragment_main
+
     private var counter: Int = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        appComponent.inject(this)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-
-        val root = inflater.inflate(R.layout.fragment_main, null, false)
-
-        /*
-         * Init ButterKnife binding in every class
-         */
-        ButterKnife.bind(this, root)
-
-        return root
+    override fun inject(appComponent: AppComponent?) {
+        appComponent!!.inject(this)
     }
 
     override fun onResume() {

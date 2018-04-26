@@ -16,8 +16,6 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
-import de.bornholdtlee.snh.R;
-
 public class CommonUtils {
 
     public static final String URL_PLAY_GOOGLE_STORE_APPS_DETAILS_ID = "http://play.google.com/store/apps/details?id=";

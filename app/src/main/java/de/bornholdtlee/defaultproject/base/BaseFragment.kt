@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.*
 import butterknife.ButterKnife
-import de.bitb.astroskop.injection.IBind
+import de.bornholdtlee.defaultproject.injection.IBind
 import de.bitb.astroskop.injection.IInjection
 import de.bitb.astroskop.viewbuilder.DialogBuilder
 import de.bitb.astroskop.viewbuilder.ToastBuilder

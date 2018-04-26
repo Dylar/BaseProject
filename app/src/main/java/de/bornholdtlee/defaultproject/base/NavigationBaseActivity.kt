@@ -7,7 +7,7 @@ import android.view.View
 
 import butterknife.BindView
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
-import de.bitb.astroskop.injection.IBind
+import de.bornholdtlee.defaultproject.injection.IBind
 import de.bornholdtlee.defaultproject.R
 import de.bornholdtlee.defaultproject.base.BaseActivity
 
