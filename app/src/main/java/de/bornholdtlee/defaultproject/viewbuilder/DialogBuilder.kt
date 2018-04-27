@@ -1,11 +1,9 @@
-package de.bitb.astroskop.viewbuilder
+package de.bornholdtlee.defaultproject.viewbuilder
 
 import android.content.Context
 import android.content.DialogInterface
 import android.support.v7.app.AlertDialog
-
-import lombok.Getter
-import lombok.Setter
+import de.bornholdtlee.defaultproject.R
 
 class DialogBuilder {
 
@@ -23,8 +21,6 @@ class DialogBuilder {
         dialog.show()
     }
 
-    @Getter
-    @Setter
     class Builder internal constructor(val context: Context) {
         var titleId: Int = 0
             set(titleId) {

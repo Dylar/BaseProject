@@ -1,4 +1,4 @@
-package de.bitb.astroskop.injection
+package de.bornholdtlee.defaultproject.injection
 
 import de.bornholdtlee.defaultproject.injection.components.AppComponent
 

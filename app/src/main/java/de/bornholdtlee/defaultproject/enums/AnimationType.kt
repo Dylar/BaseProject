@@ -1,9 +1,7 @@
 package de.bornholdtlee.defaultproject.enums
 
 import de.bornholdtlee.defaultproject.R
-import lombok.Getter
 
-@Getter
 enum class AnimationType constructor(val slideIn: Int, val slideOut: Int, val popIn: Int, val popOut: Int) {
 
     NONE(-1, -1, -1, -1),

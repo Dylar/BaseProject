@@ -11,7 +11,7 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:windowBackground">#FFFFFF</item>
+        <item name="android:windowBackground">@color/white</item>
 
         <item name="displayOptions">showHome|useLogo</item>
         <item name="homeAsUpIndicator">@null</item>
@@ -34,8 +34,8 @@
 
     <style name="dialogStyle" parent="Theme.AppCompat.Dialog.Alert">
         <item name="android:background">@color/colorPrimary</item>
-        <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@color/colorAccent</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorPrimary">@color/gray1</item>
     </style>
 
     <style name="ProfileDetailZodiacLabel" parent="AppTheme">

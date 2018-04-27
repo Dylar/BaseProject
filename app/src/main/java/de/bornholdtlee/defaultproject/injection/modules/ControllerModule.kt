@@ -1,4 +1,4 @@
-package de.bitb.astroskop.injection.modules
+package de.bornholdtlee.defaultproject.injection.modules
 
 import dagger.Module
 import dagger.Provides

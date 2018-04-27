@@ -1,4 +1,4 @@
-package de.bitb.astroskop.injection.modules
+package de.bornholdtlee.defaultproject.injection.modules
 
 
 import dagger.Module
@@ -11,7 +11,7 @@ class ApplicationModule(private val application: BaseApplication) {
 
     @Provides
     @Singleton
-    internal fun provideApplication(): BaseApplication {
+     fun provideApplication(): BaseApplication {
         return application
     }
 

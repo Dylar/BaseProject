@@ -5,30 +5,27 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.*
 import butterknife.ButterKnife
-import de.bornholdtlee.defaultproject.injection.IBind
-import de.bitb.astroskop.injection.IInjection
-import de.bitb.astroskop.viewbuilder.DialogBuilder
-import de.bitb.astroskop.viewbuilder.ToastBuilder
-import de.bornholdtlee.defaultproject.R
 import de.bornholdtlee.defaultproject.enums.AnimationType
-
+import de.bornholdtlee.defaultproject.injection.IBind
+import de.bornholdtlee.defaultproject.injection.IInjection
+import de.bornholdtlee.defaultproject.viewbuilder.DialogBuilder
+import de.bornholdtlee.defaultproject.viewbuilder.ToastBuilder
 import javax.inject.Inject
 
 abstract class BaseFragment : Fragment() {
 
-    @Inject
-    protected var toastBuilder: ToastBuilder? = null
+    var toastBuilder: ToastBuilder? = null
+        @Inject set
 
-    @Inject
-    protected var dialogBuilder: DialogBuilder? = null
+    var dialogBuilder: DialogBuilder? = null
+        @Inject set
 
     protected var toolbar: IToolbarView? = null
 
-    protected open val animationType: AnimationType
+    open val animationType: AnimationType
         get() = AnimationType.NONE
 
-    protected open val layoutId: Int
-        get() = R.layout.fragment_base
+    abstract val layoutId: Int
 
     protected open val actionbarCallback: ActionbarHandler.ActionbarCallback
         get() = ActionbarHandler.ActionbarCallback()
@@ -36,7 +33,7 @@ abstract class BaseFragment : Fragment() {
     protected open val actionbarHandler: ActionbarHandler
         get() = ActionbarHandler(actionbarCallback)
 
-    protected open var allowBackPress: Boolean = false
+    open var allowBackPress: Boolean = false
         get() = false
 
     fun runOnUiThread(runnable: Runnable) {

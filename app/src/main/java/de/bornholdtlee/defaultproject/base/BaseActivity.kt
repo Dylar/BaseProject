@@ -7,16 +7,15 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.*
 import butterknife.ButterKnife
-import de.bornholdtlee.defaultproject.injection.IBind
-import de.bitb.astroskop.injection.IInjection
 import de.bitb.astroskop.ui.base.NavigationBaseActivity
 import de.bornholdtlee.defaultproject.BaseApplication
 import de.bornholdtlee.defaultproject.R
 import de.bornholdtlee.defaultproject.enums.AnimationType
+import de.bornholdtlee.defaultproject.injection.IBind
+import de.bornholdtlee.defaultproject.injection.IInjection
 import de.bornholdtlee.defaultproject.injection.components.AppComponent
 import de.bornholdtlee.defaultproject.ui.main.MainFragment
 import de.bornholdtlee.defaultproject.utils.UiUtils
-import lombok.Getter
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 
@@ -24,14 +23,12 @@ abstract class BaseActivity : AppCompatActivity() {
 
     companion object {
 
-        @Getter
         var isAppInForeground: Boolean = false
             private set
     }
 
-    @Inject
-    @Getter
-    private var uiUtils: UiUtils? = null
+    internal var uiUtils: UiUtils? = null
+        @Inject set
 
     open val animationType: AnimationType
         get() = AnimationType.NONE
@@ -51,10 +48,9 @@ abstract class BaseActivity : AppCompatActivity() {
     protected open val actionbarHandler: ActionbarHandler
         get() = ActionbarHandler(actionbarCallback)
 
-    val currentContent: BaseFragment?
+    internal var currentContent: BaseFragment? = null
         get() = supportFragmentManager.findFragmentById(contentContainerId) as BaseFragment
 
-    @Getter
     var baseView: View? = null
         private set
 
@@ -114,11 +110,11 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        return actionbarHandler!!.onPrepareOptionsMenu(menu) || super.onPrepareOptionsMenu(menu)
+        return actionbarHandler.onPrepareOptionsMenu(menu) || super.onPrepareOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return actionbarHandler!!.onOptionsItemSelected(item.itemId) || super.onOptionsItemSelected(item)
+        return actionbarHandler.onOptionsItemSelected(item.itemId) || super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {
@@ -176,7 +172,7 @@ abstract class BaseActivity : AppCompatActivity() {
     @JvmOverloads
     fun showFragment(fragment: BaseFragment, containerViewResId: Int = contentContainerId, shouldAddToBackStack: Boolean = false) {
         val fragmentName = fragment.javaClass.name
-        var fragmentByTag: BaseFragment? = supportFragmentManager.findFragmentByTag(fragmentName) as BaseFragment
+        var fragmentByTag: BaseFragment? = supportFragmentManager.findFragmentByTag(fragmentName) as BaseFragment?
 
         fragmentByTag = if (null == fragmentByTag) fragment else fragmentByTag
 
@@ -186,7 +182,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
 
-        uiUtils!!.setAnimation(fragmentByTag, fragmentTransaction)
+//        uiUtils!!.setAnimation(fragmentByTag, fragmentTransaction)
 
         fragmentTransaction.replace(containerViewResId, fragmentByTag, fragmentName)
 
@@ -199,7 +195,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun finish() {
         super.finish()
-        commonUtils!!.closeKeyboard(this, baseView!!.windowToken)
+        uiUtils!!.closeKeyboard(this, baseView!!)
         if (AnimationType.NONE != animationType) {
             uiUtils!!.setAnimation(this, false)
         }

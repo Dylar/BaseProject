@@ -1,7 +1,7 @@
 package de.bornholdtlee.defaultproject.base
 
 import android.view.Menu
-import de.bornholdtlee.defaultproject.Constants.Companion.NULL_INTEGER
+import de.bornholdtlee.defaultproject.NULL_INTEGER
 import de.bornholdtlee.defaultproject.R
 
 class ActionbarHandler(private val callback: ActionbarCallback) {

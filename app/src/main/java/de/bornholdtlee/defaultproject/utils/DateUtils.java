@@ -1,14 +1,5 @@
 package de.bornholdtlee.defaultproject.utils;
 
-import android.text.format.DateFormat;
-
-import org.joda.time.DateTime;
-
-import java.util.Date;
-
-import de.bornholdtlee.defaultproject.Constants;
-import de.bornholdtlee.snh.Constants;
-
 public class DateUtils {
 //
 //    public static final long ONE_MIN_IN_MILLI = 1000 * 60;

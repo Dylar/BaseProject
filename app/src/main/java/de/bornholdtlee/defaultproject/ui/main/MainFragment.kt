@@ -1,17 +1,13 @@
 package de.bornholdtlee.defaultproject.ui.main
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import butterknife.BindView
-import butterknife.ButterKnife
 import butterknife.OnClick
-import de.bitb.astroskop.injection.IInjection
+import de.bornholdtlee.defaultproject.R
 import de.bornholdtlee.defaultproject.base.BaseFragment
 import de.bornholdtlee.defaultproject.controller.DefaultController
 import de.bornholdtlee.defaultproject.injection.IBind
+import de.bornholdtlee.defaultproject.injection.IInjection
 import de.bornholdtlee.defaultproject.injection.components.AppComponent
 import de.bornholdtlee.defaultproject.model.DefaultModel
 import de.bornholdtlee.defaultproject.utils.Logger
@@ -21,18 +17,23 @@ import javax.inject.Inject
 
 class MainFragment : BaseFragment(), DefaultController.Callback, IInjection, IBind {
 
-    @Inject
-    internal var defaultModelBox: Box<DefaultModel>? = null
+    companion object {
+        fun createInstance(): MainFragment {
+            return MainFragment()
+        }
+    }
 
-    @Inject
-    internal var sharedPreferencesUtils: SharedPreferencesUtils? = null
+    var defaultModelBox: Box<DefaultModel>? = null
+        @Inject set
 
-    @Inject
-    internal var defaultController: DefaultController? = null
+    var sharedPreferencesUtils: SharedPreferencesUtils? = null
+        @Inject set
+
+    var defaultController: DefaultController? = null
+        @Inject set
 
     @BindView(R.id.fragment_main_welcome_text)
-    internal var welcomeText: TextView? = null
-
+    protected var welcomeText: TextView? = null
 
     override val layoutId: Int
         get() = R.layout.fragment_main

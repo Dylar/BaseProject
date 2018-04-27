@@ -1,26 +1,20 @@
-package de.bitb.astroskop.injection.modules
+package de.bornholdtlee.defaultproject.injection.modules
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
-
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import de.bornholdtlee.defaultproject.BuildConfig
+import de.bornholdtlee.defaultproject.api.RetrofitInterface
+import de.bornholdtlee.defaultproject.api.interceptor.AddHeaderInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
 class NetworkModule {
-
-    @Provides
-    @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        val client = OkHttpClient.Builder()
-                .addNetworkInterceptor(StethoInterceptor())
-                .addInterceptor(loggingInterceptor)
-        return client.build()
-    }
 
     companion object {
 
@@ -29,62 +23,49 @@ class NetworkModule {
         private val BASE_URL_CONSUMPTION = "http://www.energieportal-hamburg.de/distribution/energieportal/"
     }
 
-    //    @Provides
-    //    @ApplicationScope
-    //    public Api.Constructions provideRetrofitConstructions(OkHttpClient okHttpClient) {
-    //
-    //        GsonBuilder gsonBuilder = new GsonBuilder();
-    //        gsonBuilder.registerTypeAdapter(Construction.class, new ConstructionsConverter());
-    //        gsonBuilder.registerTypeAdapter(SearchNumberDTO.class, new SearchNumberConverter());
-    //        gsonBuilder.registerTypeAdapter(SearchStreetDTO.class, new SearchStreetConverter());
-    //        gsonBuilder.registerTypeAdapter(Report.class, new ReportConverter());
-    //
-    //        Retrofit.Builder retrofit = new Retrofit.Builder()
-    //                .baseUrl(BASE_URL)
-    //                .addConverterFactory(GsonConverterFactory.create(gsonBuilder.create()));
-    //
-    //        if (BuildConfig.SHOW_VERSION) {
-    //            retrofit.client(okHttpClient);
-    //        }
-    //
-    //        return retrofit.build().create(Api.Constructions.class);
-    //    }
-    //
-    //    @Provides
-    //    @ApplicationScope
-    //    public Api.Disturbance provideRetrofitDisturbance(OkHttpClient okHttpClient) {
-    //
-    //        GsonBuilder gsonBuilder = new GsonBuilder();
-    //        gsonBuilder.registerTypeAdapter(Disturbance.class, new DisturbanceConverter());
-    //
-    //        Retrofit.Builder retrofit = new Retrofit.Builder()
-    //                .baseUrl(BASE_URL_DISTURBANCE + (BuildConfig.SHOW_VERSION ? "api-test/" : "api/"))
-    //                .addConverterFactory(GsonConverterFactory.create(gsonBuilder.create()));
-    //
-    //        if (BuildConfig.SHOW_VERSION) {
-    //            retrofit.client(okHttpClient);
-    //        }
-    //
-    //        return retrofit.build().create(Api.Disturbance.class);
-    //    }
-    //
-    //    @Provides
-    //    @ApplicationScope
-    //    public Api.Consumptions provideRetrofit(OkHttpClient okHttpClient) {
-    //
-    //        GsonBuilder gsonBuilder = new GsonBuilder();
-    //        gsonBuilder.registerTypeAdapter(PowerGraph.class, new GraphConverter());
-    //        gsonBuilder.registerTypeAdapter(Zodiac.class, new DistrictPowerConverter());
-    //
-    //        Retrofit.Builder retrofit = new Retrofit.Builder()
-    //                .baseUrl(BASE_URL_CONSUMPTION)
-    //                .addConverterFactory(GsonConverterFactory.create(gsonBuilder.create()));
-    //
-    //        if (BuildConfig.SHOW_VERSION) {
-    //            retrofit.client(okHttpClient);
-    //        }
-    //
-    //        return retrofit.build().create(Api.Consumptions.class);
-    //    }
+    @Provides
+    @Singleton
+    fun provideGsonBuilder(): GsonBuilder {
+        val gsonBuilder = GsonBuilder()
+//        gsonBuilder.registerTypeAdapter(CheckMail::class.java, CheckMailConverter())
+        return gsonBuilder
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClientBuilder(): OkHttpClient.Builder {
+        val builder = OkHttpClient.Builder()
+
+        if (BuildConfig.DEBUG) {
+            val loggingInterceptor = HttpLoggingInterceptor()
+            loggingInterceptor.level = HttpLoggingInterceptor.Level.HEADERS
+            loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+
+            builder.addInterceptor(AddHeaderInterceptor())
+                    .addNetworkInterceptor(StethoInterceptor())
+                    .addNetworkInterceptor(loggingInterceptor)
+        }
+
+        return builder
+    }
+
+    @Provides
+    @Singleton
+    fun provideRetrofitBuilder(gsonBuilder: GsonBuilder): Retrofit.Builder {
+        return Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gsonBuilder.create()))
+    }
+
+    @Provides
+    @Singleton
+    fun provideRetrofitConstructions(retrofitBuilder: Retrofit.Builder, httpClientBuilder: OkHttpClient.Builder): RetrofitInterface {
+
+        if (BuildConfig.IS_DEV) {
+            retrofitBuilder.client(httpClientBuilder.build())
+        }
+
+        return retrofitBuilder.build().create(RetrofitInterface::class.java)
+    }
 
 }

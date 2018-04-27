@@ -1,4 +1,4 @@
-package de.bitb.astroskop.viewbuilder
+package de.bornholdtlee.defaultproject.viewbuilder
 
 
 import android.content.Context
@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import de.bornholdtlee.defaultproject.R
 
 import de.bornholdtlee.defaultproject.base.BaseActivity
 
