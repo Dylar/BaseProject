@@ -2,10 +2,10 @@ package de.bornholdtlee.defaultproject.injection.modules
 
 import dagger.Module
 import dagger.Provides
-import de.bornholdtlee.defaultproject.viewbuilder.ToastBuilder
-import de.bornholdtlee.defaultproject.BaseApplication
+import de.bornholdtlee.defaultproject.base.BaseApplication
 import de.bornholdtlee.defaultproject.utils.*
 import de.bornholdtlee.defaultproject.viewbuilder.DialogBuilder
+import de.bornholdtlee.defaultproject.viewbuilder.ToastBuilder
 import javax.inject.Singleton
 
 @Module
@@ -43,8 +43,14 @@ class UtilsModule {
 
     @Provides
     @Singleton
-    fun provideCommonUtils(): CommonUtils {
-        return CommonUtils()
+    fun provideAndroidUtils(): AndroidUtils {
+        return AndroidUtils()
+    }
+
+    @Provides
+    @Singleton
+    fun provideStringUtils(): StringUtils {
+        return StringUtils()
     }
 
     @Provides

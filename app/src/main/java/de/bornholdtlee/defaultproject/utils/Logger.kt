@@ -14,7 +14,7 @@ object Logger {
             val stackTraceElements = Thread.currentThread().stackTrace
             for (i in stackTraceElements.indices) {
                 if (stackTraceElements[i].className == Logger::class.java.canonicalName) {
-                    try {
+                    return try {
                         val split = stackTraceElements[i + 2].className.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                         var className = split[split.size - 1]
 
@@ -22,9 +22,9 @@ object Logger {
                             className = className.split("\\$".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]
                         }
 
-                        return "(" + className + ".java:" + stackTraceElements[i + 2].lineNumber + ")"
+                        "(" + className + ".java:" + stackTraceElements[i + 2].lineNumber + ")"
                     } catch (e: Exception) {
-                        return Logger::class.java.simpleName
+                        Logger::class.java.simpleName
                     }
 
                 }

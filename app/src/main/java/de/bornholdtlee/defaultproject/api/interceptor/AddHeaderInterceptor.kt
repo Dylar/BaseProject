@@ -14,9 +14,7 @@ class AddHeaderInterceptor : Interceptor {
 
     init {
         this.userAgent = BuildConfig.APPLICATION_ID + "/" + BuildConfig.VERSION_NAME + " (" + System.getProperty("http.agent") + ")"
-
-        //TODO "Temporary basic auth" until Oauth 2.0
-        this.authToken = Credentials.basic("tlc-app", "J2xX5dVbT6ReRNbmzJBs")
+        this.authToken = Credentials.basic( BuildConfig.AUTH_USER,  BuildConfig.AUTH_PW)
     }
 
     @Throws(IOException::class)

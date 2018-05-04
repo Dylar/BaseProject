@@ -1,12 +1,7 @@
 package de.bornholdtlee.defaultproject.controller
 
-import de.bornholdtlee.defaultproject.BaseApplication
+import de.bornholdtlee.defaultproject.base.BaseApplication
 import de.bornholdtlee.defaultproject.api.RetrofitInterface
-import de.bornholdtlee.defaultproject.api.RxConsumer
-import de.bornholdtlee.defaultproject.model.QuestionList
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import retrofit2.Response
 import javax.inject.Inject
 
 class DefaultController(baseApplication: BaseApplication) {

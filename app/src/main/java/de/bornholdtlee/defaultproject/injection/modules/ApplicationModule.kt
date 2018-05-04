@@ -3,7 +3,7 @@ package de.bornholdtlee.defaultproject.injection.modules
 
 import dagger.Module
 import dagger.Provides
-import de.bornholdtlee.defaultproject.BaseApplication
+import de.bornholdtlee.defaultproject.base.BaseApplication
 import javax.inject.Singleton
 
 @Module

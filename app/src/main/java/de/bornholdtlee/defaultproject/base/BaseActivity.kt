@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar
 import android.view.*
 import butterknife.ButterKnife
 import de.bitb.astroskop.ui.base.NavigationBaseActivity
-import de.bornholdtlee.defaultproject.BaseApplication
 import de.bornholdtlee.defaultproject.R
 import de.bornholdtlee.defaultproject.enums.AnimationType
 import de.bornholdtlee.defaultproject.injection.IBind
@@ -22,12 +21,11 @@ import javax.inject.Inject
 abstract class BaseActivity : AppCompatActivity() {
 
     companion object {
-
         var isAppInForeground: Boolean = false
             private set
     }
 
-    internal var uiUtils: UiUtils? = null
+    var uiUtils: UiUtils? = null
         @Inject set
 
     open val animationType: AnimationType
@@ -53,6 +51,9 @@ abstract class BaseActivity : AppCompatActivity() {
 
     var baseView: View? = null
         private set
+
+    open val allowBackPress: Boolean
+        get() = false
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
@@ -89,7 +90,6 @@ abstract class BaseActivity : AppCompatActivity() {
         }
 
     }
-
 
     private fun initToolbar(view: View) {
         val toolbar = view.findViewById<Toolbar>(R.id.activity_base_toolbar)
@@ -129,17 +129,13 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (currentContent?.allowBackPress == true && allowBackPressed()) {
+        if (currentContent?.allowBackPress == true && allowBackPress) {
             if (currentContent is MainFragment) {
                 finish()
             } else {
                 super.onBackPressed()
             }
         }
-    }
-
-    protected open fun allowBackPressed(): Boolean {
-        return true
     }
 
     fun setToolbarTitle(title: String) {
@@ -149,42 +145,27 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    fun showFragmentClearTop(fragment: BaseFragment, shouldAddToBackStack: Boolean) {
-        showFragmentClearTop(fragment, contentContainerId, shouldAddToBackStack)
-    }
-
     @JvmOverloads
-    fun showFragmentClearTop(fragment: BaseFragment, containerViewResId: Int = contentContainerId, shouldAddToBackStack: Boolean = false) {
-        val fragmentManager = supportFragmentManager
-        val fragmentName = fragment.javaClass.name
+    fun showFragment(fragment: BaseFragment, containerViewResId: Int = contentContainerId, shouldAddToBackStack: Boolean = false, clearTop: Boolean = false) {
+        val fragmentName: String = fragment.javaClass.name
 
-        val fragmentPopped = fragmentManager.popBackStackImmediate(fragmentName, 0)
-
-        if (!fragmentPopped) { //fragment not in back stack, create it.
-            showFragment(fragment, containerViewResId, shouldAddToBackStack)
+        if (clearTop) { //maybe not functional TODO
+            val fragmentPopped: Boolean = fragmentManager.popBackStackImmediate(fragmentName, 0)
+            if (fragmentPopped) {
+                return
+            }
         }
-    }
 
-    fun showFragment(fragment: BaseFragment, shouldAddToBackStack: Boolean) {
-        showFragment(fragment, contentContainerId, shouldAddToBackStack)
-    }
-
-    @JvmOverloads
-    fun showFragment(fragment: BaseFragment, containerViewResId: Int = contentContainerId, shouldAddToBackStack: Boolean = false) {
-        val fragmentName = fragment.javaClass.name
-        var fragmentByTag: BaseFragment? = supportFragmentManager.findFragmentByTag(fragmentName) as BaseFragment?
-
-        fragmentByTag = if (null == fragmentByTag) fragment else fragmentByTag
-
-        if (fragmentByTag.isAdded) {
-            return
+        var fragmentToAdd = fragment
+        if (!fragment.singleInstance) {
+            fragmentToAdd = supportFragmentManager.findFragmentByTag(fragmentName) as BaseFragment? ?: fragment
         }
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
 
-//        uiUtils!!.setAnimation(fragmentByTag, fragmentTransaction)
+        uiUtils!!.setAnimation(fragmentToAdd, fragmentTransaction)
 
-        fragmentTransaction.replace(containerViewResId, fragmentByTag, fragmentName)
+        fragmentTransaction.replace(containerViewResId, fragmentToAdd, fragmentName)
 
         if (shouldAddToBackStack) {
             fragmentTransaction.addToBackStack(fragmentName)
@@ -208,21 +189,3 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
 }
-
-//    fun showFragment(fragment: BaseFragment, containerViewResId: Int, shouldAddToBackStack: Boolean) {
-//        val fragmentTransaction = supportFragmentManager.beginTransaction()
-//        val fragmentName = fragment.javaClass.name
-//        val fragmentByTag = supportFragmentManager.findFragmentByTag(fragmentName) as BaseFragment
-//
-//        if (null == fragmentByTag) {
-//            fragmentTransaction.replace(containerViewResId, fragment, fragmentName)
-//        } else {
-//            fragmentTransaction.replace(containerViewResId, fragmentByTag, fragmentName)
-//        }
-//
-//        if (shouldAddToBackStack) {
-//            fragmentTransaction.addToBackStack(fragmentName)
-//        }
-//        fragmentTransaction.commit()
-//    }
-//}

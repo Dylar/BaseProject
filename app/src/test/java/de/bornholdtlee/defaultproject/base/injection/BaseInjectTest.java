@@ -3,7 +3,7 @@ package de.bornholdtlee.defaultproject.base.injection;
 
 import org.junit.Before;
 
-import de.bornholdtlee.defaultproject.BaseApplication;
+import de.bornholdtlee.defaultproject.base.BaseApplication;
 import de.bornholdtlee.defaultproject.base.BaseContextTest;
 import de.bornholdtlee.defaultproject.injection.modules.UtilsModule;
 import de.bornholdtlee.defaultproject.utils.SharedPreferencesUtils;

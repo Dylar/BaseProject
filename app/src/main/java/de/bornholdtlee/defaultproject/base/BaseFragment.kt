@@ -33,8 +33,12 @@ abstract class BaseFragment : Fragment() {
     protected open val actionbarHandler: ActionbarHandler
         get() = ActionbarHandler(actionbarCallback)
 
-    open var allowBackPress: Boolean = false
+    open val singleInstance: Boolean
+        get() = true
+
+    open val allowBackPress: Boolean
         get() = false
+
 
     fun runOnUiThread(runnable: Runnable) {
         activity?.runOnUiThread(runnable)

@@ -2,7 +2,7 @@ package de.bornholdtlee.defaultproject.injection.modules
 
 import dagger.Module
 import dagger.Provides
-import de.bornholdtlee.defaultproject.BaseApplication
+import de.bornholdtlee.defaultproject.base.BaseApplication
 import de.bornholdtlee.defaultproject.model.DefaultModel
 import de.bornholdtlee.defaultproject.model.MyObjectBox
 import io.objectbox.Box

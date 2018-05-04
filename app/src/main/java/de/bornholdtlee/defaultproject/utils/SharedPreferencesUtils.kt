@@ -9,11 +9,10 @@ import de.bornholdtlee.defaultproject.R
 
 class SharedPreferencesUtils(context: Context) {
 
-    private val sharedPreferencesReader: SharedPreferences
+    private val sharedPreferencesReader: SharedPreferences = context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE)
     private val sharedPreferencesWriter: SharedPreferences.Editor
 
     init {
-        sharedPreferencesReader = context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE)
         sharedPreferencesWriter = sharedPreferencesReader.edit()
     }
 

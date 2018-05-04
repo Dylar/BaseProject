@@ -1,6 +1,6 @@
 package de.bornholdtlee.defaultproject.base.injection;
 
-import de.bornholdtlee.defaultproject.BaseApplication;
+import de.bornholdtlee.defaultproject.base.BaseApplication;
 import de.bornholdtlee.defaultproject.injection.modules.ApplicationModule;
 
 public class TestApplication extends BaseApplication {

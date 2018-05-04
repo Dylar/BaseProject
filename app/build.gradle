@@ -17,6 +17,9 @@ android {
         versionCode System.getenv("CI_PIPELINE_ID") as Integer ?: 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField 'String', 'AUTH_USER', '"BLG"'
+        buildConfigField 'String', 'AUTH_PW', '"SuperStrongPW"'
     }
 
     signingConfigs {

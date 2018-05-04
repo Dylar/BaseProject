@@ -1,8 +1,10 @@
-package de.bornholdtlee.defaultproject
+package de.bornholdtlee.defaultproject.base
 
 import android.app.Application
 
 import com.facebook.stetho.Stetho
+import de.bornholdtlee.defaultproject.BuildConfig
+import de.bornholdtlee.defaultproject.R
 
 import de.bornholdtlee.defaultproject.injection.components.AppComponent
 import de.bornholdtlee.defaultproject.injection.components.DaggerAppComponent
@@ -11,22 +13,20 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 
 open class BaseApplication : Application() {
 
-    private var appComponent: AppComponent? = null
+    companion object {
+        const val FONT_PATH = "fonts/Roboto-Light.ttf"
+    }
+
+    open val appComponent: AppComponent
+        get() = DaggerAppComponent.builder()
+                .applicationModule(ApplicationModule(this))
+                .build()
 
     override fun onCreate() {
         super.onCreate()
 
         initStetho()
         initCalligraphy()
-    }
-
-    open fun getAppComponent(): AppComponent {
-        if (appComponent == null) {
-            appComponent = DaggerAppComponent.builder()
-                    .applicationModule(ApplicationModule(this))
-                    .build()
-        }
-        return appComponent
     }
 
     private fun initCalligraphy() {
@@ -43,8 +43,4 @@ open class BaseApplication : Application() {
         }
     }
 
-    companion object {
-
-        val FONT_PATH = "fonts/Roboto-Light.ttf"
-    }
 }
