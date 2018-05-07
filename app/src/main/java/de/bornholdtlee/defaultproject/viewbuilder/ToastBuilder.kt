@@ -26,10 +26,8 @@ class ToastBuilder {
         }
     }
 
-    fun showShortToast(context: Context?, stringId: Int) {
-        if (context != null) {
-            showShortToast(context, context.getString(stringId))
-        }
+    fun showShortToast(context: Context, stringId: Int) {
+        showShortToast(context, context.getString(stringId))
     }
 
     fun showShortToast(context: Context, message: String) {

@@ -14,10 +14,10 @@ import javax.inject.Inject
 
 abstract class BaseFragment : Fragment() {
 
-    var toastBuilder: ToastBuilder? = null
+    lateinit var toastBuilder: ToastBuilder
         @Inject set
 
-    var dialogBuilder: DialogBuilder? = null
+    lateinit var dialogBuilder: DialogBuilder
         @Inject set
 
     protected var toolbar: IToolbarView? = null
@@ -38,7 +38,6 @@ abstract class BaseFragment : Fragment() {
 
     open val allowBackPress: Boolean
         get() = false
-
 
     fun runOnUiThread(runnable: Runnable) {
         activity?.runOnUiThread(runnable)

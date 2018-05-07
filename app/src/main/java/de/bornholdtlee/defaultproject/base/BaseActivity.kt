@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.*
 import butterknife.ButterKnife
-import de.bitb.astroskop.ui.base.NavigationBaseActivity
 import de.bornholdtlee.defaultproject.R
 import de.bornholdtlee.defaultproject.enums.AnimationType
 import de.bornholdtlee.defaultproject.injection.IBind
@@ -25,7 +24,7 @@ abstract class BaseActivity : AppCompatActivity() {
             private set
     }
 
-    var uiUtils: UiUtils? = null
+    lateinit var uiUtils: UiUtils
         @Inject set
 
     open val animationType: AnimationType

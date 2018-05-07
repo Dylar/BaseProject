@@ -9,7 +9,7 @@ import de.bornholdtlee.defaultproject.viewbuilder.ToastBuilder
 import javax.inject.Singleton
 
 @Module
-class UtilsModule {
+open class UtilsModule {
 
     @Provides
     @Singleton
@@ -19,7 +19,7 @@ class UtilsModule {
 
     @Provides
     @Singleton
-    fun provideSharedPreferencesUtils(context: BaseApplication): SharedPreferencesUtils {
+    open fun provideSharedPreferencesUtils(context: BaseApplication): SharedPreferencesUtils {
         return SharedPreferencesUtils(context)
     }
 

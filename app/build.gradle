@@ -1,11 +1,11 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 
-apply plugin: 'kotlin-kapt'
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'de.felixschulze.gradle.hockeyapp'
 apply from: '../quality/quality.gradle'
 apply plugin: 'io.objectbox'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 27
@@ -170,8 +170,9 @@ dependencies {
     implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "com.google.dagger:dagger-android:$daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"
-    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+    kaptTest "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
     testAnnotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
     androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
