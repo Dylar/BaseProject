@@ -126,30 +126,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'
 
-    /////TESTING/////
-
-    androidTestImplementation 'com.android.support.test:testing-support-lib:0.1'
-    testImplementation 'org.testng:testng:6.9.6'
-    testImplementation 'junit:junit:4.12'
-    testImplementation "org.mockito:mockito-inline:2.8.9"
-    testImplementation "org.robolectric:robolectric:$robolectricVersion"
-    testImplementation "org.robolectric:shadows-multidex:$robolectricVersion"
-    testImplementation "org.powermock:powermock-module-junit4:$powermockVersion"
-    testImplementation "org.powermock:powermock-module-junit4-rule:$powermockVersion"
-    testImplementation "org.powermock:powermock-api-mockito2:$powermockVersion"
-    testImplementation "org.powermock:powermock-classloading-xstream:$powermockVersion"
-
-    testAnnotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
-    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
-
-    if (Os.isFamily(Os.FAMILY_MAC)) {
-        testImplementation "io.objectbox:objectbox-macos:$objectboxVersion"
-    } else if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-        testImplementation "io.objectbox:objectbox-windows:$objectboxVersion"
-    } else {
-        testImplementation "io.objectbox:objectbox-linux:$objectboxVersion"
-    }
-
     /////UI/////
 
     implementation "com.android.support:appcompat-v7:$supportVersion"
@@ -162,6 +138,8 @@ dependencies {
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
 
     /////SUPPORT/////
+
+    implementation 'joda-time:joda-time:2.9.9'
 
     implementation 'net.hockeyapp.android:HockeySDK:5.0.4'
     implementation "com.facebook.stetho:stetho:$stethoVersion"
@@ -195,6 +173,30 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
+    /////TESTING/////
+
+    androidTestImplementation 'com.android.support.test:testing-support-lib:0.1'
+    testImplementation 'org.testng:testng:6.9.6'
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.mockito:mockito-inline:2.8.9"
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    testImplementation "org.robolectric:shadows-multidex:$robolectricVersion"
+    testImplementation "org.powermock:powermock-module-junit4:$powermockVersion"
+    testImplementation "org.powermock:powermock-module-junit4-rule:$powermockVersion"
+    testImplementation "org.powermock:powermock-api-mockito2:$powermockVersion"
+    testImplementation "org.powermock:powermock-classloading-xstream:$powermockVersion"
+
+    testAnnotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    if (Os.isFamily(Os.FAMILY_MAC)) {
+        testImplementation "io.objectbox:objectbox-macos:$objectboxVersion"
+    } else if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        testImplementation "io.objectbox:objectbox-windows:$objectboxVersion"
+    } else {
+        testImplementation "io.objectbox:objectbox-linux:$objectboxVersion"
+    }
 
 }
 repositories {

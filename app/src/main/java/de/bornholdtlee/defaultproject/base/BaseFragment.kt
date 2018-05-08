@@ -14,30 +14,26 @@ import javax.inject.Inject
 
 abstract class BaseFragment : Fragment() {
 
+    @Inject
     lateinit var toastBuilder: ToastBuilder
-        @Inject set
 
+    @Inject
     lateinit var dialogBuilder: DialogBuilder
-        @Inject set
 
     protected var toolbar: IToolbarView? = null
 
-    open val animationType: AnimationType
-        get() = AnimationType.NONE
+    open val animationType: AnimationType = AnimationType.NONE
 
     abstract val layoutId: Int
 
-    protected open val actionbarCallback: ActionbarHandler.ActionbarCallback
-        get() = ActionbarHandler.ActionbarCallback()
+    protected open val actionbarCallback: ActionbarHandler.ActionbarCallback = ActionbarHandler.ActionbarCallback()
 
     protected open val actionbarHandler: ActionbarHandler
         get() = ActionbarHandler(actionbarCallback)
 
-    open val singleInstance: Boolean
-        get() = true
+    open val singleInstance: Boolean = true
 
-    open val allowBackPress: Boolean
-        get() = false
+    open val allowBackPress: Boolean = false
 
     fun runOnUiThread(runnable: Runnable) {
         activity?.runOnUiThread(runnable)
@@ -51,12 +47,12 @@ abstract class BaseFragment : Fragment() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         if (this is IInjection) {
             (this as IInjection).inject((activity as BaseActivity).appComponent)
         } else {
             (activity as BaseActivity).appComponent.inject(this)
         }
-        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

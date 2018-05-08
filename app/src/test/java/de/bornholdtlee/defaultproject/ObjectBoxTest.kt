@@ -3,20 +3,17 @@ package de.bornholdtlee.defaultproject
 
 import de.bornholdtlee.defaultproject.base.BaseTest
 import de.bornholdtlee.defaultproject.base.ITestInjection
-import org.junit.Test
-
-import javax.inject.Inject
-
 import de.bornholdtlee.defaultproject.base.TestComponent
 import de.bornholdtlee.defaultproject.model.DefaultModel
 import io.objectbox.Box
-
 import junit.framework.Assert.assertEquals
+import org.junit.Test
+import javax.inject.Inject
 
 class ObjectBoxTest : BaseTest(), ITestInjection {
 
+    @Inject
     lateinit var defaultModelBox: Box<DefaultModel>
-        @Inject set
 
     override fun inject(testComponent: TestComponent) {
         testComponent.inject(this)

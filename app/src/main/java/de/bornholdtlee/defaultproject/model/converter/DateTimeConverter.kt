@@ -11,6 +11,6 @@ class DateTimeConverter : PropertyConverter<DateTime, Long> {
     }
 
     override fun convertToDatabaseValue(entityProperty: DateTime): Long? {
-        return entityProperty.getMillis()
+        return entityProperty.millis
     }
 }

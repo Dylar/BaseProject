@@ -10,6 +10,7 @@ import de.bornholdtlee.defaultproject.api.interceptor.AddHeaderInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
@@ -17,10 +18,7 @@ import javax.inject.Singleton
 class NetworkModule {
 
     companion object {
-
-        private val BASE_URL = "https://www.stromnetz.hamburg/"
-        private val BASE_URL_DISTURBANCE = "https://stoerungskarte.stromnetz-hamburg.de/"
-        private val BASE_URL_CONSUMPTION = "http://www.energieportal-hamburg.de/distribution/energieportal/"
+        private val BASE_URL = "https://api.stackexchange.com"
     }
 
     @Provides
@@ -54,6 +52,7 @@ class NetworkModule {
     fun provideRetrofitBuilder(gsonBuilder: GsonBuilder): Retrofit.Builder {
         return Retrofit.Builder()
                 .baseUrl(BASE_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gsonBuilder.create()))
     }
 

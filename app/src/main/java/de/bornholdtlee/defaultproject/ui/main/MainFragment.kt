@@ -23,20 +23,19 @@ class MainFragment : BaseFragment(), DefaultController.Callback, IInjection, IBi
         }
     }
 
-    var defaultModelBox: Box<DefaultModel>? = null
-        @Inject set
+    @Inject
+    lateinit var defaultModelBox: Box<DefaultModel>
 
-    var sharedPreferencesUtils: SharedPreferencesUtils? = null
-        @Inject set
+    @Inject
+    lateinit var sharedPreferencesUtils: SharedPreferencesUtils
 
-    var defaultController: DefaultController? = null
-        @Inject set
+    @Inject
+    lateinit var defaultController: DefaultController
 
     @BindView(R.id.fragment_main_welcome_text)
-    protected var welcomeText: TextView? = null
+    lateinit var welcomeText: TextView
 
-    override val layoutId: Int
-        get() = R.layout.fragment_main
+    override val layoutId: Int = R.layout.fragment_main
 
     private var counter: Int = 0
 
@@ -53,22 +52,22 @@ class MainFragment : BaseFragment(), DefaultController.Callback, IInjection, IBi
     }
 
     private fun readPreferences() {
-        val test = sharedPreferencesUtils!!.getInt("TEST", -1)
+        val test = sharedPreferencesUtils.getInt("TEST", -1)
         Logger.error("preferences: " + test)
     }
 
     private fun checkDB() {
-        val all = defaultModelBox!!.all
+        val all = defaultModelBox.all
         Logger.error("There are " + all.size + " models in the database.")
     }
 
     private fun makeTestApiCall() {
-        defaultController!!.startDownload(this)
+        defaultController.startDownload(this)
     }
 
     @OnClick(R.id.fragment_main_counter_button)
     fun incrementCounter() {
-        welcomeText!!.text = (++counter).toString()
+        welcomeText.text = (++counter).toString()
     }
 
     override fun onSuccess() {
