@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.bornholdtlee.defaultproject">
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <application
         android:name=".base.BaseApplication"
