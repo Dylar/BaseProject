@@ -8,7 +8,6 @@ import android.view.View
 import butterknife.BindView
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
-import de.bitb.astroskop.ui.base.NavigationBaseFragment
 import de.bornholdtlee.defaultproject.injection.IBind
 import de.bornholdtlee.defaultproject.R
 
@@ -34,7 +33,7 @@ abstract class NavigationBaseActivity : BaseActivity(), IBind, AHBottomNavigatio
         get() {
             var allow = false
             val fragment = currentContent
-            if (fragment is NavigationBaseFragment && fragment.navigationPosition != 0) {
+            if (fragment is NavigationBaseTab && fragment.navigationPosition != 0) {
                 bottomNavigation!!.currentItem = 0
                 allow = false
             }
