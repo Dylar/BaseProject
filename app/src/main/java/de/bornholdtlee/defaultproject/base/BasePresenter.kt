@@ -9,7 +9,7 @@ abstract class BasePresenter<T : IBaseView>(application: BaseApplication, view: 
    private var viewRef: WeakReference<T> = WeakReference(view)
 
     val context: Context
-        get() = getView().getContext()
+        get() = getView().context
 
     init {
         if (this is IInjection) {

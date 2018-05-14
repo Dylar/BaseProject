@@ -6,6 +6,6 @@ import android.os.Bundle
 
 interface IBaseView {
 
-    fun getContext(): Context
+    var context: Context
 
 }

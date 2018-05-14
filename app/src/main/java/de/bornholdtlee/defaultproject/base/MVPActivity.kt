@@ -2,7 +2,7 @@ package de.bornholdtlee.defaultproject.base
 
 import android.os.Bundle
 
-abstract class MVPActivity<T : IBaseView, P : BasePresenter<T>> : BaseActivity() {
+abstract class MVPActivity<V : IBaseView, P : BasePresenter<V>> : BaseActivity() {
 
     lateinit var presenter: P
 
