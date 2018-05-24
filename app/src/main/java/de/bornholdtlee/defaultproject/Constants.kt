@@ -6,6 +6,9 @@ import java.nio.charset.Charset
 const val NULL_INTEGER = -1
 const val NO_RESULT_STRING = "-"
 
+const val TAB_HOME = 0
+const val TAB_MAP = 1
+
 @JvmField
 val ENCODING_UTF8 = Charset.forName("UTF-8")
 

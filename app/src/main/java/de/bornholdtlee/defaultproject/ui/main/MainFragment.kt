@@ -4,7 +4,9 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.OnClick
 import de.bornholdtlee.defaultproject.R
+import de.bornholdtlee.defaultproject.TAB_HOME
 import de.bornholdtlee.defaultproject.base.BaseFragment
+import de.bornholdtlee.defaultproject.base.NavigationBaseTab
 import de.bornholdtlee.defaultproject.controller.DefaultController
 import de.bornholdtlee.defaultproject.injection.IBind
 import de.bornholdtlee.defaultproject.injection.IInjection
@@ -15,7 +17,7 @@ import de.bornholdtlee.defaultproject.utils.SharedPreferencesUtils
 import io.objectbox.Box
 import javax.inject.Inject
 
-class MainFragment : BaseFragment(), DefaultController.Callback, IInjection, IBind {
+class MainFragment : BaseFragment(), DefaultController.Callback, IInjection, IBind, NavigationBaseTab {
 
     companion object {
         fun createInstance(): MainFragment {
@@ -35,12 +37,14 @@ class MainFragment : BaseFragment(), DefaultController.Callback, IInjection, IBi
     @BindView(R.id.fragment_main_welcome_text)
     lateinit var welcomeText: TextView
 
+    override val navigationPosition: Int = TAB_HOME
+
     override val layoutId: Int = R.layout.fragment_main
 
     private var counter: Int = 0
 
     override fun inject(appComponent: AppComponent?) {
-        appComponent!!.inject(this)
+        appComponent?.inject(this)
     }
 
     override fun onResume() {

@@ -4,12 +4,12 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.View
-
 import butterknife.BindView
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
-import de.bornholdtlee.defaultproject.injection.IBind
 import de.bornholdtlee.defaultproject.R
+import de.bornholdtlee.defaultproject.TAB_HOME
+import de.bornholdtlee.defaultproject.injection.IBind
 
 abstract class NavigationBaseActivity : BaseActivity(), IBind, AHBottomNavigation.OnTabSelectedListener {
 
@@ -18,23 +18,20 @@ abstract class NavigationBaseActivity : BaseActivity(), IBind, AHBottomNavigatio
     }
 
     @BindView(R.id.activity_navigation)
-    var bottomNavigation: AHBottomNavigation? = null
+    lateinit var bottomNavigation: AHBottomNavigation
 
     abstract val bottomMenuLayout: Int
 
-    protected open val accentColor: Int
-        get() = R.color.icon_blue
-    protected open val inactiveColor: Int
-        get() = R.color.icon_inactive_gray
-    protected open val backgroundColor: Int
-        get() = R.color.background_gray
+    protected open val accentColor: Int = R.color.icon_blue
+    protected open val inactiveColor: Int = R.color.icon_inactive_gray
+    protected open val backgroundColor: Int = R.color.background_gray
 
     override var allowBackPress: Boolean = true
         get() {
-            var allow = false
-            val fragment = currentContent
-            if (fragment is NavigationBaseTab && fragment.navigationPosition != 0) {
-                bottomNavigation!!.currentItem = 0
+            var allow = true
+            val fragment = getCurrentContent()
+            if (fragment is NavigationBaseTab && fragment.navigationPosition != TAB_HOME) {
+                setCurrentTab(TAB_HOME)
                 allow = false
             }
             return allow
@@ -50,24 +47,31 @@ abstract class NavigationBaseActivity : BaseActivity(), IBind, AHBottomNavigatio
     private fun setupNavigationBar() {
         setBottomNavigationVisible(true)
 
-        bottomNavigation!!.accentColor = ContextCompat.getColor(this, accentColor)
-        bottomNavigation!!.inactiveColor = ContextCompat.getColor(this, inactiveColor)
-        bottomNavigation!!.defaultBackgroundColor = ContextCompat.getColor(this, backgroundColor)
-        bottomNavigation!!.isForceTint = true
-        bottomNavigation!!.titleState = AHBottomNavigation.TitleState.ALWAYS_HIDE
+        bottomNavigation.accentColor = ContextCompat.getColor(this, accentColor)
+        bottomNavigation.inactiveColor = ContextCompat.getColor(this, inactiveColor)
+        bottomNavigation.defaultBackgroundColor = ContextCompat.getColor(this, backgroundColor)
+        bottomNavigation.titleState = AHBottomNavigation.TitleState.ALWAYS_HIDE
 
-        setCurrentTab(0)
-        bottomNavigation!!.setOnTabSelectedListener(this)
+        bottomNavigation.setOnTabSelectedListener { position, wasSelected ->
+            showLoadingIndicator(true)
+            val loader: Boolean = this@NavigationBaseActivity.onTabSelected(position, wasSelected)
+            showLoadingIndicator(loader)
+            loader
+        }
         val adapter = AHBottomNavigationAdapter(this, bottomMenuLayout)
         adapter.setupWithBottomNavigation(bottomNavigation)
+//        setCurrentTab(TAB_HOME)
     }
 
     fun setBottomNavigationVisible(visible: Boolean) {
-        bottomNavigation!!.visibility = if (visible) View.VISIBLE else View.GONE
+        bottomNavigation.visibility = if (visible) View.VISIBLE else View.GONE
     }
 
     fun setCurrentTab(currentTab: Int) {
-        bottomNavigation!!.currentItem = currentTab
+        bottomNavigation.currentItem = currentTab
+        for (i in 0..bottomNavigation.itemsCount) {
+            bottomNavigation.getItem(i)?.setColor(if (i == currentTab) accentColor else inactiveColor)
+        }
     }
 
     fun checkKeyBoardUp() {
@@ -75,7 +79,7 @@ abstract class NavigationBaseActivity : BaseActivity(), IBind, AHBottomNavigatio
             val r = Rect()
             baseView!!.getWindowVisibleDisplayFrame(r)
             val heightDiff = baseView!!.rootView.height - (r.bottom - r.top)
-            bottomNavigation!!.visibility = if (heightDiff > VIEW_HEIGHT_DIFFERENT) View.GONE else View.VISIBLE
+            bottomNavigation.visibility = if (heightDiff > VIEW_HEIGHT_DIFFERENT) View.GONE else View.VISIBLE
         }
     }
 

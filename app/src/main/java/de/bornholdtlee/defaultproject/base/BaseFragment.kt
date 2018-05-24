@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.*
 import butterknife.ButterKnife
+import de.bornholdtlee.defaultproject.R
 import de.bornholdtlee.defaultproject.enums.AnimationType
 import de.bornholdtlee.defaultproject.injection.IBind
 import de.bornholdtlee.defaultproject.injection.IInjection
@@ -20,7 +21,8 @@ abstract class BaseFragment : Fragment() {
     @Inject
     lateinit var dialogBuilder: DialogBuilder
 
-    protected var toolbar: IToolbarView? = null
+    var baseActivity: BaseActivity? = null
+        get() = activity as BaseActivity
 
     open val animationType: AnimationType = AnimationType.NONE
 
@@ -33,17 +35,12 @@ abstract class BaseFragment : Fragment() {
 
     open val singleInstance: Boolean = true
 
-    open val allowBackPress: Boolean = false
+    open val allowBackPress: Boolean = true
+
+    open val contentTitle: Int = R.string.app_name
 
     fun runOnUiThread(runnable: Runnable) {
         activity?.runOnUiThread(runnable)
-    }
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        if (context is IToolbarView) {
-            toolbar = context
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,6 +62,12 @@ abstract class BaseFragment : Fragment() {
 
         setHasOptionsMenu(true)
         return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        baseActivity?.showLoadingIndicator(false)
+        baseActivity?.setToolbarTitle(getString(contentTitle))
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?) {

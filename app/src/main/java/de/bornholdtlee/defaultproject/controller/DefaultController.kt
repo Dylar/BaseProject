@@ -1,21 +1,22 @@
 package de.bornholdtlee.defaultproject.controller
 
-import de.bornholdtlee.defaultproject.api.RetrofitInterface
 import de.bornholdtlee.defaultproject.api.ApiRxConsumer
+import de.bornholdtlee.defaultproject.api.RetrofitInterface
 import de.bornholdtlee.defaultproject.base.BaseApplication
+import de.bornholdtlee.defaultproject.injection.IInjection
+import de.bornholdtlee.defaultproject.injection.components.AppComponent
 import de.bornholdtlee.defaultproject.model.QuestionList
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import retrofit2.Response
 import javax.inject.Inject
 
-class DefaultController(baseApplication: BaseApplication) {
+class DefaultController(baseApplication: BaseApplication) : BaseController(baseApplication), IInjection {
 
     @Inject
     lateinit var retrofitInterface: RetrofitInterface
 
-    init {
-        baseApplication.appComponent.inject(this)
+    override fun inject(appComponent: AppComponent?) {
+        appComponent?.inject(this)
     }
 
     fun startDownload(callback: Callback) {

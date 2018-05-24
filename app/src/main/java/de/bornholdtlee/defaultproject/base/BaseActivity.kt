@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import butterknife.BindView
 import butterknife.ButterKnife
 import de.bornholdtlee.defaultproject.R
 import de.bornholdtlee.defaultproject.enums.AnimationType
-import de.bornholdtlee.defaultproject.injection.IBind
 import de.bornholdtlee.defaultproject.injection.IInjection
 import de.bornholdtlee.defaultproject.injection.components.AppComponent
 import de.bornholdtlee.defaultproject.ui.main.MainFragment
@@ -24,8 +26,11 @@ abstract class BaseActivity : AppCompatActivity() {
             private set
     }
 
+    @Inject
     lateinit var uiUtils: UiUtils
-        @Inject set
+
+    @BindView(R.id.activity_base_loading_indicator)
+    lateinit var loadingIndicator: View
 
     open val animationType: AnimationType
         get() = AnimationType.NONE
@@ -33,11 +38,9 @@ abstract class BaseActivity : AppCompatActivity() {
     val appComponent: AppComponent
         get() = (application as BaseApplication).appComponent
 
-    protected open val layoutId: Int
-        get() = R.layout.activity_container
+    protected open val layoutId: Int = R.layout.activity_container
 
-    protected open val contentContainerId: Int
-        get() = R.id.activity_container
+    protected open val contentContainerId: Int = R.id.activity_container
 
     protected open val actionbarCallback: ActionbarHandler.ActionbarCallback
         get() = ActionbarHandler.ActionbarCallback()
@@ -45,17 +48,18 @@ abstract class BaseActivity : AppCompatActivity() {
     protected open val actionbarHandler: ActionbarHandler
         get() = ActionbarHandler(actionbarCallback)
 
-    internal var currentContent: BaseFragment? = null
-        get() = supportFragmentManager.findFragmentById(contentContainerId) as BaseFragment
-
     var baseView: View? = null
         private set
 
-    open val allowBackPress: Boolean
-        get() = false
+    open val allowBackPress: Boolean = true
+    open val hasToolbar: Boolean = true
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
+    }
+
+    fun getCurrentContent(): BaseFragment? {
+        return supportFragmentManager.findFragmentById(contentContainerId) as BaseFragment?
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,15 +88,13 @@ abstract class BaseActivity : AppCompatActivity() {
             baseView!!.findViewById<View>(R.id.activity_navigation).visibility = View.GONE
         }
 
-        if (this is IBind) {
-            ButterKnife.bind(this)
-        }
+        ButterKnife.bind(this)
 
     }
 
     private fun initToolbar(view: View) {
         val toolbar = view.findViewById<Toolbar>(R.id.activity_base_toolbar)
-        if (this is IToolbarView) {
+        if (hasToolbar) {
             setSupportActionBar(toolbar)
             supportActionBar!!.setDisplayShowTitleEnabled(true)
             supportActionBar!!.setHomeButtonEnabled(true)
@@ -128,6 +130,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        val currentContent: BaseFragment? = getCurrentContent()
         if (currentContent?.allowBackPress == true && allowBackPress) {
             if (currentContent is MainFragment) {
                 finish()
@@ -135,6 +138,10 @@ abstract class BaseActivity : AppCompatActivity() {
                 super.onBackPressed()
             }
         }
+    }
+
+    fun showLoadingIndicator(activate: Boolean) {
+        loadingIndicator.visibility = if (activate) VISIBLE else GONE
     }
 
     fun setToolbarTitle(title: String) {
@@ -145,7 +152,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     @JvmOverloads
-    fun showFragment(fragment: BaseFragment, containerViewResId: Int = contentContainerId, shouldAddToBackStack: Boolean = false, clearTop: Boolean = false) {
+    fun showFragment(fragment: BaseFragment, containerViewResId: Int = contentContainerId, shouldAddToBackStack: Boolean = true, clearTop: Boolean = false) {
         val fragmentName: String = fragment.javaClass.name
 
         if (clearTop) { //maybe not functional TODO
@@ -156,13 +163,13 @@ abstract class BaseActivity : AppCompatActivity() {
         }
 
         var fragmentToAdd = fragment
-        if (!fragment.singleInstance) {
+        if (fragment.singleInstance) {
             fragmentToAdd = supportFragmentManager.findFragmentByTag(fragmentName) as BaseFragment? ?: fragment
         }
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
 
-        uiUtils!!.setAnimation(fragmentToAdd, fragmentTransaction)
+        uiUtils.setAnimation(fragmentToAdd, fragmentTransaction)
 
         fragmentTransaction.replace(containerViewResId, fragmentToAdd, fragmentName)
 
@@ -175,16 +182,15 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun finish() {
         super.finish()
-        uiUtils!!.closeKeyboard(this, baseView!!)
+        uiUtils.closeKeyboard(this, baseView!!)
         if (AnimationType.NONE != animationType) {
-            uiUtils!!.setAnimation(this, false)
+            uiUtils.setAnimation(this, false)
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         isAppInForeground = true
-        val frag = currentContent
-        frag!!.onActivityResult(requestCode, resultCode, data)
+        getCurrentContent()!!.onActivityResult(requestCode, resultCode, data)
     }
 
 }

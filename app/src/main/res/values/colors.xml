@@ -30,6 +30,7 @@
     <color name="element_earth">@color/green</color>
 
     <color name="background_gray">@color/gray1</color>
+    <color name="background_gray_opaque50">#99F3F3F3</color>
     <color name="background_gray_darker">@color/gray2</color>
     <color name="background_white">@color/white</color>
 
