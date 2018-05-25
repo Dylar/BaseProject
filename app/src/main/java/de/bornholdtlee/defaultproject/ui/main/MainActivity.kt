@@ -25,8 +25,8 @@ class MainActivity : NavigationBaseActivity() {
     override fun onTabSelected(position: Int, wasSelected: Boolean): Boolean {
         if (!wasSelected) {
             when (position) {
-                TAB_HOME -> showFragment(MainFragment.createInstance())
-                TAB_MAP -> showFragment(MapFragment.createInstance())
+                TAB_MAP -> showFragment(MainFragment.createInstance())
+                TAB_HOME -> showFragment(MapFragment.createInstance())
                 else ->
                     return false
             }

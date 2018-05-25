@@ -24,7 +24,7 @@ class DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideProfileBox(store: BoxStore): Box<DefaultModel> {
+    fun provideDefaultBox(store: BoxStore): Box<DefaultModel> {
         return store.boxFor(DefaultModel::class.java)
     }
 

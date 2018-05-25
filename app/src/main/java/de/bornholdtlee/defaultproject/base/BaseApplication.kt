@@ -9,6 +9,7 @@ import de.bornholdtlee.defaultproject.R
 import de.bornholdtlee.defaultproject.injection.components.AppComponent
 import de.bornholdtlee.defaultproject.injection.components.DaggerAppComponent
 import de.bornholdtlee.defaultproject.injection.modules.ApplicationModule
+import de.bornholdtlee.defaultproject.utils.Logger
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 
 open class BaseApplication : Application() {
@@ -41,6 +42,11 @@ open class BaseApplication : Application() {
         if (BuildConfig.DEBUG) {
             Stetho.initializeWithDefaults(this)
         }
+    }
+
+    override fun onTerminate() {
+        super.onTerminate()
+        Logger.error("YEA TERMINTATE")
     }
 
 }

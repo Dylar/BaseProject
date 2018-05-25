@@ -61,8 +61,8 @@ class MainFragment : BaseFragment(), DefaultController.Callback, IInjection, IBi
     }
 
     private fun checkDB() {
-        val all = defaultModelBox.all
-        Logger.error("There are " + all.size + " models in the database.")
+//        val all = defaultModelBox.all
+//        Logger.error("There are " + all.size + " models in the database.")
     }
 
     private fun makeTestApiCall() {

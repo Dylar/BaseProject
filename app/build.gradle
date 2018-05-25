@@ -170,6 +170,7 @@ dependencies {
 
     /////DATABASE/////
 
+    implementation "io.objectbox:objectbox-kotlin:$objectboxVersion"
     implementation "io.objectbox:objectbox-android:$objectboxVersion"
     annotationProcessor "io.objectbox:objectbox-processor:$objectboxVersion"
     implementation "io.objectbox:objectbox-macos:$objectboxVersion"
