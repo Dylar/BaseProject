@@ -71,17 +71,17 @@ android {
     productFlavors {
         dev {
             dimension = "app"
-            applicationId "dev.de.bornholdtlee.defaultproject"
+            applicationId "dev.de.bornholdtlee.baseproject"
             buildConfigField 'String', 'HOCKEY_APP_ID', '"6f8e2aaa4886465ebee561bacecdcbaf"'
             buildConfigField 'String', 'BASE_URL', '"https://api.stackexchange.com"'
             buildConfigField 'String', 'FILE_FOLDER_NAME', '"/BaseProjectDev/"'
             buildConfigField 'Boolean', 'IS_DEV', 'true'
-            manifestPlaceholders = [googleMapsApiKey: "AIzaSyAlkzO3gdNCX1WE0M7wn9MjoztXuOkDUuY"]
+            manifestPlaceholders = [googleMapsApiKey: "AIzaSyAhDyTlgHpkWmY-9wlJdtyRSilL6xgGgcc"]
         }
 
         prod {
             dimension = "app"
-            applicationId "de.bornholdtlee.defaultproject"
+            applicationId "de.bornholdtlee.baseproject"
             buildConfigField 'String', 'HOCKEY_APP_ID', '"6f8e2aaa4886465ebee561bacecdcbaf"'
             buildConfigField 'String', 'BASE_URL', '"https://api.stackexchange.com"'
             buildConfigField 'String', 'FILE_FOLDER_NAME', '"/BaseProject/"'
