@@ -11,6 +11,7 @@ import android.view.View.VISIBLE
 import butterknife.BindView
 import butterknife.ButterKnife
 import de.bornholdtlee.baseproject.R
+import de.bornholdtlee.baseproject.base.navigation.NavigationBaseActivity
 import de.bornholdtlee.baseproject.enums.AnimationType
 import de.bornholdtlee.baseproject.injection.IInjection
 import de.bornholdtlee.baseproject.injection.components.AppComponent

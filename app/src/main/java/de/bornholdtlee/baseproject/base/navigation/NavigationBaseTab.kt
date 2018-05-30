@@ -1,4 +1,4 @@
-package de.bornholdtlee.baseproject.base
+package de.bornholdtlee.baseproject.base.navigation
 
 interface NavigationBaseTab {
 

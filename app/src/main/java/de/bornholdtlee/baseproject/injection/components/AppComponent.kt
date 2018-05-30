@@ -6,6 +6,7 @@ import de.bornholdtlee.baseproject.base.BaseFragment
 import de.bornholdtlee.baseproject.controller.DefaultController
 import de.bornholdtlee.baseproject.injection.modules.*
 import de.bornholdtlee.baseproject.ui.main.MainFragment
+import de.bornholdtlee.baseproject.ui.map.MapFragment
 import javax.inject.Singleton
 
 @Singleton
@@ -15,6 +16,7 @@ interface AppComponent {
 
     fun inject(baseFragment: BaseFragment)
     fun inject(mainFragment: MainFragment)
+    fun inject(baseFragment: MapFragment)
 
     fun inject(defaultController: DefaultController)
 }

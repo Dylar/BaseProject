@@ -1,4 +1,4 @@
-package de.bornholdtlee.baseproject.base
+package de.bornholdtlee.baseproject.base.navigation
 
 import android.graphics.Rect
 import android.os.Bundle
@@ -9,6 +9,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
 import de.bornholdtlee.baseproject.injection.IBind
 import de.bornholdtlee.baseproject.R
+import de.bornholdtlee.baseproject.base.BaseActivity
 
 abstract class NavigationBaseActivity : BaseActivity(), IBind, AHBottomNavigation.OnTabSelectedListener {
 

@@ -1,7 +1,11 @@
-package de.bornholdtlee.baseproject.base
+package de.bornholdtlee.baseproject.base.mvp
 
 import android.os.Bundle
 import android.view.View
+import de.bornholdtlee.baseproject.base.BaseApplication
+import de.bornholdtlee.baseproject.base.BaseFragment
+import de.bornholdtlee.baseproject.base.BasePresenter
+import de.bornholdtlee.baseproject.base.IBaseView
 
 abstract class MVPFragment<T : IBaseView, P : BasePresenter<T>> : BaseFragment() {
 

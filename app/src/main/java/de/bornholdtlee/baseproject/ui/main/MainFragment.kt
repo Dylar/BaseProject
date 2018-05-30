@@ -6,7 +6,7 @@ import butterknife.OnClick
 import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.TAB_HOME
 import de.bornholdtlee.baseproject.base.BaseFragment
-import de.bornholdtlee.baseproject.base.NavigationBaseTab
+import de.bornholdtlee.baseproject.base.navigation.NavigationBaseTab
 import de.bornholdtlee.baseproject.controller.DefaultController
 import de.bornholdtlee.baseproject.injection.IBind
 import de.bornholdtlee.baseproject.injection.IInjection

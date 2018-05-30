@@ -1,6 +1,10 @@
-package de.bornholdtlee.baseproject.base
+package de.bornholdtlee.baseproject.base.mvp
 
 import android.os.Bundle
+import de.bornholdtlee.baseproject.base.BaseActivity
+import de.bornholdtlee.baseproject.base.BaseApplication
+import de.bornholdtlee.baseproject.base.BasePresenter
+import de.bornholdtlee.baseproject.base.IBaseView
 
 abstract class MVPActivity<V : IBaseView, P : BasePresenter<V>> : BaseActivity() {
 

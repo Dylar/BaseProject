@@ -4,7 +4,7 @@ import android.os.Bundle
 import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.TAB_HOME
 import de.bornholdtlee.baseproject.TAB_MAP
-import de.bornholdtlee.baseproject.base.NavigationBaseActivity
+import de.bornholdtlee.baseproject.base.navigation.NavigationBaseActivity
 import de.bornholdtlee.baseproject.ui.map.MapFragment
 import de.bornholdtlee.baseproject.utils.HockeyAppUtils
 
