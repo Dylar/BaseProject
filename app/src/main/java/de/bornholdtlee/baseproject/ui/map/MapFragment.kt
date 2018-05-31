@@ -9,6 +9,7 @@ import com.google.android.gms.maps.model.LatLng
 import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.TAB_MAP
 import de.bornholdtlee.baseproject.base.BaseApplication
+import de.bornholdtlee.baseproject.base.map.BaseClusterItem
 import de.bornholdtlee.baseproject.base.map.MapBaseFragment
 import de.bornholdtlee.baseproject.base.navigation.NavigationBaseTab
 import de.bornholdtlee.baseproject.injection.IBind
@@ -24,7 +25,7 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, IInject
     }
 
     @BindView(R.id.fragment_map_btn_container)
-    lateinit var btnContainer : View
+    lateinit var btnContainer: View
 
     override val mapViewId: Int = R.id.map_view
 
@@ -63,7 +64,7 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, IInject
     val hamburg = LatLng(53.565278, 10.001389)
     val berlin = LatLng(52.516667, 13.388889)
 
-    override fun initMap() {
+    override fun initMapItems() {
         addMarker(berlin, "Berlin", "Dreckig")
         addMarker(-34.0, 151.0, "Marker Title", "Marker Description")
         addMarker(hamburg, "Hamburg", "Die Perle")
@@ -72,9 +73,22 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, IInject
         addPolyline(-34.0, 151.0, -54.0, 181.0)
         addPolygone()
         activateModeNormal()
+
+        // Set some lat/lng coordinates to start with.
+        var lat = hamburg.latitude
+        var lng = hamburg.longitude
+
+        // Add ten cluster items in close proximity, for purposes of this example.
+        for (i in 0..9) {
+            val offset = i
+            lng = lng + offset
+            val offsetItem = BaseClusterItem(LatLng(lat, lng), "Marker: " + i)
+            clusterManager.addItem(offsetItem)
+        }
     }
 
     override fun onCameraIdle() {
+        super.onCameraIdle()
         btnContainer.visibility = VISIBLE
     }
 

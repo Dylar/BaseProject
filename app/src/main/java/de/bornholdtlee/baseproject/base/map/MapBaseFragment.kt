@@ -1,26 +1,27 @@
 package de.bornholdtlee.baseproject.base.map
 
 import android.Manifest
+import android.graphics.Color
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.LayoutInflater
 import com.google.android.gms.maps.*
+import com.google.android.gms.maps.GoogleMap.*
+import com.google.android.gms.maps.model.*
+import com.google.maps.android.clustering.ClusterManager
 import com.karumi.dexter.Dexter
-import com.karumi.dexter.listener.single.PermissionListener
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
-import android.graphics.Color
-import com.google.android.gms.maps.GoogleMap.*
-import com.google.android.gms.maps.model.*
-import com.google.maps.android.clustering.ClusterManager
+import com.karumi.dexter.listener.single.PermissionListener
 import de.bornholdtlee.baseproject.base.BasePresenter
 import de.bornholdtlee.baseproject.base.IBaseView
 import de.bornholdtlee.baseproject.base.mvp.MVPFragment
 import de.bornholdtlee.baseproject.injection.IInjection
 import de.bornholdtlee.baseproject.utils.Logger
+
 
 abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragment<T, P>(),
         OnCameraIdleListener, IInjection, OnCameraMoveListener, OnMarkerClickListener, OnCircleClickListener, OnInfoWindowClickListener, OnInfoWindowCloseListener {
@@ -29,8 +30,7 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
 
     lateinit var googleMap: GoogleMap
 
-    open val clusterManager: ClusterManager<BaseClusterItem>
-        get() = ClusterManager(context, googleMap)
+    lateinit var clusterManager: ClusterManager<BaseClusterItem>
 
     open val myLocationEnabled: Boolean = true
     open val isIndoorLevelPickerEnabled: Boolean = true
@@ -40,6 +40,23 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
     open val isZoomControlsEnabled: Boolean = true
 
     abstract val mapViewId: Int
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val rootView = super.onCreateView(inflater, container, savedInstanceState)
+
+        mapView = rootView!!.findViewById(mapViewId) as MapView
+        mapView.onCreate(savedInstanceState)
+
+        mapView.onResume() // needed to get the map to display immediately
+
+        try {
+            MapsInitializer.initialize(activity!!.applicationContext)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return rootView
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -68,44 +85,40 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
             override fun onMapReady(mMap: GoogleMap) {
                 googleMap = mMap
 
-                googleMap.isMyLocationEnabled = myLocationEnabled
-
-                val uiSettings = googleMap.uiSettings
-                uiSettings.isIndoorLevelPickerEnabled = isIndoorLevelPickerEnabled
-                uiSettings.isMyLocationButtonEnabled = isMyLocationButtonEnabled
-                uiSettings.isMapToolbarEnabled = isMapToolbarEnabled
-                uiSettings.isCompassEnabled = isCompassEnabled
-                uiSettings.isZoomControlsEnabled = isZoomControlsEnabled
-
-                googleMap.setOnCameraIdleListener(this@MapBaseFragment)
-                googleMap.setOnCameraMoveListener(this@MapBaseFragment)
-                googleMap.setOnMarkerClickListener(this@MapBaseFragment)
-                googleMap.setOnCircleClickListener(this@MapBaseFragment)
-                googleMap.setOnInfoWindowClickListener(this@MapBaseFragment)
-                googleMap.setOnInfoWindowCloseListener(this@MapBaseFragment)
-                initMap()
+                initClusterManager()
+                initMapUi()
+                initMapListener()
+                initMapItems()
             }
         })
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = super.onCreateView(inflater, container, savedInstanceState)
-
-        mapView = rootView!!.findViewById(mapViewId) as MapView
-        mapView.onCreate(savedInstanceState)
-
-        mapView.onResume() // needed to get the map to display immediately
-
-        try {
-            MapsInitializer.initialize(activity!!.applicationContext)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        return rootView
+    private fun initClusterManager() {
+        clusterManager = ClusterManager(context, googleMap)
+        clusterManager.setAnimation(true)
     }
 
-    abstract fun initMap()
+    @Throws(SecurityException::class)
+    private fun initMapUi() {
+        googleMap.isMyLocationEnabled = myLocationEnabled
+        val uiSettings = googleMap.uiSettings
+        uiSettings.isIndoorLevelPickerEnabled = isIndoorLevelPickerEnabled
+        uiSettings.isMyLocationButtonEnabled = isMyLocationButtonEnabled
+        uiSettings.isMapToolbarEnabled = isMapToolbarEnabled
+        uiSettings.isCompassEnabled = isCompassEnabled
+        uiSettings.isZoomControlsEnabled = isZoomControlsEnabled
+    }
+
+    private fun initMapListener() {
+        googleMap.setOnCameraIdleListener(this@MapBaseFragment)
+        googleMap.setOnCameraMoveListener(this@MapBaseFragment)
+        googleMap.setOnMarkerClickListener(this@MapBaseFragment)
+        googleMap.setOnCircleClickListener(this@MapBaseFragment)
+        googleMap.setOnInfoWindowClickListener(this@MapBaseFragment)
+        googleMap.setOnInfoWindowCloseListener(this@MapBaseFragment)
+    }
+
+    abstract fun initMapItems()
 
     override fun onResume() {
         super.onResume()
@@ -144,7 +157,7 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
     }
 
     override fun onCameraIdle() {
-        Logger.info("onCameraIdle not implemented")
+        clusterManager.onCameraIdle()
     }
 
     override fun onCameraMove() {
@@ -152,8 +165,8 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        Logger.info("onMarkerClick not implemented")
-        return false
+        return clusterManager.onMarkerClick(marker)
+//        return false
     }
 
     override fun onInfoWindowClose(marker: Marker) {

@@ -3,7 +3,7 @@ package de.bornholdtlee.baseproject.base.map
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.ClusterItem
 
-class BaseClusterItem(val location: LatLng, val markerTitle: String = "", val description: String = "") : ClusterItem {
+class BaseClusterItem(private val location: LatLng, private val markerTitle: String = "", private val description: String = "") : ClusterItem {
 
     override fun getSnippet(): String {
         return description

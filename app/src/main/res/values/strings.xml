@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DefaultProject</string>
+    <string name="app_name">BaseProject</string>
 
     <string name="language">English</string>
     <string name="version">Version-Nr: %1$s\nVersion-Name: %2$s</string>

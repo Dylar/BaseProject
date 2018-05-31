@@ -11,7 +11,7 @@ android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
     defaultConfig {
-        applicationId "de.bornholdtlee.defaultproject"
+        applicationId "de.bornholdtlee.baseproject"
         minSdkVersion 16
         targetSdkVersion 27
         versionCode System.getenv("CI_PIPELINE_ID") as Integer ?: 1
@@ -76,7 +76,7 @@ android {
             buildConfigField 'String', 'BASE_URL', '"https://api.stackexchange.com"'
             buildConfigField 'String', 'FILE_FOLDER_NAME', '"/BaseProjectDev/"'
             buildConfigField 'Boolean', 'IS_DEV', 'true'
-            manifestPlaceholders = [googleMapsApiKey: "AIzaSyAhDyTlgHpkWmY-9wlJdtyRSilL6xgGgcc"]
+            manifestPlaceholders = [googleMapsApiKey: "AIzaSyCx96zffyCOc2HLx65t_lKGUUQWRVYkM-I"]
         }
 
         prod {
@@ -213,6 +213,7 @@ dependencies {
     }
 
 }
+
 repositories {
     mavenCentral()
 }
