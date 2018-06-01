@@ -1,6 +1,7 @@
 package de.bornholdtlee.baseproject.base.map
 
 import android.Manifest
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +10,9 @@ import android.view.ViewGroup
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.GoogleMap.*
 import com.google.android.gms.maps.model.*
+import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
+import com.google.maps.android.clustering.view.ClusterRenderer
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -24,7 +27,8 @@ import de.bornholdtlee.baseproject.utils.Logger
 
 
 abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragment<T, P>(),
-        OnCameraIdleListener, IInjection, OnCameraMoveListener, OnMarkerClickListener, OnCircleClickListener, OnInfoWindowClickListener, OnInfoWindowCloseListener {
+        OnCameraIdleListener, IInjection, OnCameraMoveListener, OnMarkerClickListener, OnCircleClickListener, OnInfoWindowClickListener
+        , OnInfoWindowCloseListener, ClusterManager.OnClusterClickListener<BaseClusterItem>, ClusterManager.OnClusterItemClickListener<BaseClusterItem> {
 
     lateinit var mapView: MapView
 
@@ -96,6 +100,11 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
     private fun initClusterManager() {
         clusterManager = ClusterManager(context, googleMap)
         clusterManager.setAnimation(true)
+        clusterManager.renderer = createRenderer(context!!, googleMap, clusterManager)
+    }
+
+    open fun createRenderer(context: Context, googleMap: GoogleMap, clusterManager: ClusterManager<BaseClusterItem>): ClusterRenderer<BaseClusterItem>? {
+        return BaseClusterRenderer(context, googleMap, clusterManager)
     }
 
     @Throws(SecurityException::class)
@@ -116,6 +125,9 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
         googleMap.setOnCircleClickListener(this@MapBaseFragment)
         googleMap.setOnInfoWindowClickListener(this@MapBaseFragment)
         googleMap.setOnInfoWindowCloseListener(this@MapBaseFragment)
+
+        clusterManager.setOnClusterClickListener(this@MapBaseFragment)
+        clusterManager.setOnClusterItemClickListener(this@MapBaseFragment)
     }
 
     abstract fun initMapItems()
@@ -166,7 +178,6 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
 
     override fun onMarkerClick(marker: Marker): Boolean {
         return clusterManager.onMarkerClick(marker)
-//        return false
     }
 
     override fun onInfoWindowClose(marker: Marker) {
@@ -179,6 +190,14 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
 
     override fun onCircleClick(circle: Circle) {
         Logger.info("onCircleClick not implemented")
+    }
+
+    override fun onClusterItemClick(item: BaseClusterItem?): Boolean {
+        return false
+    }
+
+    override fun onClusterClick(cluster: Cluster<BaseClusterItem>?): Boolean {
+        return false
     }
 
     fun addPolygone(vararg locations: LatLng) {

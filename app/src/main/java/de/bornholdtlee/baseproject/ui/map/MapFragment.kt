@@ -63,28 +63,27 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, IInject
 
     val hamburg = LatLng(53.565278, 10.001389)
     val berlin = LatLng(52.516667, 13.388889)
+    val sangerhausen = LatLng(51.466667, 11.3)
+    val erfurt = LatLng(50.983333, 11.033333)
+    val kiel = LatLng(54.333333, 10.133333)
+    val koeln = LatLng(50.938056, 6.956944)
+    val wien = LatLng(48.208333, 16.373056)
 
     override fun initMapItems() {
-        addMarker(berlin, "Berlin", "Dreckig")
-        addMarker(-34.0, 151.0, "Marker Title", "Marker Description")
-        addMarker(hamburg, "Hamburg", "Die Perle")
+        addMarker(-34.0, 151.0, "SEATTLE", "Marker Description")
         zoomCamera(-34.0, 151.0, 12f)
         addCircle(LatLng(-44.0, 151.0))
         addPolyline(-34.0, 151.0, -54.0, 181.0)
         addPolygone()
         activateModeNormal()
 
-        // Set some lat/lng coordinates to start with.
-        var lat = hamburg.latitude
-        var lng = hamburg.longitude
-
-        // Add ten cluster items in close proximity, for purposes of this example.
-        for (i in 0..9) {
-            val offset = i
-            lng = lng + offset
-            val offsetItem = BaseClusterItem(LatLng(lat, lng), "Marker: " + i)
-            clusterManager.addItem(offsetItem)
-        }
+        clusterManager.addItem(BaseClusterItem(hamburg, "HAMBURG"))
+        clusterManager.addItem(BaseClusterItem(berlin, "BERLIN"))
+        clusterManager.addItem(BaseClusterItem(sangerhausen, "SANGERHAUSEN"))
+        clusterManager.addItem(BaseClusterItem(erfurt, "ERFURT"))
+        clusterManager.addItem(BaseClusterItem(kiel, "KIEL"))
+        clusterManager.addItem(BaseClusterItem(koeln, "KÖLN"))
+        clusterManager.addItem(BaseClusterItem(wien, "WIEN"))
     }
 
     override fun onCameraIdle() {
