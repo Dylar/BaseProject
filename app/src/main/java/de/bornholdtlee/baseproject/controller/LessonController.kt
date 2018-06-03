@@ -20,7 +20,7 @@ class LessonController(baseApplication: BaseApplication) : BaseController(baseAp
     }
 
     fun createLesson(name: String,
-                     description: String,
+                     description: String = "",
                      organizer: List<Organizer> = ArrayList(),
                      attendees: List<Attendee> = ArrayList()): Lesson {
         val lesson = Lesson()

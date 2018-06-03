@@ -6,18 +6,15 @@ import android.view.View.VISIBLE
 import butterknife.BindView
 import butterknife.OnClick
 import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.clustering.Cluster
 import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.TAB_MAP
 import de.bornholdtlee.baseproject.base.BaseApplication
 import de.bornholdtlee.baseproject.base.map.BaseClusterItem
 import de.bornholdtlee.baseproject.base.map.MapBaseFragment
-import de.bornholdtlee.baseproject.base.mvp.MVPActivity
 import de.bornholdtlee.baseproject.base.navigation.NavigationBaseTab
 import de.bornholdtlee.baseproject.injection.IBind
-import de.bornholdtlee.baseproject.injection.IInjection
-import de.bornholdtlee.baseproject.injection.components.AppComponent
 import de.bornholdtlee.baseproject.model.Lesson
-import javax.inject.Inject
 
 class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, NavigationBaseTab, IBind {
 
@@ -96,7 +93,18 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, Navigat
         btnContainer.visibility = GONE
     }
 
+    override fun onMapLongClick(location: LatLng?) {
+        presenter.onMapLongClicked(location)
+    }
+
+    override fun onClusterClick(cluster: Cluster<BaseClusterItem>?): Boolean {
+        zoomOnCluster(cluster!!)
+        return true
+    }
+
     override fun addLesson(lesson: Lesson) {
         clusterManager.addItem(LessonClusterItem(lesson))
+        renderNew()
     }
+
 }

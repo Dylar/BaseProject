@@ -22,13 +22,14 @@ import com.karumi.dexter.listener.single.PermissionListener
 import de.bornholdtlee.baseproject.base.BasePresenter
 import de.bornholdtlee.baseproject.base.IBaseView
 import de.bornholdtlee.baseproject.base.mvp.MVPFragment
-import de.bornholdtlee.baseproject.injection.IInjection
 import de.bornholdtlee.baseproject.utils.Logger
-
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.LatLngBounds
+import de.bornholdtlee.baseproject.R
 
 abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragment<T, P>(),
         OnCameraIdleListener, OnCameraMoveListener, OnMarkerClickListener, OnCircleClickListener, OnInfoWindowClickListener
-        , OnInfoWindowCloseListener, ClusterManager.OnClusterClickListener<BaseClusterItem>, ClusterManager.OnClusterItemClickListener<BaseClusterItem> {
+        , OnInfoWindowCloseListener, ClusterManager.OnClusterClickListener<BaseClusterItem>, ClusterManager.OnClusterItemClickListener<BaseClusterItem>, OnMapClickListener, OnMapLongClickListener {
 
     lateinit var mapView: MapView
 
@@ -125,6 +126,8 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
         googleMap.setOnCircleClickListener(this@MapBaseFragment)
         googleMap.setOnInfoWindowClickListener(this@MapBaseFragment)
         googleMap.setOnInfoWindowCloseListener(this@MapBaseFragment)
+        googleMap.setOnMapClickListener(this@MapBaseFragment)
+        googleMap.setOnMapLongClickListener(this@MapBaseFragment)
 
         clusterManager.setOnClusterClickListener(this@MapBaseFragment)
         clusterManager.setOnClusterItemClickListener(this@MapBaseFragment)
@@ -168,12 +171,45 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
         googleMap.mapType = MAP_TYPE_TERRAIN
     }
 
+    fun renderNew() {
+        clusterManager.cluster()
+    }
+
+    fun zoomCamera(lat: Double, lng: Double, zoom: Float) {
+        zoomCamera(LatLng(lat, lng), zoom)
+    }
+
+    fun zoomCamera(latLng: LatLng, zoom: Float) {
+        val cameraPosition = CameraPosition.Builder()
+                .target(latLng)
+                .zoom(zoom).build()
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+    }
+
+    fun zoomOnCluster(cluster: Cluster<BaseClusterItem>){
+        val builder = LatLngBounds.builder()
+        for (item in cluster.items) {
+            builder.include(item.position)
+        }
+        val bounds = builder.build()
+        val padding = context!!.resources.getDimension(R.dimen.eight_grid_unit).toInt()
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
+    }
+
     override fun onCameraIdle() {
         clusterManager.onCameraIdle()
     }
 
     override fun onCameraMove() {
         Logger.info("onCameraMove not implemented")
+    }
+
+    override fun onMapClick(location: LatLng?) {
+        Logger.info("onMapClick not implemented")
+    }
+
+    override fun onMapLongClick(location: LatLng?) {
+        Logger.info("onMapLongClick not implemented")
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
@@ -250,17 +286,6 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
         googleMap.addCircle(circleOptions)
     }
 
-    fun zoomCamera(lat: Double, lng: Double, zoom: Float) {
-        zoomCamera(LatLng(lat, lng), zoom)
-    }
-
-    fun zoomCamera(latLng: LatLng, zoom: Float) {
-        val cameraPosition = CameraPosition.Builder()
-                .target(latLng)
-                .zoom(zoom).build()
-        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-    }
-
     fun addMarker(lat: Double, lng: Double, title: String, desc: String) {
         val location = LatLng(lat, lng)
         addMarker(location, title, desc)
@@ -273,6 +298,5 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
                 .snippet(desc))
         marker.showInfoWindow()
     }
-
 
 }

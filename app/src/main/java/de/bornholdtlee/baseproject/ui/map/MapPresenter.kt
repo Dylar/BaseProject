@@ -31,8 +31,18 @@ class MapPresenter(application: BaseApplication, view: IMapView) : BasePresenter
         lesson.location = LatLng(hamburg.latitude.minus(0.02),hamburg.longitude.minus(0.02))
         getView().addLesson(lesson)
 
+        lesson = lessonController.createLesson("HAHAHAHHAHAHA","Bla")
+        lesson.location = LatLng(hamburg.latitude.minus(0.02),hamburg.longitude.minus(0.02))
+        getView().addLesson(lesson)
+
         lesson = lessonController.createLesson("FUßBALL","Dort")
         lesson.location = LatLng(berlin.latitude.minus(0.02),berlin.longitude.minus(0.02))
+        getView().addLesson(lesson)
+    }
+
+    fun onMapLongClicked(location: LatLng?) {
+        val lesson = lessonController.createLesson("MapEvent")
+        lesson.location = LatLng(location!!.latitude,location.longitude)
         getView().addLesson(lesson)
     }
 

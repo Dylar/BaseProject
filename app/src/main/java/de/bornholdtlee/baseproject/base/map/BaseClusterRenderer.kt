@@ -36,4 +36,8 @@ class BaseClusterRenderer(private val context: Context,
         markerOptions!!.icon(BitmapDescriptorFactory.fromBitmap(icon))
     }
 //    https://medium.com/@tonyshkurenko/work-with-clustermanager-bdf3d70fb0fd
+
+    override fun shouldRenderAsCluster(cluster: Cluster<BaseClusterItem>?): Boolean {
+        return cluster!!.items.size > 1
+    }
 }
