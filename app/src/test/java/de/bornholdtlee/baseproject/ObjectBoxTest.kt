@@ -4,7 +4,6 @@ package de.bornholdtlee.baseproject
 import de.bornholdtlee.baseproject.base.BaseTest
 import de.bornholdtlee.baseproject.base.ITestInjection
 import de.bornholdtlee.baseproject.base.TestComponent
-import de.bornholdtlee.baseproject.model.DefaultModel
 import io.objectbox.Box
 import junit.framework.Assert.assertEquals
 import org.junit.Test

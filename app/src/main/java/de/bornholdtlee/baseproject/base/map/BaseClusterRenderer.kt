@@ -2,6 +2,7 @@ package de.bornholdtlee.baseproject.base.map
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.support.v4.content.ContextCompat
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptor
@@ -23,9 +24,9 @@ class BaseClusterRenderer(private val context: Context,
 
     override fun onBeforeClusterItemRendered(item: BaseClusterItem?, markerOptions: MarkerOptions?) {
 
-        val markerDescriptor: BitmapDescriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)
-
-        markerOptions!!.icon(markerDescriptor).snippet(item!!.snippet)
+//        val markerDescriptor: BitmapDescriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)
+        val markerDescriptor: BitmapDescriptor = BitmapDescriptorFactory.fromResource(item!!.icon)
+        markerOptions!!.icon(markerDescriptor).snippet(item.snippet)
     }
 
     override fun onBeforeClusterRendered(cluster: Cluster<BaseClusterItem>?, markerOptions: MarkerOptions?) {

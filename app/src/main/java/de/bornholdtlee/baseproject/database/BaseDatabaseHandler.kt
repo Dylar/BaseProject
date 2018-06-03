@@ -3,7 +3,7 @@ package de.bornholdtlee.baseproject.database
 import de.bornholdtlee.baseproject.base.BaseApplication
 import de.bornholdtlee.baseproject.injection.IInjection
 
-abstract class BaseDBHandler(application: BaseApplication) {
+abstract class BaseDatabaseHandler(application: BaseApplication) {
 
     init {
         if (this is IInjection) {

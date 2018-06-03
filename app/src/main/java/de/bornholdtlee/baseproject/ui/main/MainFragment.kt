@@ -11,7 +11,6 @@ import de.bornholdtlee.baseproject.controller.DefaultController
 import de.bornholdtlee.baseproject.injection.IBind
 import de.bornholdtlee.baseproject.injection.IInjection
 import de.bornholdtlee.baseproject.injection.components.AppComponent
-import de.bornholdtlee.baseproject.model.DefaultModel
 import de.bornholdtlee.baseproject.utils.Logger
 import de.bornholdtlee.baseproject.utils.SharedPreferencesUtils
 import io.objectbox.Box
@@ -24,9 +23,6 @@ class MainFragment : BaseFragment(), DefaultController.Callback, IInjection, IBi
             return MainFragment()
         }
     }
-
-    @Inject
-    lateinit var defaultModelBox: Box<DefaultModel>
 
     @Inject
     lateinit var sharedPreferencesUtils: SharedPreferencesUtils
@@ -43,8 +39,8 @@ class MainFragment : BaseFragment(), DefaultController.Callback, IInjection, IBi
 
     private var counter: Int = 0
 
-    override fun inject(appComponent: AppComponent?) {
-        appComponent?.inject(this)
+    override fun inject(appComponent: AppComponent) {
+        appComponent.inject(this)
     }
 
     override fun onResume() {

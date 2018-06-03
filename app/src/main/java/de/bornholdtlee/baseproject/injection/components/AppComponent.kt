@@ -4,9 +4,12 @@ import dagger.Component
 import de.bornholdtlee.baseproject.base.BaseActivity
 import de.bornholdtlee.baseproject.base.BaseFragment
 import de.bornholdtlee.baseproject.controller.DefaultController
+import de.bornholdtlee.baseproject.controller.LessonController
+import de.bornholdtlee.baseproject.database.LessonDatabaseHandler
 import de.bornholdtlee.baseproject.injection.modules.*
 import de.bornholdtlee.baseproject.ui.main.MainFragment
 import de.bornholdtlee.baseproject.ui.map.MapFragment
+import de.bornholdtlee.baseproject.ui.map.MapPresenter
 import javax.inject.Singleton
 
 @Singleton
@@ -19,4 +22,6 @@ interface AppComponent {
     fun inject(baseFragment: MapFragment)
 
     fun inject(defaultController: DefaultController)
+    fun inject(lessonController: LessonController)
+    fun inject(mapPresenter: MapPresenter)
 }

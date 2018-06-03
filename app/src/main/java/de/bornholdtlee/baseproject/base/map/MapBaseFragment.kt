@@ -27,7 +27,7 @@ import de.bornholdtlee.baseproject.utils.Logger
 
 
 abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragment<T, P>(),
-        OnCameraIdleListener, IInjection, OnCameraMoveListener, OnMarkerClickListener, OnCircleClickListener, OnInfoWindowClickListener
+        OnCameraIdleListener, OnCameraMoveListener, OnMarkerClickListener, OnCircleClickListener, OnInfoWindowClickListener
         , OnInfoWindowCloseListener, ClusterManager.OnClusterClickListener<BaseClusterItem>, ClusterManager.OnClusterItemClickListener<BaseClusterItem> {
 
     lateinit var mapView: MapView

@@ -11,12 +11,15 @@ import de.bornholdtlee.baseproject.TAB_MAP
 import de.bornholdtlee.baseproject.base.BaseApplication
 import de.bornholdtlee.baseproject.base.map.BaseClusterItem
 import de.bornholdtlee.baseproject.base.map.MapBaseFragment
+import de.bornholdtlee.baseproject.base.mvp.MVPActivity
 import de.bornholdtlee.baseproject.base.navigation.NavigationBaseTab
 import de.bornholdtlee.baseproject.injection.IBind
 import de.bornholdtlee.baseproject.injection.IInjection
 import de.bornholdtlee.baseproject.injection.components.AppComponent
+import de.bornholdtlee.baseproject.model.Lesson
+import javax.inject.Inject
 
-class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, IInjection, NavigationBaseTab, IBind {
+class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, NavigationBaseTab, IBind {
 
     companion object {
         fun createInstance(): MapFragment {
@@ -32,10 +35,6 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, IInject
     override val layoutId: Int = R.layout.fragment_map
 
     override val navigationPosition: Int = TAB_MAP
-
-    override fun inject(appComponent: AppComponent?) {
-        appComponent?.inject(this)
-    }
 
     override fun createPresenter(application: BaseApplication): MapPresenter {
         return MapPresenter(application, this)
@@ -70,6 +69,7 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, IInject
     val wien = LatLng(48.208333, 16.373056)
 
     override fun initMapItems() {
+        presenter.initMap()
         addMarker(-34.0, 151.0, "SEATTLE", "Marker Description")
         zoomCamera(-34.0, 151.0, 12f)
         addCircle(LatLng(-44.0, 151.0))
@@ -84,6 +84,7 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, IInject
         clusterManager.addItem(BaseClusterItem(kiel, "KIEL"))
         clusterManager.addItem(BaseClusterItem(koeln, "KÖLN"))
         clusterManager.addItem(BaseClusterItem(wien, "WIEN"))
+
     }
 
     override fun onCameraIdle() {
@@ -93,5 +94,9 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, IInject
 
     override fun onCameraMove() {
         btnContainer.visibility = GONE
+    }
+
+    override fun addLesson(lesson: Lesson) {
+        clusterManager.addItem(LessonClusterItem(lesson))
     }
 }
