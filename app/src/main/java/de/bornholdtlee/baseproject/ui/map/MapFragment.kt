@@ -20,6 +20,7 @@ import de.bornholdtlee.baseproject.base.map.MapBaseFragment
 import de.bornholdtlee.baseproject.base.navigation.NavigationBaseTab
 import de.bornholdtlee.baseproject.injection.IBind
 import de.bornholdtlee.baseproject.model.Lesson
+import de.bornholdtlee.baseproject.utils.Logger
 
 class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, NavigationBaseTab, IBind {
 
@@ -120,7 +121,11 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, Navigat
     }
 
     override fun onClusterClick(cluster: Cluster<BaseClusterItem>?): Boolean {
-        zoomOnCluster(cluster!!)
+        if (googleMap.cameraPosition.zoom >= maxZoom) {
+            toastBuilder.showLongToast(context!!, "HAHAHA")
+        } else {
+            zoomOnCluster(cluster!!)
+        }
         return true
     }
 

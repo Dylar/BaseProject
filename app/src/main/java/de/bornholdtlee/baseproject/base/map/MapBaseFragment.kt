@@ -7,8 +7,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.gms.maps.*
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.*
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
@@ -45,6 +48,8 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
     open val isMapToolbarEnabled: Boolean = true
     open val isCompassEnabled: Boolean = true
     open val isZoomControlsEnabled: Boolean = true
+
+    open val maxZoom: Float = 20.0f
 
     abstract val mapViewId: Int
 
@@ -112,6 +117,7 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
 
     @Throws(SecurityException::class)
     private fun initMapUi() {
+        googleMap.setMaxZoomPreference(maxZoom)
         googleMap.isMyLocationEnabled = myLocationEnabled
         val uiSettings = googleMap.uiSettings
         uiSettings.isIndoorLevelPickerEnabled = isIndoorLevelPickerEnabled
