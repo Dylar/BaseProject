@@ -2,11 +2,11 @@ package de.bornholdtlee.baseproject.base.map
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.support.v4.content.ContextCompat
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
@@ -21,6 +21,10 @@ class BaseClusterRenderer(private val context: Context,
     : DefaultClusterRenderer<BaseClusterItem>(context, map, clusterManager) {
 
     var clusterIconGenerator: IconGenerator = IconGenerator(context)
+
+    override fun shouldRenderAsCluster(cluster: Cluster<BaseClusterItem>?): Boolean {
+        return cluster!!.items.size > 1
+    }
 
     override fun onBeforeClusterItemRendered(item: BaseClusterItem?, markerOptions: MarkerOptions?) {
 
@@ -37,7 +41,4 @@ class BaseClusterRenderer(private val context: Context,
     }
 //    https://medium.com/@tonyshkurenko/work-with-clustermanager-bdf3d70fb0fd
 
-    override fun shouldRenderAsCluster(cluster: Cluster<BaseClusterItem>?): Boolean {
-        return cluster!!.items.size > 1
-    }
 }

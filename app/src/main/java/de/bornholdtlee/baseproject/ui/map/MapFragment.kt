@@ -1,8 +1,11 @@
 package de.bornholdtlee.baseproject.ui.map
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.ImageView
+import android.widget.TextView
 import butterknife.BindView
 import butterknife.OnClick
 import com.google.android.gms.maps.model.LatLng
@@ -11,6 +14,8 @@ import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.TAB_MAP
 import de.bornholdtlee.baseproject.base.BaseApplication
 import de.bornholdtlee.baseproject.base.map.BaseClusterItem
+import de.bornholdtlee.baseproject.base.map.BaseClusterRenderer
+import de.bornholdtlee.baseproject.base.map.BaseInfoViewAdapter
 import de.bornholdtlee.baseproject.base.map.MapBaseFragment
 import de.bornholdtlee.baseproject.base.navigation.NavigationBaseTab
 import de.bornholdtlee.baseproject.injection.IBind
@@ -32,6 +37,23 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, Navigat
     override val layoutId: Int = R.layout.fragment_map
 
     override val navigationPosition: Int = TAB_MAP
+
+    override val renderer: BaseClusterRenderer by lazy {
+        BaseClusterRenderer(context!!, googleMap, clusterManager)
+    }
+
+    override val infoViewAdapter: BaseInfoViewAdapter? by lazy {
+        object : BaseInfoViewAdapter(renderer, LayoutInflater.from(context)) {
+            override val layoutId: Int = R.layout.info_window_layout
+
+            override fun initViews(windowView: View, clusterItem: BaseClusterItem) {
+                val title = windowView.findViewById(R.id.title) as TextView
+                title.text = clusterItem.title
+                val image = windowView.findViewById(R.id.image) as ImageView
+                image.setImageResource(clusterItem.icon)
+            }
+        }
+    }
 
     override fun createPresenter(application: BaseApplication): MapPresenter {
         return MapPresenter(application, this)
@@ -74,13 +96,13 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, Navigat
         addPolygone()
         activateModeNormal()
 
-        clusterManager.addItem(BaseClusterItem(hamburg, "HAMBURG"))
-        clusterManager.addItem(BaseClusterItem(berlin, "BERLIN"))
-        clusterManager.addItem(BaseClusterItem(sangerhausen, "SANGERHAUSEN"))
-        clusterManager.addItem(BaseClusterItem(erfurt, "ERFURT"))
-        clusterManager.addItem(BaseClusterItem(kiel, "KIEL"))
-        clusterManager.addItem(BaseClusterItem(koeln, "KÖLN"))
-        clusterManager.addItem(BaseClusterItem(wien, "WIEN"))
+        clusterManager.addItem(BaseClusterItem(hamburg, "HAMBURG", "Hamburg"))
+        clusterManager.addItem(BaseClusterItem(berlin, "BERLIN", "Berlin"))
+        clusterManager.addItem(BaseClusterItem(sangerhausen, "SANGERHAUSEN", "Sangerhausen"))
+        clusterManager.addItem(BaseClusterItem(erfurt, "ERFURT", "Erfurt"))
+        clusterManager.addItem(BaseClusterItem(kiel, "KIEL", "Kiel"))
+        clusterManager.addItem(BaseClusterItem(koeln, "KÖLN", "Köln"))
+        clusterManager.addItem(BaseClusterItem(wien, "WIEN", "Wien"))
 
     }
 

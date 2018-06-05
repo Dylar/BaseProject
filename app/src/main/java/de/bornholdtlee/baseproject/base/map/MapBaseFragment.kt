@@ -19,13 +19,11 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
+import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.base.BasePresenter
 import de.bornholdtlee.baseproject.base.IBaseView
 import de.bornholdtlee.baseproject.base.mvp.MVPFragment
 import de.bornholdtlee.baseproject.utils.Logger
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.LatLngBounds
-import de.bornholdtlee.baseproject.R
 
 abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragment<T, P>(),
         OnCameraIdleListener, OnCameraMoveListener, OnMarkerClickListener, OnCircleClickListener, OnInfoWindowClickListener
@@ -36,6 +34,10 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
     lateinit var googleMap: GoogleMap
 
     lateinit var clusterManager: ClusterManager<BaseClusterItem>
+
+    abstract val renderer: BaseClusterRenderer
+
+    open val infoViewAdapter: BaseInfoViewAdapter? = null
 
     open val myLocationEnabled: Boolean = true
     open val isIndoorLevelPickerEnabled: Boolean = true
@@ -84,24 +86,24 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
     }
 
     private fun syncMap() {
-        mapView.getMapAsync(object : OnMapReadyCallback {
+        mapView.getMapAsync { mMap ->
+            googleMap = mMap
 
-            @Throws(SecurityException::class)
-            override fun onMapReady(mMap: GoogleMap) {
-                googleMap = mMap
-
-                initClusterManager()
-                initMapUi()
-                initMapListener()
-                initMapItems()
-            }
-        })
+            initClusterManager()
+            initMapUi()
+            initMapListener()
+            initMapItems()
+        }
     }
 
     private fun initClusterManager() {
         clusterManager = ClusterManager(context, googleMap)
         clusterManager.setAnimation(true)
-        clusterManager.renderer = createRenderer(context!!, googleMap, clusterManager)
+        clusterManager.renderer = renderer
+        if (infoViewAdapter != null) {
+            clusterManager.markerCollection.setOnInfoWindowAdapter(infoViewAdapter)
+            googleMap.setInfoWindowAdapter(clusterManager.markerManager)
+        }
     }
 
     open fun createRenderer(context: Context, googleMap: GoogleMap, clusterManager: ClusterManager<BaseClusterItem>): ClusterRenderer<BaseClusterItem>? {
@@ -186,7 +188,7 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
     }
 
-    fun zoomOnCluster(cluster: Cluster<BaseClusterItem>){
+    fun zoomOnCluster(cluster: Cluster<BaseClusterItem>) {
         val builder = LatLngBounds.builder()
         for (item in cluster.items) {
             builder.include(item.position)

@@ -76,7 +76,8 @@ android {
             buildConfigField 'String', 'BASE_URL', '"https://api.stackexchange.com"'
             buildConfigField 'String', 'FILE_FOLDER_NAME', '"/BaseProjectDev/"'
             buildConfigField 'Boolean', 'IS_DEV', 'true'
-            manifestPlaceholders = [googleMapsApiKey: "AIzaSyCHnVq2rs9R3vrt5zKv_QCtA8FCw1YHIT0"]
+//            manifestPlaceholders = [googleMapsApiKey: "AIzaSyCHnVq2rs9R3vrt5zKv_QCtA8FCw1YHIT0"]
+            manifestPlaceholders = [googleMapsApiKey: "AIzaSyAKBcv7gVTbjmOxciqmmw4rTU9np9z-9eM"]
         }
 
         prod {
