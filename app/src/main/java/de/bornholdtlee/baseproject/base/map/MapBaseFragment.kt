@@ -49,7 +49,8 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
     open val isCompassEnabled: Boolean = true
     open val isZoomControlsEnabled: Boolean = true
 
-    open val maxZoom: Float = 20.0f
+    open val maxZoom = 20.0f
+    private val openClusterOnZoom by lazy { maxZoom - 2 }
 
     abstract val mapViewId: Int
 
@@ -241,7 +242,21 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
     }
 
     override fun onClusterClick(cluster: Cluster<BaseClusterItem>?): Boolean {
-        return false
+        return if (googleMap.cameraPosition.zoom >= openClusterOnZoom) {
+            openCluster(cluster!!)
+            true
+        } else {
+            zoomOnCluster(cluster!!)
+            true
+        }
+    }
+
+    private fun openCluster(cluster: Cluster<BaseClusterItem>) {
+        baseActivity!!.showFragment(createMapClusterFragment(cluster))
+    }
+
+    open fun createMapClusterFragment(cluster: Cluster<BaseClusterItem>): MapBaseClusterFragment {
+        return MapBaseClusterFragment.createInstance(cluster.items)
     }
 
     fun addPolygone(vararg locations: LatLng) {

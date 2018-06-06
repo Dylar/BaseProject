@@ -11,9 +11,9 @@ import org.joda.time.DateTime
 import javax.inject.Inject
 
 class LessonController(baseApplication: BaseApplication) : BaseController(baseApplication), IInjection {
-//
-//    @Inject
-//    lateinit var lessonDBHandler: LessonDatabaseHandler
+
+    @Inject
+    lateinit var lessonDBHandler: LessonDatabaseHandler
 
     override fun inject(appComponent: AppComponent) {
         appComponent.inject(this)
@@ -28,7 +28,7 @@ class LessonController(baseApplication: BaseApplication) : BaseController(baseAp
         lesson.updatedAt = DateTime.now()
         lesson.name = name
         lesson.description = description
-//        lessonDBHandler.upsert(lesson)
+        lessonDBHandler.upsert(lesson)
 //        lesson.organizer.addAll(organizer)
 //        lesson.attendees.addAll(attendees)
 //        lessonDBHandler.upsert(lesson)

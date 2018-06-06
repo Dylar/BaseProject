@@ -9,13 +9,12 @@ import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 import io.objectbox.relation.ToMany
 import org.joda.time.DateTime
-import kotlin.properties.Delegates
 
 @Entity
 class Lesson {
 
     @Id
-    public var id: Long = NULL_INTEGER.toLong()
+    var id: Long = NULL_INTEGER.toLong()
 
     @Convert(converter = LatLngConverter::class, dbType = String::class)
     lateinit var location: LatLng

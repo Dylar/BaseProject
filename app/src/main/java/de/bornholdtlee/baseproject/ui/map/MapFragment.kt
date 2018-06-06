@@ -9,7 +9,6 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.OnClick
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.clustering.Cluster
 import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.TAB_MAP
 import de.bornholdtlee.baseproject.base.BaseApplication
@@ -18,11 +17,9 @@ import de.bornholdtlee.baseproject.base.map.BaseClusterRenderer
 import de.bornholdtlee.baseproject.base.map.BaseInfoViewAdapter
 import de.bornholdtlee.baseproject.base.map.MapBaseFragment
 import de.bornholdtlee.baseproject.base.navigation.NavigationBaseTab
-import de.bornholdtlee.baseproject.injection.IBind
 import de.bornholdtlee.baseproject.model.Lesson
-import de.bornholdtlee.baseproject.utils.Logger
 
-class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, NavigationBaseTab, IBind {
+class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, NavigationBaseTab {
 
     companion object {
         fun createInstance(): MapFragment {
@@ -118,15 +115,6 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, Navigat
 
     override fun onMapLongClick(location: LatLng?) {
         presenter.onMapLongClicked(location)
-    }
-
-    override fun onClusterClick(cluster: Cluster<BaseClusterItem>?): Boolean {
-        if (googleMap.cameraPosition.zoom >= maxZoom) {
-            toastBuilder.showLongToast(context!!, "HAHAHA")
-        } else {
-            zoomOnCluster(cluster!!)
-        }
-        return true
     }
 
     override fun addLesson(lesson: Lesson) {
