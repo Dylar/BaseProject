@@ -18,6 +18,8 @@ import de.bornholdtlee.baseproject.base.map.BaseInfoViewAdapter
 import de.bornholdtlee.baseproject.base.map.MapBaseFragment
 import de.bornholdtlee.baseproject.base.navigation.NavigationBaseTab
 import de.bornholdtlee.baseproject.model.Lesson
+import de.bornholdtlee.baseproject.ui.map.clusteritems.LessonClusterItem
+import de.bornholdtlee.baseproject.ui.map.clusteritems.PoiClusterItem
 
 class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, NavigationBaseTab {
 
@@ -88,19 +90,19 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, Navigat
     override fun initMapItems() {
         presenter.initMap()
         addMarker(-34.0, 151.0, "SEATTLE", "Marker Description")
-        zoomCamera(-34.0, 151.0, 12f)
+//        zoomCamera(-34.0, 151.0, 12f)
         addCircle(LatLng(-44.0, 151.0))
         addPolyline(-34.0, 151.0, -54.0, 181.0)
         addPolygone()
         activateModeNormal()
 
-        clusterManager.addItem(BaseClusterItem(hamburg, "HAMBURG", "Hamburg"))
-        clusterManager.addItem(BaseClusterItem(berlin, "BERLIN", "Berlin"))
-        clusterManager.addItem(BaseClusterItem(sangerhausen, "SANGERHAUSEN", "Sangerhausen"))
-        clusterManager.addItem(BaseClusterItem(erfurt, "ERFURT", "Erfurt"))
-        clusterManager.addItem(BaseClusterItem(kiel, "KIEL", "Kiel"))
-        clusterManager.addItem(BaseClusterItem(koeln, "KÖLN", "Köln"))
-        clusterManager.addItem(BaseClusterItem(wien, "WIEN", "Wien"))
+        clusterManager.addItem(PoiClusterItem(hamburg, title = "HAMBURG", snippet = "Hamburg"))
+        clusterManager.addItem(PoiClusterItem(berlin, title = "BERLIN", snippet = "Berlin"))
+        clusterManager.addItem(PoiClusterItem(sangerhausen, title = "SANGERHAUSEN", snippet = "Sangerhausen"))
+        clusterManager.addItem(PoiClusterItem(erfurt, title = "ERFURT", snippet = "Erfurt"))
+        clusterManager.addItem(PoiClusterItem(kiel, title = "KIEL", snippet = "Kiel"))
+        clusterManager.addItem(PoiClusterItem(koeln, title = "KÖLN", snippet = "Köln"))
+        clusterManager.addItem(PoiClusterItem(wien, title = "WIEN", snippet = "Wien"))
 
     }
 

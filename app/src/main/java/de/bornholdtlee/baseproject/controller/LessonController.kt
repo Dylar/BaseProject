@@ -21,13 +21,15 @@ class LessonController(baseApplication: BaseApplication) : BaseController(baseAp
 
     fun createLesson(name: String,
                      description: String = "",
-                     organizer: List<Organizer> = ArrayList(),
-                     attendees: List<Attendee> = ArrayList()): Lesson {
+                     organizer: MutableList<Organizer> = ArrayList(),
+                     attendees: MutableList<Attendee> = ArrayList()): Lesson {
         val lesson = Lesson()
         lesson.createdAt = DateTime.now()
         lesson.updatedAt = DateTime.now()
         lesson.name = name
         lesson.description = description
+        lesson.organizer = organizer
+        lesson.attendees = attendees
         lessonDBHandler.upsert(lesson)
 //        lesson.organizer.addAll(organizer)
 //        lesson.attendees.addAll(attendees)

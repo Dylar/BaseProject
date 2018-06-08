@@ -8,15 +8,13 @@ import de.bornholdtlee.baseproject.TAB_HOME
 import de.bornholdtlee.baseproject.base.BaseFragment
 import de.bornholdtlee.baseproject.base.navigation.NavigationBaseTab
 import de.bornholdtlee.baseproject.controller.DefaultController
-import de.bornholdtlee.baseproject.injection.IBind
 import de.bornholdtlee.baseproject.injection.IInjection
 import de.bornholdtlee.baseproject.injection.components.AppComponent
 import de.bornholdtlee.baseproject.utils.Logger
 import de.bornholdtlee.baseproject.utils.SharedPreferencesUtils
-import io.objectbox.Box
 import javax.inject.Inject
 
-class MainFragment : BaseFragment(), DefaultController.Callback, IInjection, IBind, NavigationBaseTab {
+class MainFragment : BaseFragment(), DefaultController.Callback, IInjection, NavigationBaseTab {
 
     companion object {
         fun createInstance(): MainFragment {

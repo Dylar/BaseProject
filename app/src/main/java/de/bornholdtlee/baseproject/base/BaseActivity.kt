@@ -152,7 +152,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     @JvmOverloads
-    fun showFragment(fragment: BaseFragment, containerViewResId: Int = contentContainerId, shouldAddToBackStack: Boolean = true, clearTop: Boolean = false) {
+    fun showFragment(fragment: BaseFragment, containerViewResId: Int = contentContainerId, shouldAddToBackStack: Boolean = true, clearTop: Boolean = false, replace: Boolean = true) {
         val fragmentName: String = fragment.javaClass.name
 
         if (clearTop) { //maybe not functional TODO
@@ -171,7 +171,11 @@ abstract class BaseActivity : AppCompatActivity() {
 
         uiUtils.setAnimation(fragmentToAdd, fragmentTransaction)
 
-        fragmentTransaction.replace(containerViewResId, fragmentToAdd, fragmentName)
+        if (replace) {
+            fragmentTransaction.replace(containerViewResId, fragmentToAdd, fragmentName)
+        } else {
+            fragmentTransaction.add(containerViewResId, fragmentToAdd, fragmentName)
+        }
 
         if (shouldAddToBackStack) {
             fragmentTransaction.addToBackStack(fragmentName)

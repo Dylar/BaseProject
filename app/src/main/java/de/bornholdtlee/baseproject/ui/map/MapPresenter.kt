@@ -6,6 +6,7 @@ import de.bornholdtlee.baseproject.base.BasePresenter
 import de.bornholdtlee.baseproject.controller.LessonController
 import de.bornholdtlee.baseproject.injection.IInjection
 import de.bornholdtlee.baseproject.injection.components.AppComponent
+import de.bornholdtlee.baseproject.model.Organizer
 import javax.inject.Inject
 
 class MapPresenter(application: BaseApplication, view: IMapView) : BasePresenter<IMapView>(application, view), IInjection {
@@ -22,27 +23,31 @@ class MapPresenter(application: BaseApplication, view: IMapView) : BasePresenter
     @Inject
     lateinit var lessonController: LessonController
 
+    @Inject
+    lateinit var organizerController: OrganizerController
+
     override fun inject(appComponent: AppComponent) {
         appComponent.inject(this)
     }
 
     fun initMap() {
-        var lesson = lessonController.createLesson("YOGA","Hier")
-        lesson.location = LatLng(hamburg.latitude.minus(0.02),hamburg.longitude.minus(0.02))
+        var lesson = lessonController.createLesson("YOGA", "Hier")
+        lesson.location = LatLng(hamburg.latitude.minus(0.02), hamburg.longitude.minus(0.02))
         getView().addLesson(lesson)
 
-        lesson = lessonController.createLesson("HAHAHAHHAHAHA","Bla")
-        lesson.location = LatLng(hamburg.latitude.minus(0.02),hamburg.longitude.minus(0.02))
+        lesson = lessonController.createLesson("HAHAHAHHAHAHA", "Bla")
+        lesson.location = LatLng(hamburg.latitude.minus(0.02), hamburg.longitude.minus(0.02))
         getView().addLesson(lesson)
 
-        lesson = lessonController.createLesson("FUßBALL","Dort")
-        lesson.location = LatLng(berlin.latitude.minus(0.02),berlin.longitude.minus(0.02))
+        lesson = lessonController.createLesson("FUßBALL", "Dort")
+        lesson.location = LatLng(berlin.latitude.minus(0.02), berlin.longitude.minus(0.02))
         getView().addLesson(lesson)
     }
 
     fun onMapLongClicked(location: LatLng?) {
-        val lesson = lessonController.createLesson("MapEvent")
-        lesson.location = LatLng(location!!.latitude,location.longitude)
+        val organizer = Organizer("Peter Maf Ei")
+        val lesson = lessonController.createLesson("MapEvent", organizer = organizer)
+        lesson.location = LatLng(location!!.latitude, location.longitude)
         getView().addLesson(lesson)
     }
 

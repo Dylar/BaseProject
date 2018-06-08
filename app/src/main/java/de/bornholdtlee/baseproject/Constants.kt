@@ -3,6 +3,7 @@ package de.bornholdtlee.baseproject
 import android.os.Environment
 import java.nio.charset.Charset
 
+//DEFAULT
 const val NULL_INTEGER = -1
 const val NO_RESULT_STRING = "-"
 
@@ -18,3 +19,8 @@ val BASE_FILE_PATH = Environment.getExternalStorageDirectory().path + BuildConfi
 val FILE_PATH_JSONS = BASE_FILE_PATH + "jsons/"
 @JvmField
 val FILE_PATH_IMAGES = BASE_FILE_PATH + "images/"
+
+
+//APP
+const val CLUSTER_TYPE_POI: String = "clusterTypePoi"
+const val CLUSTER_TYPE_LESSON: String = "clusterTypeLesson"
