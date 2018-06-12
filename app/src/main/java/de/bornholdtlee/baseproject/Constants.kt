@@ -24,3 +24,5 @@ val FILE_PATH_IMAGES = BASE_FILE_PATH + "images/"
 //APP
 const val CLUSTER_TYPE_POI: String = "clusterTypePoi"
 const val CLUSTER_TYPE_LESSON: String = "clusterTypeLesson"
+
+const val LESSON_ID: String = "lessonId"

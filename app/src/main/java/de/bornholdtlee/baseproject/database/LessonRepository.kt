@@ -4,12 +4,15 @@ import de.bornholdtlee.baseproject.base.BaseApplication
 import de.bornholdtlee.baseproject.injection.IInjection
 import de.bornholdtlee.baseproject.injection.components.AppComponent
 import de.bornholdtlee.baseproject.model.Lesson
+import de.bornholdtlee.baseproject.utils.Logger
 
-class LessonDatabaseHandler(application: BaseApplication) : BaseDatabaseHandler(application), IInjection {
+class LessonRepository(application: BaseApplication) : BaseRepository(application), IInjection {
 
     //    @Inject
 //    lateinit var lessonBox: Box<Lesson>
-    var allLessons = ArrayList<Lesson>()
+    companion object {
+        private var allLessons = ArrayList<Lesson>()
+    }
 
     override fun inject(appComponent: AppComponent) {
 //        appComponent.inject(this)
@@ -19,9 +22,15 @@ class LessonDatabaseHandler(application: BaseApplication) : BaseDatabaseHandler(
 //        lessonBox.put(lesson)
         lesson.id = allLessons.size.toLong()
         allLessons.add(lesson)
+        Logger.error("WAS SOLL DAS1: " + allLessons.toString())
+        Logger.error("WAS SOLL DAS2: " + toString())
     }
 
-    fun getLessons(ids: List<Int>): List<Lesson> {
+    fun getAll(): List<Lesson> {
+        return allLessons
+    }
+
+    fun getByIds(ids: List<Int>): List<Lesson> {
         val lessons = ArrayList<Lesson>()
         for (lesson in allLessons) {
             if (lesson.id.toInt() in ids) {
@@ -31,7 +40,7 @@ class LessonDatabaseHandler(application: BaseApplication) : BaseDatabaseHandler(
         return lessons
     }
 
-    fun getLesson(id: Int): Lesson? {
+    fun getById(id: Int): Lesson? {
         for (lesson in allLessons) {
             if (lesson.id.toInt() == id) {
                 return lesson

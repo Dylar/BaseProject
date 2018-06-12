@@ -57,7 +57,9 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = super.onCreateView(inflater, container, savedInstanceState)
 
+        Logger.error("INIT mapView")
         mapView = rootView!!.findViewById(mapViewId) as MapView
+        Logger.error("INIT mapView: " + mapView.toString())
         mapView.onCreate(savedInstanceState)
 
         mapView.onResume() // needed to get the map to display immediately
@@ -94,11 +96,11 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
     private fun syncMap() {
         mapView.getMapAsync { mMap ->
             googleMap = mMap
-
             initClusterManager()
             initMapUi()
             initMapListener()
             initMapItems()
+
         }
     }
 
@@ -162,6 +164,11 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
     override fun onLowMemory() {
         super.onLowMemory()
         mapView.onLowMemory()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     fun activateModeHybrid() {

@@ -7,12 +7,12 @@ import dagger.Provides
 import de.bornholdtlee.baseproject.BuildConfig
 import de.bornholdtlee.baseproject.api.RetrofitInterface
 import de.bornholdtlee.baseproject.api.interceptor.AddHeaderInterceptor
+import de.bornholdtlee.baseproject.injection.ApplicationScope
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
 @Module
 class NetworkModule {
@@ -22,7 +22,7 @@ class NetworkModule {
     }
 
     @Provides
-    @Singleton
+    @ApplicationScope
     fun provideGsonBuilder(): GsonBuilder {
         val gsonBuilder = GsonBuilder()
 //        gsonBuilder.registerTypeAdapter(CheckMail::class.java, CheckMailConverter())
@@ -30,7 +30,7 @@ class NetworkModule {
     }
 
     @Provides
-    @Singleton
+    @ApplicationScope
     fun provideOkHttpClientBuilder(): OkHttpClient.Builder {
         val builder = OkHttpClient.Builder()
 
@@ -48,7 +48,7 @@ class NetworkModule {
     }
 
     @Provides
-    @Singleton
+    @ApplicationScope
     fun provideRetrofitBuilder(gsonBuilder: GsonBuilder): Retrofit.Builder {
         return Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -57,7 +57,7 @@ class NetworkModule {
     }
 
     @Provides
-    @Singleton
+    @ApplicationScope
     fun provideRetrofitConstructions(retrofitBuilder: Retrofit.Builder, httpClientBuilder: OkHttpClient.Builder): RetrofitInterface {
 
         if (BuildConfig.IS_DEV) {

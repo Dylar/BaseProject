@@ -7,6 +7,7 @@ import butterknife.ButterKnife
 import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.enums.AnimationType
 import de.bornholdtlee.baseproject.injection.IInjection
+import de.bornholdtlee.baseproject.model.Lesson
 import de.bornholdtlee.baseproject.viewbuilder.DialogBuilder
 import de.bornholdtlee.baseproject.viewbuilder.ToastBuilder
 import javax.inject.Inject
@@ -76,6 +77,5 @@ abstract class BaseFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return actionbarHandler.onOptionsItemSelected(item!!.itemId) || super.onOptionsItemSelected(item)
     }
-
 
 }
