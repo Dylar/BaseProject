@@ -15,7 +15,6 @@ import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
-import com.google.maps.android.clustering.view.ClusterRenderer
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -29,18 +28,14 @@ import de.bornholdtlee.baseproject.base.mvp.MVPFragment
 import de.bornholdtlee.baseproject.utils.Logger
 
 abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragment<T, P>(),
-        OnCameraIdleListener, OnCameraMoveListener, OnMarkerClickListener, OnCircleClickListener, OnInfoWindowClickListener
-        , OnInfoWindowCloseListener, ClusterManager.OnClusterClickListener<BaseClusterItem>, ClusterManager.OnClusterItemClickListener<BaseClusterItem>, OnMapClickListener, OnMapLongClickListener {
+        OnCameraIdleListener, OnCameraMoveListener, OnMarkerClickListener, OnCircleClickListener, OnInfoWindowClickListener,
+        OnInfoWindowCloseListener, ClusterManager.OnClusterClickListener<BaseClusterItem>, ClusterManager.OnClusterItemClickListener<BaseClusterItem>, OnMapClickListener, OnMapLongClickListener {
 
     lateinit var mapView: MapView
-
     lateinit var googleMap: GoogleMap
-
     lateinit var clusterManager: ClusterManager<BaseClusterItem>
-
-    abstract val renderer: BaseClusterRenderer
-
-    open val infoViewAdapter: BaseInfoViewAdapter? = null
+    lateinit var renderer: BaseClusterRenderer
+    open var clusterInfoAdapter: BaseClusterInfoAdapter? = null
 
     open val myLocationEnabled: Boolean = true
     open val isIndoorLevelPickerEnabled: Boolean = true
@@ -57,11 +52,8 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = super.onCreateView(inflater, container, savedInstanceState)
 
-        Logger.error("INIT mapView")
         mapView = rootView!!.findViewById(mapViewId) as MapView
-        Logger.error("INIT mapView: " + mapView.toString())
         mapView.onCreate(savedInstanceState)
-
         mapView.onResume() // needed to get the map to display immediately
 
         try {
@@ -107,14 +99,24 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
     private fun initClusterManager() {
         clusterManager = ClusterManager(context, googleMap)
         clusterManager.setAnimation(true)
+
+        if (!::renderer.isInitialized) {
+            renderer = createRenderer(context!!, googleMap, clusterManager)
+        }
         clusterManager.renderer = renderer
-        if (infoViewAdapter != null) {
-            clusterManager.markerCollection.setOnInfoWindowAdapter(infoViewAdapter)
+
+        clusterInfoAdapter = createInfoViewAdapter()
+        if (clusterInfoAdapter != null) {
+            clusterManager.markerCollection.setOnInfoWindowAdapter(clusterInfoAdapter)
             googleMap.setInfoWindowAdapter(clusterManager.markerManager)
         }
     }
 
-    open fun createRenderer(context: Context, googleMap: GoogleMap, clusterManager: ClusterManager<BaseClusterItem>): ClusterRenderer<BaseClusterItem>? {
+    open fun createInfoViewAdapter(renderer: BaseClusterRenderer): BaseClusterInfoAdapter? {
+        return null
+    }
+
+    open fun createRenderer(context: Context, googleMap: GoogleMap, clusterManager: ClusterManager<BaseClusterItem>): BaseClusterRenderer {
         return BaseClusterRenderer(context, googleMap, clusterManager)
     }
 

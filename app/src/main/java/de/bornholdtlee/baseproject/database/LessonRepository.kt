@@ -22,8 +22,6 @@ class LessonRepository(application: BaseApplication) : BaseRepository(applicatio
 //        lessonBox.put(lesson)
         lesson.id = allLessons.size.toLong()
         allLessons.add(lesson)
-        Logger.error("WAS SOLL DAS1: " + allLessons.toString())
-        Logger.error("WAS SOLL DAS2: " + toString())
     }
 
     fun getAll(): List<Lesson> {

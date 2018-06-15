@@ -1,27 +1,28 @@
 package de.bornholdtlee.baseproject.ui.map
 
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
-import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.ImageView
-import android.widget.TextView
 import butterknife.BindView
 import butterknife.OnClick
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.clustering.ClusterManager
 import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.TAB_MAP
 import de.bornholdtlee.baseproject.base.BaseApplication
+import de.bornholdtlee.baseproject.base.map.BaseClusterInfoAdapter
 import de.bornholdtlee.baseproject.base.map.BaseClusterItem
 import de.bornholdtlee.baseproject.base.map.BaseClusterRenderer
-import de.bornholdtlee.baseproject.base.map.BaseInfoViewAdapter
 import de.bornholdtlee.baseproject.base.map.MapBaseFragment
 import de.bornholdtlee.baseproject.base.navigation.NavigationBaseTab
 import de.bornholdtlee.baseproject.model.Lesson
 import de.bornholdtlee.baseproject.ui.creation.CreateLessonActivity
 import de.bornholdtlee.baseproject.ui.map.clusteritems.LessonClusterItem
+import de.bornholdtlee.baseproject.ui.map.clusteritems.MapClusterInfoAdapter
 import de.bornholdtlee.baseproject.ui.map.clusteritems.PoiClusterItem
 import de.bornholdtlee.baseproject.utils.Logger
 
@@ -42,25 +43,12 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, Navigat
 
     override val navigationPosition: Int = TAB_MAP
 
-    override val renderer: BaseClusterRenderer
-        get() = BaseClusterRenderer(context!!, googleMap, clusterManager)
+    override fun createPresenter(application: BaseApplication): MapPresenter = MapPresenter(application, this)
 
-    override val infoViewAdapter: BaseInfoViewAdapter by lazy {
-        object : BaseInfoViewAdapter(renderer, LayoutInflater.from(context)) {
-            override val layoutId: Int = R.layout.info_window_layout
+    override fun createRenderer(context: Context, googleMap: GoogleMap, clusterManager: ClusterManager<BaseClusterItem>)
+            : BaseClusterRenderer = BaseClusterRenderer(context, googleMap, clusterManager)
 
-            override fun initViews(windowView: View, clusterItem: BaseClusterItem) {
-                val title = windowView.findViewById(R.id.title) as TextView
-                title.text = clusterItem.title
-                val image = windowView.findViewById(R.id.image) as ImageView
-                image.setImageResource(clusterItem.icon)
-            }
-        }
-    }
-
-    override fun createPresenter(application: BaseApplication): MapPresenter {
-        return MapPresenter(application, this)
-    }
+    override fun createInfoViewAdapter(renderer: BaseClusterRenderer): BaseClusterInfoAdapter = MapClusterInfoAdapter(renderer)
 
     @OnClick(R.id.fragment_map_btn1)
     internal fun onBtn1() {

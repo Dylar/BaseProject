@@ -5,7 +5,9 @@ import android.view.View
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 
-abstract class BaseInfoViewAdapter(private val renderer: BaseClusterRenderer, private val inflater: LayoutInflater) : GoogleMap.InfoWindowAdapter {
+abstract class BaseClusterInfoAdapter(private val renderer: BaseClusterRenderer) : GoogleMap.InfoWindowAdapter {
+
+    private val inflater: LayoutInflater = LayoutInflater.from(renderer.context)
 
     abstract val layoutId: Int
 
@@ -16,12 +18,9 @@ abstract class BaseInfoViewAdapter(private val renderer: BaseClusterRenderer, pr
     }
 
     override fun getInfoContents(marker: Marker): View? {
-//        val popup = inflater.inflate(R.layout.info_window_layout, null)
-//        (popup.findViewById(R.id.title) as TextView).text = marker.snippet
         return null
     }
 
     abstract fun initViews(windowView: View, clusterItem: BaseClusterItem)
 
-//    https://medium.com/@tonyshkurenko/work-with-clustermanager-bdf3d70fb0fd
 }
