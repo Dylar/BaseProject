@@ -18,7 +18,7 @@ class ActionbarHandler(private val callback: ActionbarCallback) {
 
     fun onOptionsItemSelected(id: Int): Boolean {
         when (id) {
-            R.id.actionbar_button_1 -> return callback.onActionbarButton1Clicked()
+            R.id.actionbar_button_1 -> callback.onActionbarButton1Clicked()
         }
         return false
     }
