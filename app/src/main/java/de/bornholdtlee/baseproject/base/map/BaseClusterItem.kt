@@ -1,20 +1,29 @@
 package de.bornholdtlee.baseproject.base.map
 
-import de.bornholdtlee.baseproject.R
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.ClusterItem
+import de.bornholdtlee.baseproject.NULL_INTEGER
+import java.io.Serializable
 
-open class BaseClusterItem(private val location: LatLng, private val markerTitle: String = "", private val description: String = "", open val icon: Int = R.drawable.marker_poi) : ClusterItem {
+abstract class BaseClusterItem(
+        private val position: LatLng,
+        val dataId: Int = NULL_INTEGER,
+        private val title: String = "",
+        private val snippet: String = "")
+    : ClusterItem, Serializable {
+
+    abstract val icon: Int
+    abstract val dataType: String
 
     override fun getSnippet(): String {
-        return description
+        return snippet
     }
 
     override fun getTitle(): String {
-        return markerTitle
+        return title
     }
 
     override fun getPosition(): LatLng {
-        return location
+        return position
     }
 }

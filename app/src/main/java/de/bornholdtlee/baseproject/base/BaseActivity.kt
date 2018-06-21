@@ -55,6 +55,10 @@ abstract class BaseActivity : AppCompatActivity() {
     open val allowBackPress: Boolean = true
     open val hasToolbar: Boolean = true
 
+    open fun getContext(): Context? {
+        return this
+    }
+
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
@@ -152,7 +156,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     @JvmOverloads
-    fun showFragment(fragment: BaseFragment, containerViewResId: Int = contentContainerId, shouldAddToBackStack: Boolean = true, clearTop: Boolean = false) {
+    fun showFragment(fragment: BaseFragment, containerViewResId: Int = contentContainerId, shouldAddToBackStack: Boolean = true, clearTop: Boolean = false, replace: Boolean = true) {
         val fragmentName: String = fragment.javaClass.name
 
         if (clearTop) { //maybe not functional TODO
@@ -171,7 +175,11 @@ abstract class BaseActivity : AppCompatActivity() {
 
         uiUtils.setAnimation(fragmentToAdd, fragmentTransaction)
 
-        fragmentTransaction.replace(containerViewResId, fragmentToAdd, fragmentName)
+        if (replace) {
+            fragmentTransaction.replace(containerViewResId, fragmentToAdd, fragmentName)
+        } else {
+            fragmentTransaction.add(containerViewResId, fragmentToAdd, fragmentName)
+        }
 
         if (shouldAddToBackStack) {
             fragmentTransaction.addToBackStack(fragmentName)
@@ -188,9 +196,9 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         isAppInForeground = true
-        getCurrentContent()!!.onActivityResult(requestCode, resultCode, data)
+        getCurrentContent()?.onActivityResult(requestCode, resultCode, data)
     }
 
 }

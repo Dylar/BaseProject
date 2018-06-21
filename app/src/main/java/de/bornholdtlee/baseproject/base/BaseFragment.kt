@@ -6,8 +6,8 @@ import android.view.*
 import butterknife.ButterKnife
 import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.enums.AnimationType
-import de.bornholdtlee.baseproject.injection.IBind
 import de.bornholdtlee.baseproject.injection.IInjection
+import de.bornholdtlee.baseproject.model.Lesson
 import de.bornholdtlee.baseproject.viewbuilder.DialogBuilder
 import de.bornholdtlee.baseproject.viewbuilder.ToastBuilder
 import javax.inject.Inject
@@ -32,8 +32,8 @@ abstract class BaseFragment : Fragment() {
     protected open val actionbarHandler: ActionbarHandler
         get() = ActionbarHandler(actionbarCallback)
 
+    open val shouldBindViews: Boolean = true
     open val singleInstance: Boolean = true
-
     open val allowBackPress: Boolean = true
 
     open val contentTitle: Int = R.string.app_name
@@ -55,7 +55,7 @@ abstract class BaseFragment : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
 
         val root = inflater.inflate(layoutId, null, false)
-        if (this is IBind) {
+        if (shouldBindViews) {
             ButterKnife.bind(this, root)
         }
 
@@ -77,6 +77,5 @@ abstract class BaseFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return actionbarHandler.onOptionsItemSelected(item!!.itemId) || super.onOptionsItemSelected(item)
     }
-
 
 }

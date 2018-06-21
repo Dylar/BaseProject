@@ -7,11 +7,10 @@ import android.view.View
 import butterknife.BindView
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
-import de.bornholdtlee.baseproject.injection.IBind
 import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.base.BaseActivity
 
-abstract class NavigationBaseActivity : BaseActivity(), IBind, AHBottomNavigation.OnTabSelectedListener {
+abstract class NavigationBaseActivity : BaseActivity(), AHBottomNavigation.OnTabSelectedListener {
 
     companion object {
         const val VIEW_HEIGHT_DIFFERENT = 600

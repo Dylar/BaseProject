@@ -1,0 +1,12 @@
+<resources>
+
+    <string name="language">Deutsch</string>
+
+    <string name="under_construction">In Bearbeitung</string>
+    <string name="error_please_try_again">Ein Fehler ist aufgetreten, bitte erneut probieren.</string>
+    <string name="please_accept_permission">Bitte akzeptieren sie die Berechtigung</string>
+
+    <string name="fragment_create_lesson_start">Kurs Name</string>
+    <string name="fragment_create_lesson_name_error">Name kann nicht leer sein</string>
+    <string name="fragment_create_lesson_description">Beschreibung</string>
+</resources>
