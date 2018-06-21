@@ -4,31 +4,121 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "1:8164032590787824100",
-      "lastPropertyId": "2:9034893975697822460",
-      "name": "DefaultModel",
+      "id": "2:6872309744573245431",
+      "lastPropertyId": "2:5637571582130484754",
+      "name": "Attendee",
       "properties": [
         {
-          "id": "1:4823576292516536900",
+          "id": "2:5637571582130484754",
+          "name": "id"
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:873128107117412620",
+          "name": "memberLesson"
+        },
+        {
+          "id": "2:1836545956154676956",
+          "name": "bookedLesson"
+        },
+        {
+          "id": "3:1634370305645736638",
+          "name": "attendedLesson"
+        }
+      ]
+    },
+    {
+      "id": "3:7433895525552571370",
+      "lastPropertyId": "9:2220967631875217703",
+      "name": "Lesson",
+      "properties": [
+        {
+          "id": "1:6510763926663727161",
           "name": "id"
         },
         {
-          "id": "2:9034893975697822460",
+          "id": "2:5014147771253276377",
+          "name": "location"
+        },
+        {
+          "id": "3:1728350059127944246",
           "name": "name"
+        },
+        {
+          "id": "4:5576303479406607992",
+          "name": "description"
+        },
+        {
+          "id": "5:6426873638062412999",
+          "name": "image"
+        },
+        {
+          "id": "6:1786831831950107495",
+          "name": "startDate"
+        },
+        {
+          "id": "7:8543732397444694195",
+          "name": "createdAt"
+        },
+        {
+          "id": "8:3966697127233345283",
+          "name": "updatedAt"
+        },
+        {
+          "id": "9:2220967631875217703",
+          "name": "deletedAt"
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "4:3556990225490458506",
+          "name": "organizer"
+        },
+        {
+          "id": "5:7256772140317368737",
+          "name": "attendees"
+        }
+      ]
+    },
+    {
+      "id": "4:5335647212502705524",
+      "lastPropertyId": "2:2949841339176595216",
+      "name": "Organizer",
+      "properties": [
+        {
+          "id": "2:2949841339176595216",
+          "name": "id"
+        }
+      ],
+      "relations": [
+        {
+          "id": "6:6077705845048919434",
+          "name": "organizeLesson"
+        },
+        {
+          "id": "7:2056880550994290862",
+          "name": "organizedLesson"
+        }
+      ]
     }
   ],
-  "lastEntityId": "1:8164032590787824100",
+  "lastEntityId": "4:5335647212502705524",
   "lastIndexId": "0:0",
-  "lastRelationId": "0:0",
+  "lastRelationId": "7:2056880550994290862",
   "lastSequenceId": "0:0",
   "modelVersion": 4,
   "modelVersionParserMinimum": 4,
-  "retiredEntityUids": [],
+  "retiredEntityUids": [
+    8164032590787824100
+  ],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    4823576292516536900,
+    9034893975697822460,
+    752259387623010443,
+    7342593902308140834
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

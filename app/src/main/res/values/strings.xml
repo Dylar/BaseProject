@@ -1,10 +1,12 @@
 <resources>
-    <string name="app_name">DefaultProject</string>
 
     <string name="language">English</string>
-    <string name="version">Version-Nr: %1$s\nVersion-Name: %2$s</string>
 
     <string name="under_construction">Under construction</string>
     <string name="error_please_try_again">Some error occurred, please try again.</string>
     <string name="please_accept_permission">Please accept the permission!</string>
+
+    <string name="fragment_create_lesson_start">Lesson Name</string>
+    <string name="fragment_create_lesson_name_error">Name can not be empty</string>
+    <string name="fragment_create_lesson_description">Description</string>
 </resources>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">BaseProject</string>
+    <string name="version">Version-Nr: %1$s\nVersion-Name: %2$s</string>
+</resources>
