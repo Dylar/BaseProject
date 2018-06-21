@@ -1,10 +1,9 @@
 package de.bornholdtlee.baseproject.database
 
-import de.bornholdtlee.baseproject.R
+import de.bornholdtlee.baseproject.TestData
 import de.bornholdtlee.baseproject.base.BaseApplication
 import de.bornholdtlee.baseproject.injection.IInjection
 import de.bornholdtlee.baseproject.injection.components.AppComponent
-import de.bornholdtlee.baseproject.model.Lesson
 import de.bornholdtlee.baseproject.model.Organizer
 
 class OrganizerRepository(application: BaseApplication) : BaseRepository(application), IInjection {
@@ -23,15 +22,7 @@ class OrganizerRepository(application: BaseApplication) : BaseRepository(applica
     }
 
     fun getAll(): ArrayList<Organizer> {
-        if (allOrganizer.isEmpty()) {
-            var organizer = Organizer("Peter", R.drawable.abc_ic_star_black_48dp)
-            allOrganizer.add(organizer)
-
-            organizer = Organizer("Olli", R.drawable.abc_ic_menu_copy_mtrl_am_alpha)
-            allOrganizer.add(organizer)
-
-        }
-        return allOrganizer
+        return TestData.testOrganizer
     }
 
     fun getByIds(ids: List<Int>): List<Organizer> {

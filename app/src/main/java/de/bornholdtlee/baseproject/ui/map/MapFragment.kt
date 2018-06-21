@@ -46,7 +46,7 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, Navigat
     override fun createPresenter(application: BaseApplication): MapPresenter = MapPresenter(application, this)
 
     override fun createRenderer(context: Context, googleMap: GoogleMap, clusterManager: ClusterManager<BaseClusterItem>)
-            : BaseClusterRenderer = BaseClusterRenderer(context, googleMap, clusterManager)
+            : BaseClusterRenderer? = BaseClusterRenderer(context, googleMap, clusterManager)
 
     override fun createInfoViewAdapter(renderer: BaseClusterRenderer): BaseClusterInfoAdapter = MapClusterInfoAdapter(renderer)
 
@@ -73,7 +73,7 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, Navigat
     override fun initMapItems() {
         presenter.initMap()
         addMarker(-34.0, 151.0, "SEATTLE", "Marker Description")
-//        zoomCamera(-34.0, 151.0, 12f)
+        zoomCamera(LatLng(53.565278, 10.001389), 10f)
         addCircle(LatLng(-44.0, 151.0))
         addPolyline(-34.0, 151.0, -54.0, 181.0)
         addPolygone()

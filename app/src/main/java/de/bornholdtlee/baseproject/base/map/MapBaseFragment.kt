@@ -101,11 +101,11 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
         clusterManager.setAnimation(true)
 
         if (!::renderer.isInitialized) {
-            renderer = createRenderer(context!!, googleMap, clusterManager)
+            renderer = createRenderer(context!!, googleMap, clusterManager)!!
         }
         clusterManager.renderer = renderer
 
-        clusterInfoAdapter = createInfoViewAdapter()
+        clusterInfoAdapter = createInfoViewAdapter(renderer)
         if (clusterInfoAdapter != null) {
             clusterManager.markerCollection.setOnInfoWindowAdapter(clusterInfoAdapter)
             googleMap.setInfoWindowAdapter(clusterManager.markerManager)
@@ -116,8 +116,8 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
         return null
     }
 
-    open fun createRenderer(context: Context, googleMap: GoogleMap, clusterManager: ClusterManager<BaseClusterItem>): BaseClusterRenderer {
-        return BaseClusterRenderer(context, googleMap, clusterManager)
+    open fun createRenderer(context: Context, googleMap: GoogleMap, clusterManager: ClusterManager<BaseClusterItem>): BaseClusterRenderer? {
+        return null
     }
 
     @Throws(SecurityException::class)

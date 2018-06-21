@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/eight_grid_unit"
+    android:layout_height="@dimen/eight_grid_unit">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/background_circle_black" />
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="@dimen/four_grid_unit"
+        android:layout_height="@dimen/four_grid_unit"
+        android:layout_centerInParent="true"
+        android:scaleType="fitXY"
+        tools:src="@drawable/test_organizer5" />
+
+</RelativeLayout>
