@@ -4,6 +4,13 @@
     android:layout_height="match_parent"
     android:padding="@dimen/two_grid_unit">
 
+    <FrameLayout
+        android:id="@+id/container_haha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </FrameLayout>
+
     <TextView
         android:id="@+id/fragment_main_welcome_text"
         android:layout_width="wrap_content"

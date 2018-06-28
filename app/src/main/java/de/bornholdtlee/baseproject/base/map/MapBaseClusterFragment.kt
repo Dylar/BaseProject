@@ -6,6 +6,7 @@ import android.view.View
 import butterknife.BindView
 import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.base.BaseFragment
+import de.bornholdtlee.baseproject.ui.map.clusteritems.LessonClusterItem
 import de.bornholdtlee.baseproject.utils.Logger
 
 class MapBaseClusterFragment : BaseFragment() {
@@ -13,7 +14,7 @@ class MapBaseClusterFragment : BaseFragment() {
     companion object {
         private const val KEY_DATA_IDS = "keyDataIds"
 
-        fun createInstance(items: MutableCollection<BaseClusterItem>): MapBaseClusterFragment {
+       fun <CI : BaseClusterItem> createInstance(items: MutableCollection<CI>): MapBaseClusterFragment {
             val frag = MapBaseClusterFragment()
 
             val ids = ArrayList<Int>()

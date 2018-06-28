@@ -21,21 +21,20 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
-import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.base.BasePresenter
 import de.bornholdtlee.baseproject.base.IBaseView
 import de.bornholdtlee.baseproject.base.mvp.MVPFragment
 import de.bornholdtlee.baseproject.utils.Logger
 
-abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragment<T, P>(),
+abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>, CI : BaseClusterItem, R : BaseClusterRenderer<CI>> : MVPFragment<T, P>(),
         OnCameraIdleListener, OnCameraMoveListener, OnMarkerClickListener, OnCircleClickListener, OnInfoWindowClickListener,
-        OnInfoWindowCloseListener, ClusterManager.OnClusterClickListener<BaseClusterItem>, ClusterManager.OnClusterItemClickListener<BaseClusterItem>, OnMapClickListener, OnMapLongClickListener {
+        OnInfoWindowCloseListener, ClusterManager.OnClusterClickListener<CI>, ClusterManager.OnClusterItemClickListener<CI>, OnMapClickListener, OnMapLongClickListener {
 
     lateinit var mapView: MapView
     lateinit var googleMap: GoogleMap
-    lateinit var clusterManager: ClusterManager<BaseClusterItem>
-    lateinit var renderer: BaseClusterRenderer
-    open var clusterInfoAdapter: BaseClusterInfoAdapter? = null
+    lateinit var clusterManager: ClusterManager<CI>
+    lateinit var renderer: R
+    open var clusterInfoAdapter: BaseClusterInfoAdapter<CI, R>? = null
 
     open val myLocationEnabled: Boolean = true
     open val isIndoorLevelPickerEnabled: Boolean = true
@@ -112,11 +111,11 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
         }
     }
 
-    open fun createInfoViewAdapter(renderer: BaseClusterRenderer): BaseClusterInfoAdapter? {
+    open fun <A : BaseClusterInfoAdapter<CI, R>> createInfoViewAdapter(renderer: R): A? {
         return null
     }
 
-    open fun createRenderer(context: Context, googleMap: GoogleMap, clusterManager: ClusterManager<BaseClusterItem>): BaseClusterRenderer? {
+    open fun createRenderer(context: Context, googleMap: GoogleMap, clusterManager: ClusterManager<CI>): R? {
         return null
     }
 
@@ -204,13 +203,13 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
     }
 
-    fun zoomOnCluster(cluster: Cluster<BaseClusterItem>) {
+    fun zoomOnCluster(cluster: Cluster<CI>) {
         val builder = LatLngBounds.builder()
         for (item in cluster.items) {
             builder.include(item.position)
         }
         val bounds = builder.build()
-        val padding = context!!.resources.getDimension(R.dimen.eight_grid_unit).toInt()
+        val padding = context!!.resources.getDimension(de.bornholdtlee.baseproject.R.dimen.eight_grid_unit).toInt()
         googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
     }
 
@@ -246,11 +245,11 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
         Logger.info("onCircleClick not implemented")
     }
 
-    override fun onClusterItemClick(item: BaseClusterItem?): Boolean {
+    override fun onClusterItemClick(item: CI?): Boolean {
         return false
     }
 
-    override fun onClusterClick(cluster: Cluster<BaseClusterItem>?): Boolean {
+    override fun onClusterClick(cluster: Cluster<CI>?): Boolean {
         return if (googleMap.cameraPosition.zoom >= openClusterOnZoom) {
             openCluster(cluster!!)
             true
@@ -260,12 +259,12 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>> : MVPFragmen
         }
     }
 
-    private fun openCluster(cluster: Cluster<BaseClusterItem>) {
+    private fun openCluster(cluster: Cluster<CI>) {
         baseActivity!!.showFragment(createMapClusterFragment(cluster))
     }
 
-    open fun createMapClusterFragment(cluster: Cluster<BaseClusterItem>): MapBaseClusterFragment {
-        return MapBaseClusterFragment.createInstance(cluster.items)
+    open fun createMapClusterFragment(cluster: Cluster<CI>): MapBaseClusterFragment {
+        return MapBaseClusterFragment.createInstance(cluster.items!!)
     }
 
     fun addPolygone(vararg locations: LatLng) {

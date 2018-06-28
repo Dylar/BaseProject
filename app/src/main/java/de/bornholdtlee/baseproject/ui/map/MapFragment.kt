@@ -23,10 +23,11 @@ import de.bornholdtlee.baseproject.model.Lesson
 import de.bornholdtlee.baseproject.ui.creation.CreateLessonActivity
 import de.bornholdtlee.baseproject.ui.map.clusteritems.LessonClusterItem
 import de.bornholdtlee.baseproject.ui.map.clusteritems.MapClusterInfoAdapter
+import de.bornholdtlee.baseproject.ui.map.clusteritems.MapClusterRenderer
 import de.bornholdtlee.baseproject.ui.map.clusteritems.PoiClusterItem
 import de.bornholdtlee.baseproject.utils.Logger
 
-class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, NavigationBaseTab {
+class MapFragment : MapBaseFragment<IMapView, MapPresenter, LessonClusterItem, MapClusterRenderer>(), IMapView, NavigationBaseTab {
 
     companion object {
         fun createInstance(): MapFragment {
@@ -45,10 +46,12 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, Navigat
 
     override fun createPresenter(application: BaseApplication): MapPresenter = MapPresenter(application, this)
 
-    override fun createRenderer(context: Context, googleMap: GoogleMap, clusterManager: ClusterManager<BaseClusterItem>)
-            : BaseClusterRenderer? = BaseClusterRenderer(context, googleMap, clusterManager)
+    override fun createRenderer(context: Context, googleMap: GoogleMap, clusterManager: ClusterManager<LessonClusterItem>)
+            : MapClusterRenderer? = MapClusterRenderer(context, googleMap, clusterManager)
 
-    override fun createInfoViewAdapter(renderer: BaseClusterRenderer): BaseClusterInfoAdapter = MapClusterInfoAdapter(renderer)
+    override fun <A : BaseClusterInfoAdapter<LessonClusterItem, MapClusterRenderer>> createInfoViewAdapter(renderer: MapClusterRenderer): A? {
+        return MapClusterInfoAdapter(renderer) as A
+    }
 
     @OnClick(R.id.fragment_map_btn1)
     internal fun onBtn1() {
