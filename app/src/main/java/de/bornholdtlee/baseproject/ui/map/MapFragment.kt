@@ -15,16 +15,14 @@ import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.TAB_MAP
 import de.bornholdtlee.baseproject.base.BaseApplication
 import de.bornholdtlee.baseproject.base.map.BaseClusterInfoAdapter
-import de.bornholdtlee.baseproject.base.map.BaseClusterItem
-import de.bornholdtlee.baseproject.base.map.BaseClusterRenderer
 import de.bornholdtlee.baseproject.base.map.MapBaseFragment
 import de.bornholdtlee.baseproject.base.navigation.NavigationBaseTab
+import de.bornholdtlee.baseproject.injection.components.AppComponent
 import de.bornholdtlee.baseproject.model.Lesson
 import de.bornholdtlee.baseproject.ui.creation.CreateLessonActivity
 import de.bornholdtlee.baseproject.ui.map.clusteritems.LessonClusterItem
-import de.bornholdtlee.baseproject.ui.map.clusteritems.MapClusterInfoAdapter
+import de.bornholdtlee.baseproject.ui.map.clusteritems.LessonClusterInfoAdapter
 import de.bornholdtlee.baseproject.ui.map.clusteritems.MapClusterRenderer
-import de.bornholdtlee.baseproject.ui.map.clusteritems.PoiClusterItem
 import de.bornholdtlee.baseproject.utils.Logger
 
 class MapFragment : MapBaseFragment<IMapView, MapPresenter, LessonClusterItem, MapClusterRenderer>(), IMapView, NavigationBaseTab {
@@ -44,13 +42,17 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter, LessonClusterItem, M
 
     override val navigationPosition: Int = TAB_MAP
 
+    override fun inject(appComponent: AppComponent) {
+        appComponent.inject(this)
+    }
+
     override fun createPresenter(application: BaseApplication): MapPresenter = MapPresenter(application, this)
 
     override fun createRenderer(context: Context, googleMap: GoogleMap, clusterManager: ClusterManager<LessonClusterItem>)
             : MapClusterRenderer? = MapClusterRenderer(context, googleMap, clusterManager)
 
     override fun <A : BaseClusterInfoAdapter<LessonClusterItem, MapClusterRenderer>> createInfoViewAdapter(renderer: MapClusterRenderer): A? {
-        return MapClusterInfoAdapter(renderer) as A
+        return LessonClusterInfoAdapter(renderer) as A
     }
 
     @OnClick(R.id.fragment_map_btn1)
@@ -91,9 +93,9 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter, LessonClusterItem, M
             clusterManager.addItem(LessonClusterItem(lesson))
         }
 
-        for (poi in pois) {
-            clusterManager.addItem(PoiClusterItem(poi))
-        }
+//        for (poi in pois) { TODO multiple clustermanager?
+//            clusterManager.addItem(PoiClusterItem(poi))
+//        }
 
         renderNew()
     }

@@ -21,6 +21,6 @@ abstract class BaseClusterInfoAdapter<CI : BaseClusterItem, R : BaseClusterRende
         return null
     }
 
-    abstract fun initViews(windowView: View, clusterItem: BaseClusterItem)
+    abstract fun initViews(windowView: View, clusterItem: CI)
 
 }

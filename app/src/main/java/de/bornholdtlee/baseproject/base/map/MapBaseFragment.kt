@@ -24,11 +24,18 @@ import com.karumi.dexter.listener.single.PermissionListener
 import de.bornholdtlee.baseproject.base.BasePresenter
 import de.bornholdtlee.baseproject.base.IBaseView
 import de.bornholdtlee.baseproject.base.mvp.MVPFragment
+import de.bornholdtlee.baseproject.injection.IInjection
 import de.bornholdtlee.baseproject.utils.Logger
+import de.bornholdtlee.baseproject.utils.PermissionUtils
+import javax.inject.Inject
 
 abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>, CI : BaseClusterItem, R : BaseClusterRenderer<CI>> : MVPFragment<T, P>(),
         OnCameraIdleListener, OnCameraMoveListener, OnMarkerClickListener, OnCircleClickListener, OnInfoWindowClickListener,
-        OnInfoWindowCloseListener, ClusterManager.OnClusterClickListener<CI>, ClusterManager.OnClusterItemClickListener<CI>, OnMapClickListener, OnMapLongClickListener {
+        OnInfoWindowCloseListener, ClusterManager.OnClusterClickListener<CI>, ClusterManager.OnClusterItemClickListener<CI>,
+        OnMapClickListener, OnMapLongClickListener, IInjection {
+
+    @Inject
+    lateinit var permissionUtils: PermissionUtils
 
     lateinit var mapView: MapView
     lateinit var googleMap: GoogleMap
@@ -66,6 +73,7 @@ abstract class MapBaseFragment<T : IBaseView, P : BasePresenter<T>, CI : BaseClu
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         Dexter.withActivity(activity)
                 .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                 .withListener(object : PermissionListener {

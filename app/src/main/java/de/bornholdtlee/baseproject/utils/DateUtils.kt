@@ -1,12 +1,13 @@
 package de.bornholdtlee.baseproject.utils
 
 import android.text.format.DateFormat
+import de.bornholdtlee.baseproject.base.BaseApplication
 
 import org.joda.time.DateTime
 
 import java.util.Date
 
-class DateUtils {
+class DateUtils(application: BaseApplication) : BaseUtils(application) {
 
     companion object {
 
