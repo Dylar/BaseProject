@@ -1,17 +1,14 @@
-package de.bornholdtlee.baseproject.ui.map.clusteritems
+package de.bornholdtlee.baseproject.ui.map.components.poi
 
-import com.google.android.gms.maps.model.LatLng
 import de.bornholdtlee.baseproject.CLUSTER_TYPE_POI
 import de.bornholdtlee.baseproject.NULL_INTEGER
 import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.base.map.BaseClusterItem
+import de.bornholdtlee.baseproject.ui.map.components.MapItemInfo
 
 class PoiClusterItem(
-        position: LatLng,
-        dataId: Int = NULL_INTEGER,
-        title: String = "",
-        snippet: String = "")
-    : BaseClusterItem(position, dataId, title, snippet) {
+        info: MapItemInfo)
+    : BaseClusterItem(info) {
 
     override val dataType: String = CLUSTER_TYPE_POI
     override val icon: Int = R.drawable.marker_poi

@@ -1,4 +1,4 @@
-package de.bornholdtlee.baseproject.ui.map.clusteritems
+package de.bornholdtlee.baseproject.ui.map.components.poi
 
 import android.content.Context
 import android.view.View
@@ -9,27 +9,27 @@ import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.base.map.BaseClusterRenderer
 
 
-open class MapClusterRenderer(context: Context,
+open class PoiClusterRenderer(context: Context,
                               map: GoogleMap,
-                              clusterManager: ClusterManager<LessonClusterItem>)
-    : BaseClusterRenderer<LessonClusterItem>(context, map, clusterManager) {
+                              clusterManager: ClusterManager<PoiClusterItem>)
+    : BaseClusterRenderer<PoiClusterItem>(context, map, clusterManager) {
 
 
     override val itemLayoutId: Int = R.layout.item_map_lesson
     override val clusterLayoutId: Int = R.layout.cluster_map_lesson
 
-    override fun initItemView(itemMapView: View, item: LessonClusterItem) {
+    override fun initItemView(itemMapView: View, item: PoiClusterItem) {
         val imageView = itemMapView.findViewById(R.id.image) as ImageView
         imageView.setImageResource(item.icon)
     }
 
-    override fun initClusterView(clusterMapView: View, items: Collection<LessonClusterItem>) {
+    override fun initClusterView(clusterMapView: View, items: Collection<PoiClusterItem>) {
         val imageView1 = clusterMapView.findViewById(R.id.image1) as ImageView
         val imageView2 = clusterMapView.findViewById(R.id.image2) as ImageView
         val imageView3 = clusterMapView.findViewById(R.id.image3) as ImageView
         val imageView4 = clusterMapView.findViewById(R.id.image4) as ImageView
 
-        val list = ArrayList<LessonClusterItem>()
+        val list = ArrayList<PoiClusterItem>()
         for (baseClusterItem in items.iterator()) {
             list.add(baseClusterItem)
         }

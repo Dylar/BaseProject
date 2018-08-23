@@ -1,14 +1,12 @@
-package de.bornholdtlee.baseproject.ui.map.clusteritems
+package de.bornholdtlee.baseproject.ui.map.components.lesson
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.base.map.BaseClusterInfoAdapter
-import de.bornholdtlee.baseproject.base.map.BaseClusterItem
-import de.bornholdtlee.baseproject.base.map.BaseClusterRenderer
 
-class LessonClusterInfoAdapter(renderer: BaseClusterRenderer<LessonClusterItem>) : BaseClusterInfoAdapter<LessonClusterItem, BaseClusterRenderer<LessonClusterItem>>(renderer) {
+class LessonClusterInfoAdapter(renderer: LessonClusterRenderer) : BaseClusterInfoAdapter<LessonClusterItem, LessonClusterRenderer>(renderer) {
     override val layoutId: Int = R.layout.info_window_layout
 
     override fun initViews(windowView: View, clusterItem: LessonClusterItem) {

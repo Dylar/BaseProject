@@ -6,7 +6,6 @@ import android.view.View
 import butterknife.BindView
 import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.base.BaseFragment
-import de.bornholdtlee.baseproject.ui.map.clusteritems.LessonClusterItem
 import de.bornholdtlee.baseproject.utils.Logger
 
 class MapBaseClusterFragment : BaseFragment() {
@@ -19,7 +18,7 @@ class MapBaseClusterFragment : BaseFragment() {
 
             val ids = ArrayList<Int>()
             for (item in items) {
-                ids.add(item.dataId)
+                ids.add(item.info.id.toInt())
             }
 
             val args = Bundle()

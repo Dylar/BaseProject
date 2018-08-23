@@ -8,6 +8,7 @@ import de.bornholdtlee.baseproject.controller.OrganizerController
 import de.bornholdtlee.baseproject.injection.IInjection
 import de.bornholdtlee.baseproject.injection.components.AppComponent
 import de.bornholdtlee.baseproject.model.Lesson
+import de.bornholdtlee.baseproject.model.Poi
 import javax.inject.Inject
 
 class MapPresenter(application: BaseApplication, view: IMapView) : BasePresenter<IMapView>(application, view), IInjection {
@@ -27,13 +28,21 @@ class MapPresenter(application: BaseApplication, view: IMapView) : BasePresenter
     lateinit var organizerController: OrganizerController
 
     var lessons: List<Lesson> = ArrayList()
-    var pois: List<LatLng> = listOf(hamburg, berlin, sangerhausen, erfurt, kiel, koeln, wien)
+    var pois: MutableList<Poi> = ArrayList()
 
     override fun inject(appComponent: AppComponent) {
         appComponent.inject(this)
     }
 
     fun initMap() {
+        pois.add(Poi(0, hamburg, "Hamburg", "Meine Perle"))
+        pois.add(Poi(1, berlin, "Berlin", "Hauptstadt"))
+        pois.add(Poi(2, sangerhausen, "Sangerhausen", "Bonnella Heimat"))
+        pois.add(Poi(3, erfurt, "Erfurt", "Teilheimat von Evelyn"))
+        pois.add(Poi(4, kiel, "Kiel", "Peter Heimat"))
+        pois.add(Poi(5, koeln, "Köln", "Youtube"))
+        pois.add(Poi(6, wien, "Wien", "Hitlers Hauptstadt"))
+
         renderMap()
     }
 

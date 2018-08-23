@@ -21,7 +21,7 @@ class CreateLessonPresenter(application: BaseApplication, view: ICreateLessonVie
     @Inject
     lateinit var lessonController: LessonController
 
-    private val lesson: Lesson = Lesson()
+    private lateinit var lesson: Lesson
 
     override val adapterItemCount: Int
         get() = organizerController.organizerRepository.getAll().size
@@ -31,7 +31,7 @@ class CreateLessonPresenter(application: BaseApplication, view: ICreateLessonVie
     }
 
     fun onSetLatLng(latLng: LatLng) {
-        lesson.location = latLng
+//        lesson.location = latLng TODO data type ... everything else mapinfo shit
     }
 
     fun onCreate() {

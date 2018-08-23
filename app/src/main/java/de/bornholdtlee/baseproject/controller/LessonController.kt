@@ -29,12 +29,9 @@ class LessonController(baseApplication: BaseApplication) : BaseController(baseAp
                      location: LatLng,
                      organizer: MutableList<Organizer> = ArrayList(),
                      attendees: MutableList<Attendee> = ArrayList()): Lesson {
-        val lesson = Lesson()
-        lesson.location = location
+        val lesson = Lesson(0, location, name, description)
         lesson.createdAt = DateTime.now()
         lesson.updatedAt = DateTime.now()
-        lesson.name = name
-        lesson.description = description
         lesson.organizer = organizer
         lesson.attendees = attendees
         lessonRepository.upsert(lesson)
