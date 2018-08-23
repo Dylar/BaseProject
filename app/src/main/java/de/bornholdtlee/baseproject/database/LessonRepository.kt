@@ -1,10 +1,10 @@
 package de.bornholdtlee.baseproject.database
 
+import de.bornholdtlee.baseproject.TestData
 import de.bornholdtlee.baseproject.base.BaseApplication
 import de.bornholdtlee.baseproject.injection.IInjection
 import de.bornholdtlee.baseproject.injection.components.AppComponent
 import de.bornholdtlee.baseproject.model.Lesson
-import de.bornholdtlee.baseproject.utils.Logger
 
 class LessonRepository(application: BaseApplication) : BaseRepository(application), IInjection {
 
@@ -25,7 +25,7 @@ class LessonRepository(application: BaseApplication) : BaseRepository(applicatio
     }
 
     fun getAll(): List<Lesson> {
-        return allLessons
+        return TestData.testLessons
     }
 
     fun getByIds(ids: List<Int>): List<Lesson> {

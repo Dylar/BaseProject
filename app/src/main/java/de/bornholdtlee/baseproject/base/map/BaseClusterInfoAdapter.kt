@@ -5,7 +5,7 @@ import android.view.View
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 
-abstract class BaseClusterInfoAdapter(private val renderer: BaseClusterRenderer) : GoogleMap.InfoWindowAdapter {
+abstract class BaseClusterInfoAdapter<CI : BaseClusterItem, R : BaseClusterRenderer<CI>>(private val renderer: R) : GoogleMap.InfoWindowAdapter {
 
     private val inflater: LayoutInflater = LayoutInflater.from(renderer.context)
 
@@ -21,6 +21,6 @@ abstract class BaseClusterInfoAdapter(private val renderer: BaseClusterRenderer)
         return null
     }
 
-    abstract fun initViews(windowView: View, clusterItem: BaseClusterItem)
+    abstract fun initViews(windowView: View, clusterItem: CI)
 
 }

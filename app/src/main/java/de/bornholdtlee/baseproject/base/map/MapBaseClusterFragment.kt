@@ -13,12 +13,12 @@ class MapBaseClusterFragment : BaseFragment() {
     companion object {
         private const val KEY_DATA_IDS = "keyDataIds"
 
-        fun createInstance(items: MutableCollection<BaseClusterItem>): MapBaseClusterFragment {
+       fun <CI : BaseClusterItem> createInstance(items: MutableCollection<CI>): MapBaseClusterFragment {
             val frag = MapBaseClusterFragment()
 
             val ids = ArrayList<Int>()
             for (item in items) {
-                ids.add(item.dataId)
+                ids.add(item.info.id.toInt())
             }
 
             val args = Bundle()

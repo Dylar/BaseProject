@@ -4,29 +4,21 @@
     android:layout_height="match_parent"
     android:padding="@dimen/two_grid_unit">
 
-    <FrameLayout
-        android:id="@+id/container_haha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    </FrameLayout>
-
     <TextView
-        android:id="@+id/fragment_main_welcome_text"
+        android:id="@+id/fragment_lesson_overview_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="DEFAULT PROJECT"
+        android:text="Keine Kurse"
         android:textColor="@color/black" />
 
     <Button
-        android:id="@+id/fragment_main_counter_button"
+        android:id="@+id/fragment_lesson_overview_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/fragment_main_welcome_text"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
-        android:text="Klick mich"
+        android:text="Create new"
         android:textColor="@color/black" />
 
 

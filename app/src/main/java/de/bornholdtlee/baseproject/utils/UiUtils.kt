@@ -16,10 +16,11 @@ import android.widget.TextView
 
 import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.base.BaseActivity
+import de.bornholdtlee.baseproject.base.BaseApplication
 import de.bornholdtlee.baseproject.base.BaseFragment
 import de.bornholdtlee.baseproject.enums.AnimationType
 
-class UiUtils {
+class UiUtils(application: BaseApplication) : BaseUtils(application) {
 
     fun convertDpToPx(dp: Float): Float {
         val metrics = Resources.getSystem().displayMetrics

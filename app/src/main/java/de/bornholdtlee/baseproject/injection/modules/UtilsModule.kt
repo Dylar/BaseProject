@@ -5,58 +5,50 @@ import dagger.Provides
 import de.bornholdtlee.baseproject.base.BaseApplication
 import de.bornholdtlee.baseproject.injection.ApplicationScope
 import de.bornholdtlee.baseproject.utils.*
-import de.bornholdtlee.baseproject.viewbuilder.DialogBuilder
-import de.bornholdtlee.baseproject.viewbuilder.ToastBuilder
 
 @Module
-open class UtilsModule {
+class UtilsModule {
 
     @Provides
     @ApplicationScope
-    fun provideNetworkUtils(context: BaseApplication): NetworkUtils {
-        return NetworkUtils(context)
+    fun provideNetworkUtils(application: BaseApplication): NetworkUtils {
+        return NetworkUtils(application)
     }
 
     @Provides
     @ApplicationScope
-    open fun provideSharedPreferencesUtils(context: BaseApplication): SharedPreferencesUtils {
-        return SharedPreferencesUtils(context)
+    fun provideSharedPreferencesUtils(application: BaseApplication): SharedPreferencesUtils {
+        return SharedPreferencesUtils(application)
     }
 
     @Provides
     @ApplicationScope
-    fun provideToastBuilder(): ToastBuilder {
-        return ToastBuilder()
+    fun provideUiUtils(application: BaseApplication): UiUtils {
+        return UiUtils(application)
     }
 
     @Provides
     @ApplicationScope
-    fun provideUiUtils(): UiUtils {
-        return UiUtils()
+    fun provideAndroidUtils(application: BaseApplication): AndroidUtils {
+        return AndroidUtils(application)
     }
 
     @Provides
     @ApplicationScope
-    fun provideDialogBuilder(): DialogBuilder {
-        return DialogBuilder()
+    fun provideStringUtils(application: BaseApplication): StringUtils {
+        return StringUtils(application)
     }
 
     @Provides
     @ApplicationScope
-    fun provideAndroidUtils(): AndroidUtils {
-        return AndroidUtils()
+    fun provideDateUtils(application: BaseApplication): DateUtils {
+        return DateUtils(application)
     }
 
     @Provides
     @ApplicationScope
-    fun provideStringUtils(): StringUtils {
-        return StringUtils()
-    }
-
-    @Provides
-    @ApplicationScope
-    fun provideDateUtils(): DateUtils {
-        return DateUtils()
+    fun providePermissionUtils(application: BaseApplication): PermissionUtils {
+        return PermissionUtils(application)
     }
 
 }

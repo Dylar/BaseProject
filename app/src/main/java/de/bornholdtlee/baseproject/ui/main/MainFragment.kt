@@ -1,5 +1,10 @@
 package de.bornholdtlee.baseproject.ui.main
 
+import android.content.Context
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.FrameLayout
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.OnClick
@@ -30,6 +35,8 @@ class MainFragment : BaseFragment(), DefaultController.Callback, IInjection, Nav
 
     @BindView(R.id.fragment_main_welcome_text)
     lateinit var welcomeText: TextView
+    @BindView(R.id.container_haha)
+    lateinit var containerHaHa: FrameLayout
 
     override val navigationPosition: Int = TAB_HOME
 
@@ -41,12 +48,19 @@ class MainFragment : BaseFragment(), DefaultController.Callback, IInjection, Nav
         appComponent.inject(this)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val itemMapView = (context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.cluster_map_lesson, null)
+        containerHaHa.addView(itemMapView)
+    }
+
     override fun onResume() {
         super.onResume()
 
         makeTestApiCall()
         checkDB()
         readPreferences()
+
     }
 
     private fun readPreferences() {

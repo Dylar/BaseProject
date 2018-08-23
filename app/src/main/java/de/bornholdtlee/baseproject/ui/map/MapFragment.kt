@@ -1,29 +1,27 @@
 package de.bornholdtlee.baseproject.ui.map
 
 import android.app.Activity.RESULT_OK
-import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import butterknife.BindView
 import butterknife.OnClick
-import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.clustering.ClusterManager
+import com.google.android.gms.maps.model.LatLngBounds
 import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.TAB_MAP
 import de.bornholdtlee.baseproject.base.BaseApplication
-import de.bornholdtlee.baseproject.base.map.BaseClusterInfoAdapter
-import de.bornholdtlee.baseproject.base.map.BaseClusterItem
-import de.bornholdtlee.baseproject.base.map.BaseClusterRenderer
+import de.bornholdtlee.baseproject.base.map.BaseMapItemComponents
 import de.bornholdtlee.baseproject.base.map.MapBaseFragment
 import de.bornholdtlee.baseproject.base.navigation.NavigationBaseTab
+import de.bornholdtlee.baseproject.injection.components.AppComponent
 import de.bornholdtlee.baseproject.model.Lesson
+import de.bornholdtlee.baseproject.model.Poi
 import de.bornholdtlee.baseproject.ui.creation.CreateLessonActivity
-import de.bornholdtlee.baseproject.ui.map.clusteritems.LessonClusterItem
-import de.bornholdtlee.baseproject.ui.map.clusteritems.MapClusterInfoAdapter
-import de.bornholdtlee.baseproject.ui.map.clusteritems.PoiClusterItem
+import de.bornholdtlee.baseproject.ui.map.components.lesson.LessonItemComponents
+import de.bornholdtlee.baseproject.ui.map.components.poi.PoiItemComponents
 import de.bornholdtlee.baseproject.utils.Logger
 
 class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, NavigationBaseTab {
@@ -43,12 +41,11 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, Navigat
 
     override val navigationPosition: Int = TAB_MAP
 
+    override fun inject(appComponent: AppComponent) {
+        appComponent.inject(this)
+    }
+
     override fun createPresenter(application: BaseApplication): MapPresenter = MapPresenter(application, this)
-
-    override fun createRenderer(context: Context, googleMap: GoogleMap, clusterManager: ClusterManager<BaseClusterItem>)
-            : BaseClusterRenderer = BaseClusterRenderer(context, googleMap, clusterManager)
-
-    override fun createInfoViewAdapter(renderer: BaseClusterRenderer): BaseClusterInfoAdapter = MapClusterInfoAdapter(renderer)
 
     @OnClick(R.id.fragment_map_btn1)
     internal fun onBtn1() {
@@ -73,7 +70,7 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, Navigat
     override fun initMapItems() {
         presenter.initMap()
         addMarker(-34.0, 151.0, "SEATTLE", "Marker Description")
-//        zoomCamera(-34.0, 151.0, 12f)
+        zoomCamera(LatLng(53.565278, 10.001389), 10f)
         addCircle(LatLng(-44.0, 151.0))
         addPolyline(-34.0, 151.0, -54.0, 181.0)
         addPolygone()
@@ -81,18 +78,15 @@ class MapFragment : MapBaseFragment<IMapView, MapPresenter>(), IMapView, Navigat
 
     }
 
-    override fun renderMap(lessons: List<Lesson>, pois: List<LatLng>) {
+    override fun addItemComponents(components: MutableMap<String, BaseMapItemComponents<*, *, *>>) {
+        components["pois"] = PoiItemComponents(context!!, this)
+        components["lesson"] = LessonItemComponents(context!!, this)
+    }
+
+    override fun renderMap(lessons: List<Lesson>, pois: List<Poi>) {
         Logger.error("RENDER MAP: " + this.toString())
-        clusterManager.clearItems()
-        for (lesson in lessons) {
-            clusterManager.addItem(LessonClusterItem(lesson))
-        }
-
-        for (poi in pois) {
-            clusterManager.addItem(PoiClusterItem(poi))
-        }
-
-        renderNew()
+        renderMap("lesson", lessons)
+        renderMap("pois", pois)
     }
 
     override fun onMapClick(location: LatLng?) {

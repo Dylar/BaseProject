@@ -11,9 +11,10 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.widget.Toast
 import de.bornholdtlee.baseproject.R
+import de.bornholdtlee.baseproject.base.BaseApplication
 
 
-class AndroidUtils {
+class AndroidUtils(application: BaseApplication) : BaseUtils(application) {
     companion object {
         val URL_PLAY_GOOGLE_STORE_APPS_DETAILS_ID = "http://play.google.com/store/apps/details?id="
         val URL_MARKET_DETAILS_ID = "market://details?id="

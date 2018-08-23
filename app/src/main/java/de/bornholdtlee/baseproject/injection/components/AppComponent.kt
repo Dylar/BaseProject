@@ -14,13 +14,19 @@ import de.bornholdtlee.baseproject.ui.map.MapFragment
 import de.bornholdtlee.baseproject.ui.map.MapPresenter
 
 @ApplicationScope
-@Component(modules = [ApplicationModule::class, NetworkModule::class, DatabaseModule::class, UtilsModule::class, ControllerModule::class])
+@Component(modules = [
+    ApplicationModule::class,
+    NetworkModule::class,
+    DatabaseModule::class,
+    UtilsModule::class,
+    ControllerModule::class,
+    BuilderModule::class])
 interface AppComponent {
     fun inject(baseActivity: BaseActivity)
 
     fun inject(baseFragment: BaseFragment)
     fun inject(mainFragment: MainFragment)
-    fun inject(baseFragment: MapFragment)
+    fun inject(mapFragment: MapFragment)
 
     fun inject(defaultController: DefaultController)
     fun inject(lessonController: LessonController)
