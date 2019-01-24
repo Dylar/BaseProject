@@ -1,8 +1,8 @@
 package de.bornholdtlee.baseproject.base.map
 
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.base.BaseFragment

@@ -1,16 +1,16 @@
 package de.bornholdtlee.baseproject.base
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.*
+import androidx.fragment.app.Fragment
 import butterknife.ButterKnife
 import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.enums.AnimationType
 import de.bornholdtlee.baseproject.injection.IInjection
-import de.bornholdtlee.baseproject.model.Lesson
 import de.bornholdtlee.baseproject.viewbuilder.DialogBuilder
 import de.bornholdtlee.baseproject.viewbuilder.ToastBuilder
 import javax.inject.Inject
+
 
 abstract class BaseFragment : Fragment() {
 
@@ -69,12 +69,12 @@ abstract class BaseFragment : Fragment() {
         baseActivity?.setToolbarTitle(getString(contentTitle))
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu?) {
+    override fun onPrepareOptionsMenu(menu: Menu) {
         actionbarHandler.onPrepareOptionsMenu(menu)
         super.onPrepareOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return actionbarHandler.onOptionsItemSelected(item!!.itemId) || super.onOptionsItemSelected(item)
     }
 

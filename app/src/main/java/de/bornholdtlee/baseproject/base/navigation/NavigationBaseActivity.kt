@@ -2,8 +2,8 @@ package de.bornholdtlee.baseproject.base.navigation
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.view.View
+import androidx.core.content.ContextCompat
 import butterknife.BindView
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter

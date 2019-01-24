@@ -1,8 +1,8 @@
 package de.bornholdtlee.baseproject.base.recyclerview
 
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import butterknife.ButterKnife
 
 abstract class BaseViewHolder<M>(presenter: IAdapterPresenter<M>, view: View) : RecyclerView.ViewHolder(view), IAdapterView<M> {
