@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import de.bornholdtlee.baseproject.R
+import de.bornholdtlee.baseproject.database.room.LessonData
 import de.bornholdtlee.baseproject.model.Lesson
 
 class CreateLessonOrganizerFragment : CreateLessonBaseFragment() {
@@ -28,7 +29,7 @@ class CreateLessonOrganizerFragment : CreateLessonBaseFragment() {
         recyclerView.adapter = SelectOrganizerAdapter(context!!, presenter)
     }
 
-    override fun refreshView(lesson: Lesson) {
+    override fun refreshView(lesson: LessonData) {
 
     }
 

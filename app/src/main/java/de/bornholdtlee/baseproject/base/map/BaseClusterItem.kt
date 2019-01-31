@@ -21,7 +21,7 @@ abstract class BaseClusterItem(
     }
 
     override fun getPosition(): LatLng {
-        return info.position
+        return info.location!!
     }
 
 }

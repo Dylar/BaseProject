@@ -7,6 +7,7 @@ import com.google.android.gms.maps.model.LatLng
 import de.bornholdtlee.baseproject.base.BaseActivity
 import de.bornholdtlee.baseproject.base.BaseApplication
 import de.bornholdtlee.baseproject.base.mvp.MVPActivity
+import de.bornholdtlee.baseproject.database.room.LessonData
 import de.bornholdtlee.baseproject.model.Lesson
 
 class CreateLessonActivity : MVPActivity<ICreateLessonView, CreateLessonPresenter>(), ICreateLessonView {
@@ -28,12 +29,12 @@ class CreateLessonActivity : MVPActivity<ICreateLessonView, CreateLessonPresente
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val latLng = intent.extras.getParcelable<LatLng>(KEY_LATLNG)
+        val latLng = intent!!.extras!!.getParcelable<LatLng>(KEY_LATLNG)!!
         presenter.onSetLatLng(latLng)
         showFragment(CreateLessonNameFragment.createInstance())
     }
 
-    override fun initView(lesson: Lesson) {
+    override fun initView(lesson: LessonData) {
         val frag = getCurrentContent()
         if (frag is CreateLessonBaseFragment) {
             frag.refreshView(lesson)

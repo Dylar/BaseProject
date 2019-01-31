@@ -58,10 +58,10 @@ object TestData {
                              organizer: MutableList<Organizer> = ArrayList(),
                              attendees: MutableList<Attendee> = ArrayList()): Lesson {
         val lesson = Lesson(0, location, name, description)
-        lesson.createdAt = DateTime.now()
-        lesson.updatedAt = DateTime.now()
-        lesson.organizer = organizer
-        lesson.attendees = attendees
+//        lesson.createdAt = DateTime.now()
+//        lesson.updatedAt = DateTime.now()
+//        lesson.organizer = organizer
+//        lesson.attendees = attendees
         return lesson
 
     }

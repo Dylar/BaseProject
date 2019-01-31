@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/two_grid_unit">
+
+    <FrameLayout
+        android:id="@+id/container_haha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/fragment_first_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="First"
+        android:textColor="@color/black" />
+
+    <EditText
+        android:id="@+id/fragment_last_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_first_name"
+        android:text="Last"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/fragment_add_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_last_name"
+        android:layout_marginTop="8dp"
+        android:text="Upsert"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/fragment_delete_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_last_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="Delete"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/fragment_dispose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_last_name"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:text="Dispose"
+        android:textColor="@color/black" />
+
+    <ListView
+        android:id="@+id/fragment_db_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_delete_user"
+        android:text="Last"
+        android:textColor="@color/black" />
+
+
+</RelativeLayout>

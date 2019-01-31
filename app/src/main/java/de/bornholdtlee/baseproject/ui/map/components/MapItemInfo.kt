@@ -4,7 +4,7 @@ import com.google.android.gms.maps.model.LatLng
 
 interface MapItemInfo {
     var id: Long
-    var position: LatLng
+    var location: LatLng?
     var name: String
     var description: String
 }

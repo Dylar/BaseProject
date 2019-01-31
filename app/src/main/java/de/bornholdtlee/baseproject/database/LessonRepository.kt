@@ -1,15 +1,22 @@
 package de.bornholdtlee.baseproject.database
 
-import de.bornholdtlee.baseproject.TestData
 import de.bornholdtlee.baseproject.base.BaseApplication
+import de.bornholdtlee.baseproject.database.room.Database
+import de.bornholdtlee.baseproject.database.room.LessonDao
+import de.bornholdtlee.baseproject.database.room.LessonData
 import de.bornholdtlee.baseproject.injection.IInjection
 import de.bornholdtlee.baseproject.injection.components.AppComponent
 import de.bornholdtlee.baseproject.model.Lesson
+import javax.inject.Inject
 
 class LessonRepository(application: BaseApplication) : BaseRepository(application), IInjection {
 
-    //    @Inject
-//    lateinit var lessonBox: Box<Lesson>
+    @Inject
+    lateinit var database: Database
+
+    @Inject
+    lateinit var lessonDao: LessonDao
+
     companion object {
         private var allLessons = ArrayList<Lesson>()
     }
@@ -18,14 +25,16 @@ class LessonRepository(application: BaseApplication) : BaseRepository(applicatio
 //        appComponent.inject(this)
     }
 
-    fun upsert(lesson: Lesson) {
+    fun upsert(lesson: LessonData) {
+
 //        lessonBox.put(lesson)
         lesson.id = allLessons.size.toLong()
-        allLessons.add(lesson)
+        lessonDao.insertAll(lesson)
+//        allLessons.add(lesson)
     }
 
     fun getAll(): List<Lesson> {
-        return TestData.testLessons
+        return ArrayList()//database.lessonDao().getAll()
     }
 
     fun getByIds(ids: List<Int>): List<Lesson> {

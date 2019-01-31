@@ -20,6 +20,6 @@ class OrganizerViewHolder(presenter: IAdapterPresenter<Organizer>, view: View) :
     override fun bindValues(model: Organizer) {
         imageIV.setImageResource(model.image)
         nameTV.text = model.name
-        itemView.setOnClickListener({ presenter.onItemClicked(model) })
+        itemView.setOnClickListener { presenter.onItemClicked(model) }
     }
 }

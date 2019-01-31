@@ -25,7 +25,7 @@ class AddHeaderInterceptor : Interceptor {
 
     private fun addHeader(builder: Request.Builder) {
         builder.header("Authorization", authToken)
-        builder.header("User-Agent", userAgent)
+        builder.header("UserData-Agent", userAgent)
     }
 
 }

@@ -4,6 +4,7 @@ import android.widget.EditText
 import butterknife.BindView
 import butterknife.OnClick
 import de.bornholdtlee.baseproject.R
+import de.bornholdtlee.baseproject.database.room.LessonData
 import de.bornholdtlee.baseproject.model.Lesson
 
 class CreateLessonDescriptionFragment : CreateLessonBaseFragment() {
@@ -20,7 +21,7 @@ class CreateLessonDescriptionFragment : CreateLessonBaseFragment() {
     override val layoutId: Int
         get() = R.layout.fragment_create_lesson_description
 
-    override fun refreshView(lesson: Lesson) {
+    override fun refreshView(lesson: LessonData) {
         descriptionET.setText(lesson.description)
     }
 

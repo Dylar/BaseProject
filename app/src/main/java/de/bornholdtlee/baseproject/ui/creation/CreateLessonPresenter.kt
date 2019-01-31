@@ -7,9 +7,9 @@ import de.bornholdtlee.baseproject.base.recyclerview.IAdapterPresenter
 import de.bornholdtlee.baseproject.base.recyclerview.IAdapterView
 import de.bornholdtlee.baseproject.controller.LessonController
 import de.bornholdtlee.baseproject.controller.OrganizerController
+import de.bornholdtlee.baseproject.database.room.LessonData
 import de.bornholdtlee.baseproject.injection.IInjection
 import de.bornholdtlee.baseproject.injection.components.AppComponent
-import de.bornholdtlee.baseproject.model.Lesson
 import de.bornholdtlee.baseproject.model.Organizer
 import javax.inject.Inject
 
@@ -21,7 +21,7 @@ class CreateLessonPresenter(application: BaseApplication, view: ICreateLessonVie
     @Inject
     lateinit var lessonController: LessonController
 
-    private lateinit var lesson: Lesson
+    private var lesson: LessonData = LessonData()
 
     override val adapterItemCount: Int
         get() = organizerController.organizerRepository.getAll().size
@@ -31,7 +31,7 @@ class CreateLessonPresenter(application: BaseApplication, view: ICreateLessonVie
     }
 
     fun onSetLatLng(latLng: LatLng) {
-//        lesson.location = latLng TODO data type ... everything else mapinfo shit
+        lesson.location = latLng // TODO data type ... everything else mapinfo shit     <- what? :D
     }
 
     fun onCreate() {
@@ -53,7 +53,7 @@ class CreateLessonPresenter(application: BaseApplication, view: ICreateLessonVie
     }
 
     override fun onItemClicked(model: Organizer) {
-        lesson.organizer.add(model)
+//        lesson.organizer.add(model) TODO
         lessonController.createLesson(lesson)
         getView().finishCreation()
     }

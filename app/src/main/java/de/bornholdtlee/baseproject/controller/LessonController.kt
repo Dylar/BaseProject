@@ -3,12 +3,13 @@ package de.bornholdtlee.baseproject.controller
 import com.google.android.gms.maps.model.LatLng
 import de.bornholdtlee.baseproject.base.BaseApplication
 import de.bornholdtlee.baseproject.database.LessonRepository
+import de.bornholdtlee.baseproject.database.room.LessonData
 import de.bornholdtlee.baseproject.injection.IInjection
 import de.bornholdtlee.baseproject.injection.components.AppComponent
 import de.bornholdtlee.baseproject.model.Attendee
-import de.bornholdtlee.baseproject.model.Lesson
 import de.bornholdtlee.baseproject.model.Organizer
 import org.joda.time.DateTime
+import java.util.*
 import javax.inject.Inject
 
 class LessonController(baseApplication: BaseApplication) : BaseController(baseApplication), IInjection {
@@ -20,7 +21,7 @@ class LessonController(baseApplication: BaseApplication) : BaseController(baseAp
         appComponent.inject(this)
     }
 
-    fun createLesson(lesson: Lesson) {
+    fun createLesson(lesson: LessonData) {
         lessonRepository.upsert(lesson)
     }
 
@@ -28,12 +29,11 @@ class LessonController(baseApplication: BaseApplication) : BaseController(baseAp
                      description: String = "",
                      location: LatLng,
                      organizer: MutableList<Organizer> = ArrayList(),
-                     attendees: MutableList<Attendee> = ArrayList()): Lesson {
-        val lesson = Lesson(0, location, name, description)
-        lesson.createdAt = DateTime.now()
-        lesson.updatedAt = DateTime.now()
-        lesson.organizer = organizer
-        lesson.attendees = attendees
+                     attendees: MutableList<Attendee> = ArrayList()): LessonData {
+
+        val lesson = LessonData(UUID.randomUUID().toString(), name, description, location)
+//        lesson.organizer = organizer
+//        lesson.attendees = attendees TODO
         lessonRepository.upsert(lesson)
         return lesson
 

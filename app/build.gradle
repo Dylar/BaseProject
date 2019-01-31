@@ -17,7 +17,9 @@ android {
         versionCode System.getenv("CI_PIPELINE_ID") as Integer ?: 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
 
+        buildConfigField 'String', 'DATABASE_NAME', '"database"'
         buildConfigField 'String', 'AUTH_USER', '"BLG"'
         buildConfigField 'String', 'AUTH_PW', '"SuperStrongPW"'
     }
@@ -90,6 +92,7 @@ android {
             manifestPlaceholders = [googleMapsApiKey: "AIzaSyB_dz6mv-YioYb7FE6LbTVSYVmgkrrF4gU"]
         }
     }
+
 }
 
 hockeyapp {
@@ -130,7 +133,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     /////UI/////
-
+    implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
     implementation 'com.google.maps.android:android-maps-utils:0.5'
 
@@ -182,6 +185,28 @@ dependencies {
     annotationProcessor "io.objectbox:objectbox-processor:$objectboxVersion"
     implementation "io.objectbox:objectbox-macos:$objectboxVersion"
 
+
+    implementation "androidx.room:room-common:$roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+//    implementation "androidx.room:room-guava:$roomVersion"
+    implementation "androidx.room:room-migration:$roomVersion"
+    implementation "androidx.room:room-runtime:$roomVersion"
+    implementation "androidx.room:room-rxjava2:$roomVersion"
+    implementation "androidx.room:room-testing:$roomVersion"
+
+//    configurations.all {//dafuq? xD
+//        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+//            def requested = details.requested
+//            if (requested.group == "com.android.support") {
+//                if (!requested.name.startsWith("multidex")) {
+//                    details.useVersion "26.+"
+//                }
+//            }
+//        }
+//
+//        all*.exclude group: 'com.google.guava', module: 'listenablefuture'
+//    }
     /////API/////
 
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"

@@ -1,16 +1,16 @@
 package de.bornholdtlee.baseproject.injection.modules
 
+import androidx.room.Room
 import dagger.Module
 import dagger.Provides
+import de.bornholdtlee.baseproject.BuildConfig
 import de.bornholdtlee.baseproject.base.BaseApplication
 import de.bornholdtlee.baseproject.database.LessonRepository
 import de.bornholdtlee.baseproject.database.OrganizerRepository
+import de.bornholdtlee.baseproject.database.room.Database
+import de.bornholdtlee.baseproject.database.room.LessonDao
+import de.bornholdtlee.baseproject.database.room.UserDao
 import de.bornholdtlee.baseproject.injection.ApplicationScope
-import de.bornholdtlee.baseproject.model.Attendee
-import de.bornholdtlee.baseproject.model.Lesson
-import de.bornholdtlee.baseproject.model.Organizer
-import io.objectbox.Box
-import io.objectbox.BoxStore
 
 @Module
 class DatabaseModule {
@@ -39,8 +39,8 @@ class DatabaseModule {
 //
 //    @Provides
 //    @ApplicationScope
-//    fun provideLessonBox(store: BoxStore): Box<Lesson> {
-//        return store.boxFor(Lesson::class.java)
+//    fun provideLessonBox(store: BoxStore): Box<LessonData> {
+//        return store.boxFor(LessonData::class.java)
 //    }
 
     @Provides
@@ -54,4 +54,26 @@ class DatabaseModule {
     fun provideOrganizerRepository(application: BaseApplication): OrganizerRepository {
         return OrganizerRepository(application)
     }
+
+    @Provides
+    @ApplicationScope
+    fun roomDatabase(application: BaseApplication): Database {
+        return Room.databaseBuilder(
+                application,
+                Database::class.java, BuildConfig.DATABASE_NAME
+        ).build()
+    }
+
+    @Provides
+    @ApplicationScope
+    fun lessonDao(application: Database): LessonDao {
+        return application.lessonDao()
+    }
+
+    @Provides
+    @ApplicationScope
+    fun userDao(application: Database): UserDao {
+        return application.userDao()
+    }
+
 }
