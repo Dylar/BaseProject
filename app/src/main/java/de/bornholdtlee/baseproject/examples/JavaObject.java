@@ -2,7 +2,7 @@ package de.bornholdtlee.baseproject.examples;
 
 import de.bornholdtlee.baseproject.utils.Logger;
 
-public class JavaObject {
+public class JavaObject implements TestMethodsKotlin {
 
     private static final String DEFAULT_IMAGE_PATH = "imagePath";
     byte[] loadedImage;

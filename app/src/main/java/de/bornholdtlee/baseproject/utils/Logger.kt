@@ -19,13 +19,13 @@ object Logger {
                             val callingClass = stackTraceElements[searchNextNotLoggerClassIndex]
                             if (!isLoggerClass(callingClass)) {
                                 val split = callingClass.className.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                                var className = split[split.size - 1]
+                                var className = split.last()
 
                                 if (className.contains("$")) {
                                     className = className.split("\\$".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]
                                 }
-
-                                return "(" + className + ".java:" + callingClass.lineNumber + ")"
+                                val isJava = callingClass.fileName.endsWith(".java")
+                                return "($className${if (isJava) ".java" else ".kt"}:${callingClass.lineNumber})"
                             }
                         }
                     } catch (e: Exception) {
@@ -41,39 +41,44 @@ object Logger {
         return stackTraceElement.className == Logger::class.java.canonicalName
     }
 
+    private fun createMessage(message: String): String {
+        return "<-- $message"
+    }
+
+
     fun error(message: String) {
         if (isAllowedToLog) {
-            Log.e(callingClass, message)
+            Log.e(callingClass, createMessage(message))
         }
     }
 
     fun debug(message: String) {
         if (isAllowedToLog) {
-            Log.d(callingClass, message)
+            Log.d(callingClass, createMessage(message))
         }
     }
 
     fun info(message: String) {
         if (isAllowedToLog) {
-            Log.i(callingClass, message)
+            Log.i(callingClass, createMessage(message))
         }
     }
 
     fun verbose(message: String) {
         if (isAllowedToLog) {
-            Log.v(callingClass, message)
+            Log.v(callingClass, createMessage(message))
         }
     }
 
     fun warn(message: String) {
         if (isAllowedToLog) {
-            Log.w(callingClass, message)
+            Log.w(callingClass, createMessage(message))
         }
     }
 
     fun wtf(message: String) {
         if (isAllowedToLog) {
-            Log.wtf(callingClass, message)
+            Log.wtf(callingClass, createMessage(message))
         }
     }
 }

@@ -12,6 +12,7 @@ import de.bornholdtlee.baseproject.ui.creation.CreateLessonPresenter
 import de.bornholdtlee.baseproject.ui.main.MainFragment
 import de.bornholdtlee.baseproject.ui.map.MapFragment
 import de.bornholdtlee.baseproject.ui.map.MapPresenter
+import de.bornholdtlee.baseproject.ui.test.BrownbagFragment
 import de.bornholdtlee.baseproject.ui.test.TestFragment
 
 @ApplicationScope
@@ -26,6 +27,7 @@ interface AppComponent {
     fun inject(baseActivity: BaseActivity)
 
     fun inject(baseFragment: BaseFragment)
+    fun inject(baseFragment: BrownbagFragment)
     fun inject(mainFragment: MainFragment)
     fun inject(mapFragment: MapFragment)
     fun inject(testFragment: TestFragment)

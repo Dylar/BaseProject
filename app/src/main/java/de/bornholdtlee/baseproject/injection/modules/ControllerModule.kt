@@ -6,6 +6,7 @@ import de.bornholdtlee.baseproject.base.BaseApplication
 import de.bornholdtlee.baseproject.controller.DefaultController
 import de.bornholdtlee.baseproject.controller.LessonController
 import de.bornholdtlee.baseproject.controller.OrganizerController
+import de.bornholdtlee.baseproject.examples.TestController
 import de.bornholdtlee.baseproject.injection.ApplicationScope
 
 @Module
@@ -27,6 +28,12 @@ class ControllerModule {
     @ApplicationScope
     fun provideOrganizerController(baseApplication: BaseApplication): OrganizerController {
         return OrganizerController(baseApplication)
+    }
+
+    @Provides
+    @ApplicationScope
+    fun anyController(baseApplication: BaseApplication): TestController {
+        return TestController(baseApplication)
     }
 
 }

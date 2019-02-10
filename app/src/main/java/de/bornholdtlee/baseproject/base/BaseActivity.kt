@@ -3,11 +3,11 @@ package de.bornholdtlee.baseproject.base
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import butterknife.BindView
 import butterknife.ButterKnife
 import de.bornholdtlee.baseproject.R
@@ -73,7 +73,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var delegate : DelegateShit = DelegateShit()
+        var delegate: DelegateShit = DelegateShit()
         var test: TesteMich = TesteMich(delegate)
 
         Logger.error(test.method1())
@@ -166,7 +166,11 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     @JvmOverloads
-    fun showFragment(fragment: BaseFragment, containerViewResId: Int = contentContainerId, shouldAddToBackStack: Boolean = true, clearTop: Boolean = false, replace: Boolean = true) {
+    fun showFragment(fragment: BaseFragment,
+                     containerViewResId: Int = contentContainerId,
+                     shouldAddToBackStack: Boolean = true,
+                     clearTop: Boolean = false,
+                     replace: Boolean = true) {
         val fragmentName: String = fragment.javaClass.name
 
         if (clearTop) { //maybe not functional TODO
@@ -178,7 +182,8 @@ abstract class BaseActivity : AppCompatActivity() {
 
         var fragmentToAdd = fragment
         if (fragment.singleInstance) {
-            fragmentToAdd = supportFragmentManager.findFragmentByTag(fragmentName) as BaseFragment? ?: fragment
+            fragmentToAdd = supportFragmentManager.findFragmentByTag(fragmentName) as BaseFragment?
+                    ?: fragment
         }
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
