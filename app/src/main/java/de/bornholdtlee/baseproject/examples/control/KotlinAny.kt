@@ -1,28 +1,10 @@
-package de.bornholdtlee.baseproject.examples
+package de.bornholdtlee.baseproject.examples.control
 
 import de.bornholdtlee.baseproject.examples.TestController.Companion.BREAK_STRING
+import de.bornholdtlee.baseproject.examples.TestMethods
 import de.bornholdtlee.baseproject.utils.Logger
 
-open class KotlinAny : TestMethods {
-
-    private lateinit var loadedImage: ByteArray
-
-    fun loadImage(imagePath: String = "") {
-        loadedImage = ImageUtils.loadImage(imagePath)
-    }
-
-    fun showImage() {
-
-    }
-
-    fun calculateMax(value1: Int = 0, value2: Int = 0) {
-        val maxValue = if (value1 > value2) {
-            value1
-        } else {
-            value2
-        }
-        Logger.info("MaxValue is $maxValue")
-    }
+class KotlinAny : TestMethods {
 
     override fun isInWhen(value: Any): Boolean {
         Logger.info("Value is: $value")
@@ -80,9 +62,7 @@ open class KotlinAny : TestMethods {
         for (index in reversed) {
             Logger.info("Value: ${values[index]}")
         }
-
     }
-
 
     fun breakIt(break1: Int = 2, break2: Int = 3, vararg values: String) {
         Logger.info("For each loop")
@@ -113,8 +93,5 @@ open class KotlinAny : TestMethods {
             }
         }
 
-
     }
-
-
 }

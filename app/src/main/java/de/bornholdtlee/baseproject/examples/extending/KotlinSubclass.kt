@@ -2,8 +2,7 @@ package de.bornholdtlee.baseproject.examples.extending
 
 import de.bornholdtlee.baseproject.utils.Logger
 
-class KotlinSubclass : BaseClass() {
-
+class KotlinSubclass : BaseClass {
     override var posX: Int = 0
         get() = field - 1
         set(value) {
@@ -12,11 +11,24 @@ class KotlinSubclass : BaseClass() {
 
     override var posY: Int = 0
 
-    override fun doStuff() {
-        Logger.info("Kotlin stuff")
+    constructor() : super() {
+        init()
     }
 
-    override fun getName(): String {
-        return "Kotlin Sub"
+    constructor(name: String) : super(name) {
+        init()
+    }
+
+    private fun init() {
+        Logger.info("Do additional constructor stuff")
+    }
+
+    override fun doStuff() {
+        Logger.info("Kotlin sub stuff")
+    }
+
+    override fun openMethod() {
+        super.openMethod()
+        Logger.info("In Kotlin")
     }
 }

@@ -1,14 +1,27 @@
 package de.bornholdtlee.baseproject.examples.extending;
 
-import org.jetbrains.annotations.NotNull;
-
 import de.bornholdtlee.baseproject.utils.Logger;
 
 public class JavaSubclass extends BaseClass {
     private int posX = 0;
     private int posY = 0;
 
+    public JavaSubclass() {
+        super();
+        init();
+    }
+
+    public JavaSubclass(String name) {
+        super(name);
+        init();
+    }
+
+    private void init() {
+        Logger.INSTANCE.info("Do additional constructor stuff");
+    }
+
     @Override
+
     public int getPosX() {
         return posX - 1;
     }
@@ -30,18 +43,12 @@ public class JavaSubclass extends BaseClass {
 
     @Override
     public void doStuff() {
-        Logger.INSTANCE.info("Java stuff");
+        Logger.INSTANCE.info("Java sub stuff");
     }
 
-    @NotNull
     @Override
-    public String getName() {
-        return "Java sub";
-    }
-
-    @NotNull
-    @Override
-    public String getType() {
-        return "Java";
+    public void openMethod() {
+        super.openMethod();
+        Logger.INSTANCE.info("In Java");
     }
 }

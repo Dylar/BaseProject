@@ -1,19 +1,13 @@
-package de.bornholdtlee.baseproject.examples;
+package de.bornholdtlee.baseproject.examples.control;
 
+import org.jetbrains.annotations.NotNull;
+
+import de.bornholdtlee.baseproject.examples.TestMethodsKotlin;
 import de.bornholdtlee.baseproject.utils.Logger;
 
 public class JavaObject implements TestMethodsKotlin {
 
-    private static final String DEFAULT_IMAGE_PATH = "imagePath";
-    byte[] loadedImage;
-    private int width = 0;
-    private int height = 0;
-
-    public JavaObject() {
-//        loadedImage = ImageUtils.INSTANCE.loadImage(DEFAULT_IMAGE_PATH, width, height);
-    }
-
-    public boolean isInWhen(Object value) {
+    public boolean isInWhen(@NotNull Object value) {
         Logger.INSTANCE.info("Value is: " + value);
         boolean isIn;
         if (value instanceof Double && (Double) value == 0.0) {

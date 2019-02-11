@@ -1,5 +1,5 @@
 package de.bornholdtlee.baseproject.examples;
 
-interface TestMethods {
+public interface TestMethods {
     boolean isInWhen(Object value);
 }

@@ -2,6 +2,10 @@ package de.bornholdtlee.baseproject.examples
 
 import de.bornholdtlee.baseproject.base.BaseApplication
 import de.bornholdtlee.baseproject.controller.BaseController
+import de.bornholdtlee.baseproject.examples.control.ControlTest
+import de.bornholdtlee.baseproject.examples.declaration.DeclarationTest
+import de.bornholdtlee.baseproject.examples.delegate.DelegateTest
+import de.bornholdtlee.baseproject.examples.extending.ExtendingTest
 import de.bornholdtlee.baseproject.utils.Logger
 
 class TestController(application: BaseApplication) : BaseController(application) {
@@ -11,15 +15,14 @@ class TestController(application: BaseApplication) : BaseController(application)
         val TEST_LOOPINGS = TEST_IS_IN_WHEN + 1
         val TEST_BREAK_IT = TEST_LOOPINGS + 1
         val TEST_SUBCLASS = TEST_BREAK_IT + 1
+        val TEST_DELEGATE = TEST_SUBCLASS + 1
+        val TEST_DECLARATION = TEST_DELEGATE + 1
 
-        val MAX_TEST = TEST_SUBCLASS
+        val MAX_TEST = TEST_DELEGATE
 
         const val BREAK_STRING = "breakIt"
 
     }
-
-    val kotlinAny: KotlinAny = KotlinAny()
-    val javaObject: JavaObject = JavaObject()
 
     fun getTestName(index: Int): String {
         return "Test: ${when (index) {
@@ -27,6 +30,8 @@ class TestController(application: BaseApplication) : BaseController(application)
             TEST_LOOPINGS -> "Loopings"
             TEST_BREAK_IT -> "Break it"
             TEST_SUBCLASS -> "Subclass"
+            TEST_DELEGATE -> "Delegate"
+            TEST_DECLARATION -> "Declaration"
             else -> ""
         }}"
     }
@@ -34,41 +39,13 @@ class TestController(application: BaseApplication) : BaseController(application)
     fun doIt(counter: Int) {
         Logger.info("TEST: ${getTestName(counter)}")
         when (counter) {
-            TEST_IS_IN_WHEN -> {
-                doIsInWhenTest(0.0)
-                doIsInWhenTest(0L)
-                doIsInWhenTest(100f)
-                doIsInWhenTest(6)
-                doIsInWhenTest(7)
-                doIsInWhenTest(69)
-                doIsInWhenTest(99)
-                doIsInWhenTest(100)
-
-                doIsInWhenTest(101)
-                doIsInWhenTest(103)
-
-                doIsInWhenTest("IsnString")
-
-                doIsInWhenTest(kotlinAny)
-                doIsInWhenTest(javaObject)
-            }
-            TEST_LOOPINGS -> {
-                kotlinAny.doLooping("Ich", "bin", "eine", "Liste")
-            }
-            TEST_BREAK_IT -> {
-                kotlinAny.breakIt(values = *arrayOf("returnFunction"))
-                val list = arrayListOf("Ich", "bin", "eine", "Liste")
-                kotlinAny.breakIt(values = *list.toTypedArray())
-            }
-            TEST_SUBCLASS -> {
-
-                kotlinAny.doLooping("Ich", "bin", "eine", "Liste")
-            }
+            TEST_IS_IN_WHEN -> ControlTest.doIsWhen()
+            TEST_LOOPINGS -> ControlTest.doLooping()
+            TEST_BREAK_IT -> ControlTest.doBreakit()
+            TEST_SUBCLASS -> ExtendingTest.doExtendingTest()
+            TEST_DELEGATE -> DelegateTest.doDelegateTest()
+            TEST_DECLARATION -> DeclarationTest.doDeclarationTest()
         }
     }
 
-    private fun doIsInWhenTest(value: Any) {
-        kotlinAny.isInWhen(value)
-        javaObject.isInWhen(value)
-    }
 }
