@@ -7,9 +7,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import butterknife.BindView
 import butterknife.OnClick
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
 import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.TAB_MAP
 import de.bornholdtlee.baseproject.base.BaseApplication

@@ -15,10 +15,7 @@ import de.bornholdtlee.baseproject.base.navigation.NavigationBaseActivity
 import de.bornholdtlee.baseproject.enums.AnimationType
 import de.bornholdtlee.baseproject.injection.IInjection
 import de.bornholdtlee.baseproject.injection.components.AppComponent
-import de.bornholdtlee.baseproject.model.Test.DelegateShit
-import de.bornholdtlee.baseproject.model.Test.TesteMich
 import de.bornholdtlee.baseproject.ui.main.MainFragment
-import de.bornholdtlee.baseproject.utils.Logger
 import de.bornholdtlee.baseproject.utils.UiUtils
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
@@ -72,13 +69,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        var delegate: DelegateShit = DelegateShit()
-        var test: TesteMich = TesteMich(delegate)
-
-        Logger.error(test.method1())
-        Logger.error(test.method2())
-
 
         if (this is IInjection) {
             (this as IInjection).inject(appComponent)

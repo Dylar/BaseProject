@@ -1,4 +1,4 @@
-package de.bornholdtlee.baseproject.examples.delegate;
+package de.bornholdtlee.baseproject.kotlinexamples.delegate;
 
 import de.bornholdtlee.baseproject.utils.Logger;
 

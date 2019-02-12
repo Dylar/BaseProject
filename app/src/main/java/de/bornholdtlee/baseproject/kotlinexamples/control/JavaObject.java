@@ -1,11 +1,14 @@
-package de.bornholdtlee.baseproject.examples.control;
+package de.bornholdtlee.baseproject.kotlinexamples.control;
 
 import org.jetbrains.annotations.NotNull;
 
-import de.bornholdtlee.baseproject.examples.TestMethodsKotlin;
 import de.bornholdtlee.baseproject.utils.Logger;
 
-public class JavaObject implements TestMethodsKotlin {
+public class JavaObject {
+
+    public String getJavaObjectName() {
+        return "Java Object";
+    }
 
     public boolean isInWhen(@NotNull Object value) {
         Logger.INSTANCE.info("Value is: " + value);
@@ -27,6 +30,12 @@ public class JavaObject implements TestMethodsKotlin {
             isIn = true;
         } else if (value instanceof String) {
             Logger.INSTANCE.info("String: " + value);
+            isIn = true;
+        } else if (value instanceof JavaObject) {
+            Logger.INSTANCE.info("Is JavaObject: " + ((JavaObject) value).getJavaObjectName());
+            isIn = true;
+        } else if (value instanceof KotlinAny) {
+            Logger.INSTANCE.info("Is KotlinAny: " + ((KotlinAny) value).getKotlinObjectName());
             isIn = true;
         } else isIn = false;
 

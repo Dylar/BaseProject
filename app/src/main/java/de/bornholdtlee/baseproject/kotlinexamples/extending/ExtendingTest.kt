@@ -1,4 +1,4 @@
-package de.bornholdtlee.baseproject.examples.extending
+package de.bornholdtlee.baseproject.kotlinexamples.extending
 
 import de.bornholdtlee.baseproject.utils.Logger
 
@@ -11,15 +11,15 @@ object ExtendingTest {
         val javaNamedSubclass: BaseClass = JavaSubclass("Java named")
 
         print(kotlinSubclass)
-        print(kotlinNamedSubclass)
         print(javaSubclass)
+        print(kotlinNamedSubclass)
         print(javaNamedSubclass)
     }
 
     private fun print(baseClass: BaseClass) {
         Logger.info("Name: ${baseClass.name}")
         baseClass.openMethod()
-        baseClass.sealedMethod()
+        baseClass.finalMethod()
     }
 
 }

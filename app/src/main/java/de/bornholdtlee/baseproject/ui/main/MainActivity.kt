@@ -12,6 +12,7 @@ import de.bornholdtlee.baseproject.utils.HockeyAppUtils
 class MainActivity : NavigationBaseActivity() {
 
     override val bottomMenuLayout: Int = R.menu.navigation_menu
+    override val hasToolbar: Boolean = false //TODO just for brownbag
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

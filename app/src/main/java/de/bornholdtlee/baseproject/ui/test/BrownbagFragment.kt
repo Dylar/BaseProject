@@ -9,8 +9,8 @@ import de.bornholdtlee.baseproject.R
 import de.bornholdtlee.baseproject.TAB_HOME
 import de.bornholdtlee.baseproject.base.BaseFragment
 import de.bornholdtlee.baseproject.base.navigation.NavigationBaseTab
-import de.bornholdtlee.baseproject.examples.TestController
-import de.bornholdtlee.baseproject.examples.TestController.Companion.MAX_TEST
+import de.bornholdtlee.baseproject.kotlinexamples.TestController
+import de.bornholdtlee.baseproject.kotlinexamples.TestController.Companion.MAX_TEST
 import de.bornholdtlee.baseproject.injection.IInjection
 import de.bornholdtlee.baseproject.injection.components.AppComponent
 import javax.inject.Inject
@@ -33,8 +33,6 @@ class BrownbagFragment : BaseFragment(), IInjection, NavigationBaseTab {
     override val navigationPosition: Int = TAB_HOME
     override val layoutId: Int = R.layout.fragment_brownbag
 
-    var counter: Int = 0
-
     override fun inject(appComponent: AppComponent) {
         appComponent.inject(this)
     }
@@ -49,27 +47,24 @@ class BrownbagFragment : BaseFragment(), IInjection, NavigationBaseTab {
     }
 
     private fun updateText() {
-        counterTV.text = testController.getTestName(counter)
+        counterTV.text = testController.getTestName()
     }
 
     @OnClick(R.id.fragment_brownbag_previous_button)
     fun doPrevious() {
-        counter--
-        if (counter < 0) counter = 0
+        testController.switchToPrevious()
         updateText()
-
     }
 
     @OnClick(R.id.fragment_brownbag_doit_button)
     fun doIt() {
-        testController.doIt(counter)
+        testController.doIt()
     }
 
     @OnClick(R.id.fragment_brownbag_next_button)
     fun doNext() {
-        counter++
-        if (counter > MAX_TEST) counter = MAX_TEST
-        updateText()
+        testController.switchToNext()
+       updateText()
     }
 
 }

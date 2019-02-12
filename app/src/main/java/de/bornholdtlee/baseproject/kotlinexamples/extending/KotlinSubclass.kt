@@ -1,4 +1,4 @@
-package de.bornholdtlee.baseproject.examples.extending
+package de.bornholdtlee.baseproject.kotlinexamples.extending
 
 import de.bornholdtlee.baseproject.utils.Logger
 
@@ -21,6 +21,7 @@ class KotlinSubclass : BaseClass {
 
     private fun init() {
         Logger.info("Do additional constructor stuff")
+        methodWithDefault(parameter2 = "Second Value")
     }
 
     override fun doStuff() {

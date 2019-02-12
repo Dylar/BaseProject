@@ -1,7 +1,6 @@
 package de.bornholdtlee.baseproject.model.converter
 
 import com.google.android.gms.maps.model.LatLng
-import org.joda.time.DateTime
 
 import io.objectbox.converter.PropertyConverter
 

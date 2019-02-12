@@ -1,4 +1,4 @@
-package de.bornholdtlee.baseproject.examples.extending;
+package de.bornholdtlee.baseproject.kotlinexamples.extending;
 
 import de.bornholdtlee.baseproject.utils.Logger;
 
@@ -18,6 +18,7 @@ public class JavaSubclass extends BaseClass {
 
     private void init() {
         Logger.INSTANCE.info("Do additional constructor stuff");
+        methodWithDefault("Second Value");
     }
 
     @Override
@@ -51,4 +52,5 @@ public class JavaSubclass extends BaseClass {
         super.openMethod();
         Logger.INSTANCE.info("In Java");
     }
+
 }

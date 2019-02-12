@@ -1,4 +1,4 @@
-package de.bornholdtlee.baseproject.examples.extending
+package de.bornholdtlee.baseproject.kotlinexamples.extending
 
 import de.bornholdtlee.baseproject.utils.Logger
 
@@ -8,8 +8,6 @@ abstract class BaseClass {
     abstract var posX: Int
     abstract var posY: Int
 
-    abstract fun doStuff()
-
     constructor() {
         name = "Default name"
     }
@@ -18,11 +16,18 @@ abstract class BaseClass {
         this.name = name
     }
 
+    abstract fun doStuff()
+
     open fun openMethod() {
         Logger.info("Open method")
     }
 
-    fun sealedMethod() {
-        Logger.info("Sealed method")
+    fun finalMethod() {
+        Logger.info("Final method")
+    }
+
+    @JvmOverloads
+    fun methodWithDefault(parameter1: String = "DefaultValue", parameter2: String) {
+        Logger.info("Parameter1: $parameter1, Parameter2: $parameter2")
     }
 }
