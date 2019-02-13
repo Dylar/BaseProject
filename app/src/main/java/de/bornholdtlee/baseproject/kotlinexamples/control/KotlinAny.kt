@@ -25,30 +25,37 @@ class KotlinAny {
                 true
             }
             6, 7 -> {
-                Logger.info("$value is 6 oder 7")
+                Logger.info("$value is 6 or 7")
                 true
             }
             in 0..100 -> {
-                Logger.info("$value is in Range")
+                Logger.info("$value is in Range 0 to 100")
                 true
             }
             in 101..104 step 2 -> {
-                Logger.info("$value is 101 oder 103")
+                Logger.info("$value is 101 or 103")
                 true
             }
             is String -> {
                 Logger.info("String: $value")
                 true
             }
-            is JavaObject -> {
-                Logger.info("Is JavaObject: ${value.javaObjectName}")
-                return true
+//            is JavaObject -> {
+//                Logger.info("Is JavaDelegation: ${value.javaObjectName}")
+//                true
+//            }
+            is KotlinAny, is JavaObject -> {
+                Logger.info("Is KotlinDelegation: ${(value as KotlinAny).getKotlinObjectName()}")
+                true
             }
-            is KotlinAny -> {
-                Logger.info("Is KotlinAny: ${value.getKotlinObjectName()}")
-                return true
+            !in -2..-1 -> {
+                Logger.info("Value is not in Range -2 to -1")
+                true
             }
-            else -> false
+            else -> {
+                Logger.info("only -2 or -1")
+                false
+            }
         }
     }
 
@@ -75,7 +82,7 @@ class KotlinAny {
 
         Logger.error("Print value reversed")
         val reversed = values.lastIndex downTo 0
-        for (index in reversed) {
+        for (index in values.lastIndex downTo 0 step 2) {
             Logger.info("Value: ${values[index]}")
         }
     }
@@ -85,13 +92,14 @@ class KotlinAny {
         values.forEach {
             Logger.info("For each value: $it")
             if (it == "eine") {
-                Logger.info("return for each")
+                Logger.info("return for each - Still running -> like a continue")
                 return@forEach
             } else if (it == BREAK_STRING) {
                 Logger.info("return function")
                 return@breakIt
 //                return <-- or just return
             }
+            Logger.info("Block done")
         }
 
         Logger.error("Inner/Outer loop")
@@ -105,6 +113,7 @@ class KotlinAny {
                     Logger.info("break loop2: $value2")
                     break@innerLoop
                 }
+                break@outerLoop
             }
         }
 
@@ -122,9 +131,9 @@ class KotlinAny {
         filtered.forEach { Logger.info("Small value: $it") }
 
         if (filtered.none { it.length >= 3 }) {
-            Logger.info("None value length >= 3")
+            Logger.info("Contains no value length >= 3")
         } else {
-            Logger.info("Value length < 3")
+            Logger.info("Contains value length >= 3")
         }
 
         if (filtered.isNotEmpty()) {

@@ -4,7 +4,7 @@ class NoDataClass() {
 
     var name: String = "NoName"
     var lastName: String = "NoLastName"
-    var age: Int = 12
+    var age: Int = 18
     var weight: Float = 70f
 
     operator fun component1(): String {

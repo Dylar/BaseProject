@@ -2,18 +2,19 @@ package de.bornholdtlee.baseproject.kotlinexamples.delegate;
 
 import de.bornholdtlee.baseproject.utils.Logger;
 
-public class JavaObject implements KotlinDuplicateFunctions, KotlinFunctions, JavaFunctions {
+public class JavaDelegation extends OpenClass implements KotlinDuplicateFunctions, KotlinFunctions, JavaFunctions {
 
     private JavaFunctions javaFunctions = new JavaFunctionsImpl();
     private KotlinFunctions kotlinFunctions;
     private KotlinDuplicateFunctions kotlinDuplicateFunctions = new KotlinDuplicateFunctions() {
         @Override
         public void doStuff() {
-            Logger.INSTANCE.info("Do Stuff");
+            Logger.INSTANCE.info("Do anonym Stuff");
         }
     };
 
-    public JavaObject(KotlinFunctions kotlinFunctions) {
+    public JavaDelegation(KotlinFunctions kotlinFunctions) {
+        super("JavaDelegation");
         this.kotlinFunctions = kotlinFunctions;
     }
 

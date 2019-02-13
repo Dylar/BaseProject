@@ -5,6 +5,6 @@ import de.bornholdtlee.baseproject.utils.Logger
 interface KotlinDuplicateFunctions {
 
     fun doStuff() {
-        Logger.info("Multi function did kotlin stuff")
+        Logger.info("Duplicated function did kotlin stuff")
     }
 }

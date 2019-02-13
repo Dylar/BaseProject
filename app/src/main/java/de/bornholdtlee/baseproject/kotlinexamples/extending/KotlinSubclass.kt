@@ -13,15 +13,16 @@ class KotlinSubclass : BaseClass {
 
     constructor() : super() {
         init()
+        methodWithDefault(parameter2 = "Second Value")
     }
 
     constructor(name: String) : super(name) {
         init()
+        methodWithDefault(parameter2 = name)
     }
 
     private fun init() {
-        Logger.info("Do additional constructor stuff")
-        methodWithDefault(parameter2 = "Second Value")
+        Logger.info("KotlinSubclass did additional constructor stuff")
     }
 
     override fun doStuff() {

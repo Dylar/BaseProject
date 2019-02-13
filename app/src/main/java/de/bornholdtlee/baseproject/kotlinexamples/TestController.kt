@@ -35,7 +35,7 @@ class TestController(application: BaseApplication) : BaseController(application)
             TEST_IS_IN_WHEN -> "When"
             TEST_LOOPINGS -> "Loopings"
             TEST_BREAK_IT -> "Break it"
-            TEST_SUBCLASS -> "Subclass"
+            TEST_SUBCLASS -> "Extending"
             TEST_DELEGATE -> "Delegate"
             TEST_DECLARATION -> "Declaration"
             TEST_DATACLASS -> "Dataclass"

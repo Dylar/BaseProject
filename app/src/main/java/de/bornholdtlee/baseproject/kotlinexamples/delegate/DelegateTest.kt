@@ -3,12 +3,13 @@ package de.bornholdtlee.baseproject.kotlinexamples.delegate
 object DelegateTest {
 
     fun doDelegateTest() {
-        val kotlinSubclass = KotlinAny(object : KotlinFunctions {})
-        val javaSubclass = JavaObject(object : KotlinFunctions {})
+        val kotlinSubclass = KotlinDelegation(object : KotlinFunctions {})
+        val javaSubclass = JavaDelegation(object : KotlinFunctions {})
 
         doSimpleStuff(kotlinSubclass)
-        doMoreStuff(kotlinSubclass)
         doSimpleStuff(javaSubclass)
+
+        doMoreStuff(kotlinSubclass)
         doMoreStuff(javaSubclass)
     }
 

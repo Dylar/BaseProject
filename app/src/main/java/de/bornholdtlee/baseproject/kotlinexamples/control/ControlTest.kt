@@ -1,6 +1,8 @@
 package de.bornholdtlee.baseproject.kotlinexamples.control
 
+import de.bornholdtlee.baseproject.NULL_INTEGER
 import de.bornholdtlee.baseproject.kotlinexamples.TestController
+import de.bornholdtlee.baseproject.utils.Logger
 
 object ControlTest {
 
@@ -9,10 +11,12 @@ object ControlTest {
 
     fun doHandleList() {
         kotlinAny.handleLists(mutableListOf("Ich", "bin", "eine", "Liste"))
+        kotlinAny.handleLists(listOf("Kleine", "Liste"))
     }
 
     fun doLooping() {
         kotlinAny.doLooping("Ich", "bin", "eine", "Liste")
+        kotlinAny.doLooping("Kleine", "Liste")
     }
 
     fun doBreakit() {
@@ -24,8 +28,8 @@ object ControlTest {
     fun doIsWhen() {
 
         val doIsInWhenFunction = fun(value: Any) {
-            kotlinAny.isInWhen(value)
-            javaObject.isInWhen(value)
+            Logger.info("Kotlin value included: ${kotlinAny.isInWhen(value)}")
+            Logger.info("Java value included: ${javaObject.isInWhen(value)}")
         }
 
         doIsInWhenFunction(0.0)
@@ -45,6 +49,10 @@ object ControlTest {
 
         doIsInWhenFunction(kotlinAny)
         doIsInWhenFunction(javaObject)
+
+        doIsInWhenFunction(-3)
+        doIsInWhenFunction(NULL_INTEGER)
+        doIsInWhenFunction('3')
     }
 
 

@@ -1,7 +1,9 @@
 package de.bornholdtlee.baseproject.kotlinexamples.delegate
 
-class KotlinAny(kotlinFunctions: KotlinFunctions)
-    : KotlinDuplicateFunctions by object : KotlinDuplicateFunctions {},
+
+class KotlinDelegation(kotlinFunctions: KotlinFunctions)
+    : OpenClass("KotlinDelegation"),
+        KotlinDuplicateFunctions by object : KotlinDuplicateFunctions {},
         KotlinFunctions by kotlinFunctions,
         JavaFunctions by JavaFunctionsImpl() {
 

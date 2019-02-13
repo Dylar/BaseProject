@@ -2,9 +2,11 @@ package de.bornholdtlee.baseproject.kotlinexamples.declaration
 
 import de.bornholdtlee.baseproject.utils.Logger
 
+const val CONSTANT: Int = 0
+
 class KotlinDeclaration {
 
-    public var publicProperty: String = "A public property"
+    public var publicProperty: Int = 3
     internal var internalProperty: String = "A internal property"
     protected var protectedProperty: String = "A protected property"
     private var privateProperty: String = "A private property"
@@ -18,13 +20,12 @@ class KotlinDeclaration {
         }
         get() {
             Logger.info("Getter called always")
-            return field - 3
+            return field - publicProperty
         }
 
     var isSeven = false
         get() = integer == 7
         private set
-
 
     fun latePropertyIsInitialized(): Boolean {
         //Lateinit check only in class/subclass

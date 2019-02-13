@@ -6,14 +6,15 @@ interface KotlinFunctions {
 
 //    @JvmDefault <-- Experimental
     fun printStuff() {
-        Logger.info("Function printed stuff")
+        Logger.info("KotlinFunctions printed stuff")
     }
 
     fun doStuff() {
-        Logger.info("Function did kotlin stuff")
+        Logger.info("KotlinFunctions did kotlin stuff")
     }
 
     fun doNothing() {
+        Logger.info("KotlinFunctions did nothing")
         //nothing
     }
 }

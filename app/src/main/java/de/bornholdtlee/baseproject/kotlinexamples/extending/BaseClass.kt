@@ -22,8 +22,9 @@ abstract class BaseClass {
         Logger.info("Open method")
     }
 
-    fun finalMethod() {
+    fun finalMethod(): Boolean {
         Logger.info("Final method")
+        return true
     }
 
     @JvmOverloads

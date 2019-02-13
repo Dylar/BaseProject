@@ -9,20 +9,20 @@ public class JavaSubclass extends BaseClass {
     public JavaSubclass() {
         super();
         init();
+        methodWithDefault("Second parameter");
     }
 
     public JavaSubclass(String name) {
         super(name);
         init();
+        methodWithDefault(name);
     }
 
     private void init() {
-        Logger.INSTANCE.info("Do additional constructor stuff");
-        methodWithDefault("Second Value");
+        Logger.INSTANCE.info("JavaSubclass did additional constructor stuff");
     }
 
     @Override
-
     public int getPosX() {
         return posX - 1;
     }

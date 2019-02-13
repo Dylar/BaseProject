@@ -37,6 +37,7 @@ object DeclarationTest {
         checkLazy(declaration)
         checkLazy(declaration)
 
+
     }
 
     private fun checkNullProperty(declaration: KotlinDeclaration) {
